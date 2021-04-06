@@ -638,3 +638,12 @@ C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\SmartVillages.Client.pdb
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\serviceworkers\wwwroot\service-worker.js
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\service-worker-assets.js
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\RazorDeclaration\Pages\UserSign\SignIn.razor.g.cs
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\RazorDeclaration\Pages\UserSign\SignUp.razor.g.cs
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\RazorDeclaration\Shared\UserSignLayout.razor.g.cs
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\Razor\Pages\UserSign\SignIn.razor.g.cs
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\Razor\Pages\UserSign\SignUp.razor.g.cs
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\Razor\Shared\UserSignLayout.razor.g.cs
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\RazorDeclaration\Pages\UserSign\Home.razor.g.cs
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\Razor\Pages\UserSign\Home.razor.g.cs
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\scopedcss\Pages\UserSign\Home.razor.rz.scp.css

@@ -2,7 +2,6 @@ C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Shared\bin\Debug\net5.
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Shared\bin\Debug\net5.0\SmartVillages.Shared.dll
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Shared\bin\Debug\net5.0\ref\SmartVillages.Shared.dll
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Shared\bin\Debug\net5.0\SmartVillages.Shared.pdb
-C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\SmartVillages.Shared.csprojAssemblyReference.cache
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\SmartVillages.Shared.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\SmartVillages.Shared.AssemblyInfoInputs.cache
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\SmartVillages.Shared.AssemblyInfo.cs
@@ -10,3 +9,4 @@ C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Shared\obj\Debug\net5.
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\SmartVillages.Shared.dll
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\ref\SmartVillages.Shared.dll
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\SmartVillages.Shared.pdb
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\SmartVillages.Shared.csprojAssemblyReference.cache

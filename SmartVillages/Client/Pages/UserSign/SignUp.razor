@@ -1,0 +1,22 @@
+﻿@layout UserSignLayout
+@page "/signup"
+
+@if (isLeftOpened)
+{
+    <h3>SigUp left</h3>
+}
+else
+{
+    <h3>SigUp right</h3>
+}
+<button @onclick="GoBack">Go back..</button>
+
+@code {
+    [Parameter] public bool isLeftOpened { get; set; }
+    [Parameter] public EventCallback goBack { get; set; }
+
+    async Task GoBack()
+    {
+        await goBack.InvokeAsync();
+    }
+}

@@ -1,0 +1,32 @@
+﻿@layout UserSignLayout
+@page "/signin"
+@inject NavigationManager NavigationManager
+
+@if (isLeftOpened)
+{
+    <h3>SignIn left</h3>
+    <button @onclick="Login">login</button>
+}
+else
+{
+    <h3>SignIn right</h3>
+    <button @onclick="Login">login</button>
+}
+
+<button @onclick="GoBack">Go back..</button>
+
+
+@code {
+    [Parameter] public bool isLeftOpened { get; set; }
+    [Parameter] public EventCallback goBack { get; set; }
+
+    void Login()
+    {
+        NavigationManager.NavigateTo("/index");
+    }
+
+    async Task GoBack ()
+    {
+        await goBack.InvokeAsync();
+    }
+}

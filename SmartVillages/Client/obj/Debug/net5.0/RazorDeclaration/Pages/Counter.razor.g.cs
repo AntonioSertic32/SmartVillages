@@ -82,6 +82,7 @@ using SmartVillages.Client.Shared;
 #line default
 #line hidden
 #nullable disable
+    [Microsoft.AspNetCore.Components.LayoutAttribute(typeof(MainLayout))]
     [Microsoft.AspNetCore.Components.RouteAttribute("/counter")]
     public partial class Counter : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -91,7 +92,7 @@ using SmartVillages.Client.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 9 "C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\Pages\Counter.razor"
+#line 10 "C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\Pages\Counter.razor"
        
     private int currentCount = 0;
 

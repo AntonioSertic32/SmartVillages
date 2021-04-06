@@ -89,6 +89,18 @@ using SmartVillages.Client.Shared;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 21 "C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\Shared\MainLayout.razor"
+       
+    void Logout ()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+
+#line default
+#line hidden
+#nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
     }
 }
 #pragma warning restore 1591

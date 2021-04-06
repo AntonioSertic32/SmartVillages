@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-prJRBws+56APvaPblv+zyTKZVMiEUwkZWNmaTDDczKI=",
+      "hash": "sha256-h6IfwVnPhzxS+0eF9V39\/mtFTATdxXPH0t8gsVM4PqM=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -793,11 +793,11 @@
       "url": "_framework\/SmartVillages.Shared.pdb"
     },
     {
-      "hash": "sha256-ogv7CiO0DBrk2QI5gE47NdKR3y8j7eV0b9\/Yg3n2tfw=",
+      "hash": "sha256-M1WU1xnSkestSJso0ek+xgtChhOlZoNo0NfgB0Er3bE=",
       "url": "_framework\/SmartVillages.Client.dll"
     },
     {
-      "hash": "sha256-X4B38ji5yOj1koMEF8W90Hlxe6ygSIOL7So\/cwrfFaY=",
+      "hash": "sha256-Bv0qmMyY4RGqM+a6teus3R1VEiTQ3+NHxoojrHFb8uo=",
       "url": "_framework\/SmartVillages.Client.pdb"
     },
     {
@@ -1589,7 +1589,7 @@
       "url": "_framework\/SmartVillages.Shared.dll.gz"
     },
     {
-      "hash": "sha256-8aM9R9K90X6h+KPDW4OzrEh071mAs7dvAQxjBxAZQAc=",
+      "hash": "sha256-p0kDaSzj\/i50XzMbIIK5LTlLX4tbTbqo3l8th\/2x6mA=",
       "url": "css\/app.css"
     },
     {
@@ -1641,11 +1641,87 @@
       "url": "favicon.ico"
     },
     {
+      "hash": "sha256-LjN2g2L9NX54HQFnDbHSJt+0hMbyt2nzt5hGnuH4KtY=",
+      "url": "font\/Roboto\/Roboto-Black.ttf"
+    },
+    {
+      "hash": "sha256-wtE+LcfEAoEsac86+j89kGYKLBBaKJDuX8BQfK\/NquQ=",
+      "url": "font\/Roboto\/Roboto-BlackItalic.ttf"
+    },
+    {
+      "hash": "sha256-uvRM6BY2zJJ\/wndoQ35dqFO6xpnoqvgy0ELw3+0ptLQ=",
+      "url": "font\/Roboto\/Roboto-Bold.ttf"
+    },
+    {
+      "hash": "sha256-Rnqe97VMkeuL6Ysu8T84VykwLSKV+rUQH4APHIRTsXA=",
+      "url": "font\/Roboto\/Roboto-BoldItalic.ttf"
+    },
+    {
+      "hash": "sha256-iq8jrC7ps+8bYcI5Cz5uAsCqakCdWRx\/1\/PU189R4As=",
+      "url": "font\/Roboto\/Roboto-Italic.ttf"
+    },
+    {
+      "hash": "sha256-KDWzWKqqMp+aS7R5NslmhyAsokd0ouHHglGllvKwH6U=",
+      "url": "font\/Roboto\/Roboto-Light.ttf"
+    },
+    {
+      "hash": "sha256-PsEo5yo2cHm3J3Xta\/HrDrvqjRt63W24xbmjCf9vL0Q=",
+      "url": "font\/Roboto\/Roboto-LightItalic.ttf"
+    },
+    {
+      "hash": "sha256-SsjgNgb\/pMN\/YaZRCiCA8fN6cFT0cmwhSIfTsj9y42k=",
+      "url": "font\/Roboto\/Roboto-Medium.ttf"
+    },
+    {
+      "hash": "sha256-hSRza6uTOcGiVw5hA3eUvfTGqjhPv3W5jNUNWVnQsLM=",
+      "url": "font\/Roboto\/Roboto-MediumItalic.ttf"
+    },
+    {
+      "hash": "sha256-MZz\/bnox8PKkHEddykKJCqXRn+FgF+IpD4wdThT3ZIE=",
+      "url": "font\/Roboto\/Roboto-Regular.ttf"
+    },
+    {
+      "hash": "sha256-v5dgpIIWiNVE7H2vunsGCrH6dYNgQDU3V5vwZ5LSkPg=",
+      "url": "font\/Roboto\/Roboto-Thin.ttf"
+    },
+    {
+      "hash": "sha256-ysvmS9xjmEDzWFKPCnf4AfRtakfLlHZOG3B95IT08nw=",
+      "url": "font\/Roboto\/Roboto-ThinItalic.ttf"
+    },
+    {
       "hash": "sha256-IpHFcQvs03lh6W54zoeJRG1jW+VnGmwymzxLoXtKX7Y=",
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-FcjznkT0IjW53RGbvani9NNFomWkhXRW4NLBvOI6AL0=",
+      "hash": "sha256-zXk+O8fsrzNmFb8QtEn0aC0JBJySrEumwFFn7Zk9D5k=",
+      "url": "img\/illustrations\/DarkNotifications.png"
+    },
+    {
+      "hash": "sha256-6+vSmTLFDEgLIvGNERBy0d2GSYXrfKLG+AVQ4eDkXTg=",
+      "url": "img\/illustrations\/DarkThinking.png"
+    },
+    {
+      "hash": "sha256-0KQwcSJUhGC+tzu5ZIHWo8nhwzr\/DwySjjU\/DfMgel4=",
+      "url": "img\/illustrations\/DarkWatering.png"
+    },
+    {
+      "hash": "sha256-m9BPGnftBwrr\/Pan2W0W6Fqh9E25MFmLrkVjEKIDcK4=",
+      "url": "img\/illustrations\/DarkWateringG.png"
+    },
+    {
+      "hash": "sha256-bMYcXfzmXlvE2H45IQrOzrfKQO+r7JLtPVshJAP2h+M=",
+      "url": "img\/Innovation _Two Color.png"
+    },
+    {
+      "hash": "sha256-eFDt+MyI+P5uQbxnZQ1ORXwPN0EQ4uF3JTmSxISIx2A=",
+      "url": "img\/logo.png"
+    },
+    {
+      "hash": "sha256-DgI8O2oo4YYwi77a20jUdTztH8T+oqlpzW156x86Sd8=",
+      "url": "img\/pametna_sela.png"
+    },
+    {
+      "hash": "sha256-On8z8zzNrlcV2RVmHuGkEcZ8xubA9CVfFj6FofckCrU=",
       "url": "index.html"
     },
     {
@@ -1653,13 +1729,13 @@
       "url": "manifest.json"
     },
     {
-      "hash": "sha256-EzcSIon4ZKQOlT994NWjxYTioz5l8ncqvsSmMYOktFg=",
+      "hash": "sha256-oqW3OaVTTKwlHfkNcktX0wn5G0VsoZc7fOMn9c6n+Ds=",
       "url": "SmartVillages.Client.styles.css"
     },
     {
-      "hash": "sha256-jFo6vkSyIbIlNHR1OmvnXyFYlLtZfqFAGRzYCu5DicI=",
+      "hash": "sha256-TFNbCkeDzxLu57tissozJWbUxuNFbxnHTyyvTJUNZVM=",
       "url": "SmartVillages.Client.bundle.scp.css"
     }
   ],
-  "version": "Wsytl+sO"
+  "version": "v76xnxQk"
 };

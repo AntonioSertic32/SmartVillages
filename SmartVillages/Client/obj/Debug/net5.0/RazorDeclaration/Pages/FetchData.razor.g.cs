@@ -83,12 +83,13 @@ using SmartVillages.Client.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\Pages\FetchData.razor"
+#line 3 "C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\Pages\FetchData.razor"
 using SmartVillages.Shared;
 
 #line default
 #line hidden
 #nullable disable
+    [Microsoft.AspNetCore.Components.LayoutAttribute(typeof(MainLayout))]
     [Microsoft.AspNetCore.Components.RouteAttribute("/fetchdata")]
     public partial class FetchData : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -98,7 +99,7 @@ using SmartVillages.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 38 "C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\Pages\FetchData.razor"
+#line 39 "C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\Pages\FetchData.razor"
        
     private WeatherForecast[] forecasts;
 
