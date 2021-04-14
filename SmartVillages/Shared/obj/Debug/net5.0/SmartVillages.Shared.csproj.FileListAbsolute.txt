@@ -10,3 +10,15 @@ C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Shared\obj\Debug\net5.
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\ref\SmartVillages.Shared.dll
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\SmartVillages.Shared.pdb
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\SmartVillages.Shared.csprojAssemblyReference.cache
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Shared\bin\Debug\net5.0\SmartVillages.Shared.deps.json
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Shared\bin\Debug\net5.0\SmartVillages.Shared.dll
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Shared\bin\Debug\net5.0\ref\SmartVillages.Shared.dll
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Shared\bin\Debug\net5.0\SmartVillages.Shared.pdb
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\SmartVillages.Shared.csprojAssemblyReference.cache
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\SmartVillages.Shared.GeneratedMSBuildEditorConfig.editorconfig
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\SmartVillages.Shared.AssemblyInfoInputs.cache
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\SmartVillages.Shared.AssemblyInfo.cs
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\SmartVillages.Shared.csproj.CoreCompileInputs.cache
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\SmartVillages.Shared.dll
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\ref\SmartVillages.Shared.dll
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Shared\obj\Debug\net5.0\SmartVillages.Shared.pdb
