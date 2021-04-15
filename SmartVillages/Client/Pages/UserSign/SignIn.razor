@@ -1,32 +1,60 @@
 ﻿@layout UserSignLayout
 @page "/signin"
-@inject NavigationManager NavigationManager
+@inherits SignInBase
 
 @if (isLeftOpened)
 {
     <h3>SignIn left</h3>
-    <button @onclick="Login">login</button>
+    @*
+        <EditForm OnValidSubmit="args => Login(true)">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label>Email</label>
+                <InputText class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <InputText type="password" class="form-control" />
+
+            </div>
+            <div class="form-group">
+                <label>Secret code</label>
+                <InputText type="password" class="form-control" />
+
+            </div>
+            <button disabled="@loading" class="btn btn-primary">
+                @if (loading)
+                {
+                    <span class="spinner-border spinner-border-sm mr-1"></span>}
+                Login
+            </button>
+            <NavLink href="account/register" class="btn btn-link">Sign in</NavLink>
+        </EditForm>
+    *@
 }
 else
 {
     <h3>SignIn right</h3>
-    <button @onclick="Login">login</button>
+    @*
+        <EditForm OnValidSubmit="args => Login(false)">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label>Email</label>
+                <InputText class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <InputText type="password" class="form-control" />
+            </div>
+            <button disabled="@loading" class="btn btn-primary">
+                @if (loading)
+                {
+                    <span class="spinner-border spinner-border-sm mr-1"></span>}
+                Login
+            </button>
+            <NavLink href="account/register" class="btn btn-link">Sign in</NavLink>
+        </EditForm>
+    *@
 }
 
 <button @onclick="GoBack">Go back..</button>
-
-
-@code {
-    [Parameter] public bool isLeftOpened { get; set; }
-    [Parameter] public EventCallback goBack { get; set; }
-
-    void Login()
-    {
-        NavigationManager.NavigateTo("/index");
-    }
-
-    async Task GoBack ()
-    {
-        await goBack.InvokeAsync();
-    }
-}

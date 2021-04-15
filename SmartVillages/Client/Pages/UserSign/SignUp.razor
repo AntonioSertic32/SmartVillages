@@ -1,22 +1,53 @@
 ﻿@layout UserSignLayout
 @page "/signup"
+@inherits SignUpBase
 
-@if (isLeftOpened)
+@if (IsLeftOpened)
 {
     <h3>SigUp left</h3>
+
+    <EditForm Model="@User" OnValidSubmit="ValidSignUp">
+        <DataAnnotationsValidator />
+        <div class="form-group">
+            <label for="firstname">First name</label>
+            <InputText class="form-control" type="text" id="firstname" @bind-Value="User.FirstName"></InputText>
+            <ValidationMessage For="@(() => User.FirstName)" />
+        </div>
+        <div class="form-group">
+            <label for="secondname">Second name</label>
+            <InputText class="form-control" type="text" id="secondname" @bind-Value="User.LastName"></InputText>
+            <ValidationMessage For="@(() => User.LastName)" />
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <InputText class="form-control" type="email" id="email" @bind-Value="User.Email"></InputText>
+            <ValidationMessage For="@(() => User.Email)" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <InputText class="form-control" type="password" id="password" @bind-Value="User.Password"></InputText>
+            <ValidationMessage For="@(() => User.Password)" />
+        </div>
+        <div class="form-group">
+            <label for="usertype">Type</label>
+            <InputRadioGroup class="form-control" id="usertype" @bind-Value="User.UserType">
+                <br>
+                @foreach (var type in UserTypes)
+                    {
+                    <InputRadio Value="type.UserTypeId" />@type.UserTypeName
+                    <br>
+                    }
+            </InputRadioGroup>
+            <ValidationMessage For="@(() => User.UserType)" />
+        </div>
+
+        <button type="submit" class="btn btn-dark">Sign up</button>
+    </EditForm>
+
 }
 else
 {
     <h3>SigUp right</h3>
 }
+
 <button @onclick="GoBack">Go back..</button>
-
-@code {
-    [Parameter] public bool isLeftOpened { get; set; }
-    [Parameter] public EventCallback goBack { get; set; }
-
-    async Task GoBack()
-    {
-        await goBack.InvokeAsync();
-    }
-}

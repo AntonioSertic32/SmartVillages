@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartVillages.Server.Models
+namespace SmartVillages.Shared
 {
     public class User
     {
@@ -20,6 +21,7 @@ namespace SmartVillages.Server.Models
         public string City { get; set; }
         public string Address { get; set; }
         public string Number { get; set; }
+        public string Password { get; set; }
         public string SecretCode { get; set; }
         public DateTime BirthDate { get; set; }
         public UserType UserType { get; set; }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SmartVillages.Server.Models;
+using SmartVillages.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;

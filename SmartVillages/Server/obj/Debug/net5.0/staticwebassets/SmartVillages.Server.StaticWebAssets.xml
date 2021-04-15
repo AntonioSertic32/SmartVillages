@@ -1,5 +1,5 @@
 ﻿<StaticWebAssets Version="1.0">
-  <ContentRoot BasePath="/" Path="E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\" />
-  <ContentRoot BasePath="/" Path="E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\scopedcss\bundle\" />
-  <ContentRoot BasePath="/" Path="E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\wwwroot\" />
+  <ContentRoot BasePath="/" Path="C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\" />
+  <ContentRoot BasePath="/" Path="C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\scopedcss\bundle\" />
+  <ContentRoot BasePath="/" Path="C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\wwwroot\" />
 </StaticWebAssets>
