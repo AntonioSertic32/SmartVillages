@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using SmartVillages.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SmartVillages.Client.Pages.UserSign
@@ -30,6 +32,36 @@ namespace SmartVillages.Client.Pages.UserSign
         public void ValidSignUp()
         {
             Console.WriteLine("Sign me up!!");
+        }
+
+
+        public bool success;
+        public string[] errors = { };
+        public MudTextField<string> pwField1;
+        public MudForm form;
+
+        public IEnumerable<string> PasswordStrength(string pw)
+        {
+            if (string.IsNullOrWhiteSpace(pw))
+            {
+                yield return "Password is required!";
+                yield break;
+            }
+            if (pw.Length < 8)
+                yield return "Password must be at least of length 8";
+            if (!Regex.IsMatch(pw, @"[A-Z]"))
+                yield return "Password must contain at least one capital letter";
+            if (!Regex.IsMatch(pw, @"[a-z]"))
+                yield return "Password must contain at least one lowercase letter";
+            if (!Regex.IsMatch(pw, @"[0-9]"))
+                yield return "Password must contain at least one digit";
+        }
+
+        public string PasswordMatch(string arg)
+        {
+            if (pwField1.Value != arg)
+                return "Passwords don't match";
+            return null;
         }
     }
 }

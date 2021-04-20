@@ -288,6 +288,25 @@
           "lib/net5.0/Microsoft.JSInterop.WebAssembly.dll": {}
         }
       },
+      "MudBlazor/5.0.7": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "5.0.3",
+          "Microsoft.AspNetCore.Components.Web": "5.0.3"
+        },
+        "compile": {
+          "lib/net5.0/MudBlazor.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/MudBlazor.dll": {}
+        },
+        "build": {
+          "buildTransitive/MudBlazor.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/MudBlazor.props": {}
+        }
+      },
       "System.IO.Pipelines/5.0.1": {
         "type": "package",
         "compile": {
@@ -602,6 +621,25 @@
         },
         "runtime": {
           "lib/net5.0/Microsoft.JSInterop.WebAssembly.dll": {}
+        }
+      },
+      "MudBlazor/5.0.7": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "5.0.3",
+          "Microsoft.AspNetCore.Components.Web": "5.0.3"
+        },
+        "compile": {
+          "lib/net5.0/MudBlazor.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/MudBlazor.dll": {}
+        },
+        "build": {
+          "buildTransitive/MudBlazor.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/MudBlazor.props": {}
         }
       },
       "System.IO.Pipelines/5.0.1": {
@@ -1107,6 +1145,27 @@
         "microsoft.jsinterop.webassembly.nuspec"
       ]
     },
+    "MudBlazor/5.0.7": {
+      "sha512": "NDjFiP6dd92gpSVdESg1rxkvhDB9k5IPa4iNfkwmnvxkZjyMk9sYX3/QiynlO30IyibB7q4Z6KeOw7weEZZIPg==",
+      "type": "package",
+      "path": "mudblazor/5.0.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "Nuget.png",
+        "build/Microsoft.AspNetCore.StaticWebAssets.props",
+        "build/MudBlazor.props",
+        "buildMultiTargeting/MudBlazor.props",
+        "buildTransitive/MudBlazor.props",
+        "lib/net5.0/MudBlazor.dll",
+        "lib/net5.0/MudBlazor.xml",
+        "mudblazor.5.0.7.nupkg.sha512",
+        "mudblazor.nuspec",
+        "staticwebassets/MudBlazor.min.css",
+        "staticwebassets/MudBlazor.min.js"
+      ]
+    },
     "System.IO.Pipelines/5.0.1": {
       "sha512": "qEePWsaq9LoEEIqhbGe6D5J8c9IqQOUuTzzV6wn1POlfdLkJliZY3OlB0j0f17uMWlqZYjH7txj+2YbyrIA8Yg==",
       "type": "package",
@@ -1165,24 +1224,25 @@
     "net5.0": [
       "Microsoft.AspNetCore.Components.WebAssembly >= 5.0.4",
       "Microsoft.AspNetCore.Components.WebAssembly.DevServer >= 5.0.4",
+      "MudBlazor >= 5.0.7",
       "SmartVillages.Shared >= 1.0.0",
       "System.Net.Http.Json >= 5.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Antonio\\.nuget\\packages\\": {}
+    "C:\\Users\\asertic\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Antonio\\source\\repos\\SmartVillages\\SmartVillages\\Client\\SmartVillages.Client.csproj",
+      "projectUniqueName": "E:\\asertic\\Documents\\GitHub\\SmartVillages\\SmartVillages\\Client\\SmartVillages.Client.csproj",
       "projectName": "SmartVillages.Client",
-      "projectPath": "C:\\Users\\Antonio\\source\\repos\\SmartVillages\\SmartVillages\\Client\\SmartVillages.Client.csproj",
-      "packagesPath": "C:\\Users\\Antonio\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Antonio\\source\\repos\\SmartVillages\\SmartVillages\\Client\\obj\\",
+      "projectPath": "E:\\asertic\\Documents\\GitHub\\SmartVillages\\SmartVillages\\Client\\SmartVillages.Client.csproj",
+      "packagesPath": "C:\\Users\\asertic\\.nuget\\packages\\",
+      "outputPath": "E:\\asertic\\Documents\\GitHub\\SmartVillages\\SmartVillages\\Client\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Antonio\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\asertic\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1190,14 +1250,16 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "E:\\Local_Nugets": {},
+        "http://mavenprod.unix.fina.hr:8081/artifactory/api/nuget/nuget-local": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\Antonio\\source\\repos\\SmartVillages\\SmartVillages\\Shared\\SmartVillages.Shared.csproj": {
-              "projectPath": "C:\\Users\\Antonio\\source\\repos\\SmartVillages\\SmartVillages\\Shared\\SmartVillages.Shared.csproj"
+            "E:\\asertic\\Documents\\GitHub\\SmartVillages\\SmartVillages\\Shared\\SmartVillages.Shared.csproj": {
+              "projectPath": "E:\\asertic\\Documents\\GitHub\\SmartVillages\\SmartVillages\\Shared\\SmartVillages.Shared.csproj"
             }
           }
         }
@@ -1221,6 +1283,10 @@
             "target": "Package",
             "version": "[5.0.4, )"
           },
+          "MudBlazor": {
+            "target": "Package",
+            "version": "[5.0.7, )"
+          },
           "System.Net.Http.Json": {
             "target": "Package",
             "version": "[5.0.0, )"
@@ -1239,7 +1305,7 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.NETCore.App.Runtime.browser-wasm",
-            "version": "[5.0.4, 5.0.4]"
+            "version": "[5.0.3, 5.0.3]"
           }
         ],
         "frameworkReferences": {
@@ -1247,7 +1313,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
       }
     },
     "runtimes": {

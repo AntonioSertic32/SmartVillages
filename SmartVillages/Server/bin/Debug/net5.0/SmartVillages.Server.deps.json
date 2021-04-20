@@ -9,15 +9,7 @@
       "DEBUG",
       "NET",
       "NET5_0",
-      "NETCOREAPP",
-      "NET5_0_OR_GREATER",
-      "NETCOREAPP1_0_OR_GREATER",
-      "NETCOREAPP1_1_OR_GREATER",
-      "NETCOREAPP2_0_OR_GREATER",
-      "NETCOREAPP2_1_OR_GREATER",
-      "NETCOREAPP2_2_OR_GREATER",
-      "NETCOREAPP3_0_OR_GREATER",
-      "NETCOREAPP3_1_OR_GREATER"
+      "NETCOREAPP"
     ],
     "languageVersion": "9.0",
     "platform": "",
@@ -819,6 +811,21 @@
           "Microsoft.NETCore.Platforms": "3.1.0"
         }
       },
+      "MudBlazor/5.0.7": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "5.0.4",
+          "Microsoft.AspNetCore.Components.Web": "5.0.4"
+        },
+        "runtime": {
+          "lib/net5.0/MudBlazor.dll": {
+            "assemblyVersion": "5.0.7.0",
+            "fileVersion": "5.0.7.0"
+          }
+        },
+        "compile": {
+          "lib/net5.0/MudBlazor.dll": {}
+        }
+      },
       "Newtonsoft.Json/10.0.1": {
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
@@ -1508,6 +1515,7 @@
       "SmartVillages.Client/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Components.WebAssembly": "5.0.4",
+          "MudBlazor": "5.0.7",
           "SmartVillages.Shared": "1.0.0",
           "System.Net.Http.Json": "5.0.0"
         },
@@ -3506,6 +3514,13 @@
       "sha512": "sha512-mtVirZr++rq+XCDITMUdnETD59XoeMxSpLRIII7JRI6Yj0LEDiO1pPn0ktlnIj12Ix8bfvQqQDMMIF9wC98oCA==",
       "path": "microsoft.win32.systemevents/4.7.0",
       "hashPath": "microsoft.win32.systemevents.4.7.0.nupkg.sha512"
+    },
+    "MudBlazor/5.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-NDjFiP6dd92gpSVdESg1rxkvhDB9k5IPa4iNfkwmnvxkZjyMk9sYX3/QiynlO30IyibB7q4Z6KeOw7weEZZIPg==",
+      "path": "mudblazor/5.0.7",
+      "hashPath": "mudblazor.5.0.7.nupkg.sha512"
     },
     "Newtonsoft.Json/10.0.1": {
       "type": "package",
