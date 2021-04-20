@@ -181,3 +181,4 @@ E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Server\obj\Debug\net5.0\
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Server\obj\Debug\net5.0\SmartVillages.Server.pdb
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Server\obj\Debug\net5.0\SmartVillages.Server.genruntimeconfig.cache
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Server\bin\Debug\net5.0\MudBlazor.dll
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Server\bin\Debug\net5.0\MudBlazor.dll

@@ -1299,3 +1299,6 @@ C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\MudBlazor.dll.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\MudBlazor.dll
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\dQoEMFui.gz
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\MudBlazor.dll.gz
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\MudBlazor.dll
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\rkJA0ys2.gz
