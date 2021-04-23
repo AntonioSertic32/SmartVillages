@@ -24,44 +24,16 @@ namespace SmartVillages.Client.Pages.UserSign
             return base.OnInitializedAsync();
         }
 
-        public async Task Close()
-        {
-            await GoBack.InvokeAsync();
-        }
 
         public void ValidSignUp()
         {
+        }
+        public User exampleModel = new User();
+
+        public void HandleValidSubmit()
+        {
             Console.WriteLine("Sign me up!!");
-        }
-
-
-        public bool success;
-        public string[] errors = { };
-        public MudTextField<string> pwField1;
-        public MudForm form;
-
-        public IEnumerable<string> PasswordStrength(string pw)
-        {
-            if (string.IsNullOrWhiteSpace(pw))
-            {
-                yield return "Password is required!";
-                yield break;
-            }
-            if (pw.Length < 8)
-                yield return "Password must be at least of length 8";
-            if (!Regex.IsMatch(pw, @"[A-Z]"))
-                yield return "Password must contain at least one capital letter";
-            if (!Regex.IsMatch(pw, @"[a-z]"))
-                yield return "Password must contain at least one lowercase letter";
-            if (!Regex.IsMatch(pw, @"[0-9]"))
-                yield return "Password must contain at least one digit";
-        }
-
-        public string PasswordMatch(string arg)
-        {
-            if (pwField1.Value != arg)
-                return "Passwords don't match";
-            return null;
+            Console.WriteLine(exampleModel.FirstName + " " + exampleModel.LastName + " " + exampleModel.Email + " " + exampleModel.Password);
         }
     }
 }

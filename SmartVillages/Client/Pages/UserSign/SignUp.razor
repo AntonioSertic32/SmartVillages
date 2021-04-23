@@ -46,70 +46,73 @@
 
         <button type="submit" class="btn btn-dark">Sign up</button>
     </EditForm>
+
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" >Sign in</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="GoBack">Go back</MudButton>
 }
 else
 {
     <h3>SigUp right</h3>
-    <MudText Typo="Typo.h6">MudBlazor is @Text</MudText>
-    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="ButtonOnClick">@ButtonText</MudButton>
-
-    <div style="max-width: 400px;">
+    <EditForm Model="@exampleModel" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
         <MudCard>
             <MudCardContent>
-                <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-                    <MudTextField T="string" Label="Username" Required="true" RequiredError="User name is required!" />
-                    <MudTextField T="string" Label="Email" Required="true" RequiredError="Email is required!"
-                                  Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
-                    <MudTextField T="string" Label="Password" HelperText="Choose a strong password" @ref="pwField1"
-                                  InputType="InputType.Password"
-                                  Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
-                                  RequiredError="Password is required!" />
-                    <MudTextField T="string"
-                                  Label="Password" HelperText="Repeat the password" InputType="InputType.Password"
-                                  Validation="@(new Func<string, string>(PasswordMatch))" />
-                    <div class="d-flex">
-                        <MudRadioGroup T="string" Required="true" RequiredError="Account type is required!">
-                            <MudRadio Option="@("Personal")">Personal</MudRadio>
-                            <MudRadio Option="@("Professional")">Professional</MudRadio>
-                        </MudRadioGroup>
-                    </div>
-                    <MudCheckBox T="bool" Required="true" RequiredError="You must agree" Class="ml-n2"
-                                 Label="I agree that MudBlazor is awesome!" />
-                </MudForm>
+                <MudGrid>
+                    <MudItem xs="12" sm="6">
+                        <MudTextField For="@(() => exampleModel.FirstName)" @bind-Value="exampleModel.FirstName" Variant="Variant.Outlined" Label="First name" />
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudTextField For="@(() => exampleModel.LastName)" @bind-Value="exampleModel.LastName" Variant="Variant.Outlined" Label="Last name" />
+                    </MudItem>
+                </MudGrid>
+
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudTextField For="@(() => exampleModel.Email)" @bind-Value="exampleModel.Email" Variant="Variant.Outlined" Label="Email" />
+                    </MudItem>
+                </MudGrid>
+
+                <MudItem xs="12">
+                    <MudTextField For="@(() => exampleModel.Password)" @bind-Value="exampleModel.Password" Variant="Variant.Outlined" Label="Password" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" />
+                </MudItem>
+
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudCheckBox T="bool" Required="true" RequiredError="You must agree" Class="ml-n2" Label="I agree to the terms and conditions" />
+                    </MudItem>
+                </MudGrid>
             </MudCardContent>
+
             <MudCardActions>
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" Class="ml-auto">Register</MudButton>
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Register</MudButton>
             </MudCardActions>
+
         </MudCard>
+    </EditForm>
 
-        <MudPaper Class="pa-4 justify-center my-4 mud-text-align-center">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(()=>form.Validate())">Validate</MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(()=>form.Reset())" Class="mx-2">Reset</MudButton>
-            <MudButton Variant="Variant.Filled" OnClick="@(()=>form.ResetValidation())">Reset Validation</MudButton>
-        </MudPaper>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" >Sign in</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="GoBack">Go back</MudButton>
 
-        <MudExpansionPanels>
-            <MudExpansionPanel Text="@($"Show Errors ({errors.Length})")">
-                @foreach (var error in errors)
-                {
-                    <MudText Color="@Color.Error">@error</MudText>
-                }
-            </MudExpansionPanel>
-        </MudExpansionPanels>
-    </div>
 }
 
-<button @onclick="GoBack">Go back..</button>
-
 @code {
-    public string Text { get; set; } = "????";
-    public string ButtonText { get; set; } = "Click Me";
-    public int ButtonClicked { get; set; }
-
-    void ButtonOnClick()
+    // password
+    bool isShow;
+    InputType PasswordInput = InputType.Password;
+    string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+    void ButtonTestclick()
     {
-        ButtonClicked += 1;
-        Text = $"Awesome x {ButtonClicked}";
-        ButtonText = "Click Me Again";
+        @if (isShow)
+        {
+            isShow = false;
+            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            PasswordInput = InputType.Password;
+        }
+        else
+        {
+            isShow = true;
+            PasswordInputIcon = Icons.Material.Filled.Visibility;
+            PasswordInput = InputType.Text;
+        }
     }
 }

@@ -1230,19 +1230,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Antonio\\.nuget\\packages\\": {}
+    "C:\\Users\\asertic\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Antonio\\source\\repos\\SmartVillages\\SmartVillages\\Client\\SmartVillages.Client.csproj",
+      "projectUniqueName": "E:\\asertic\\Documents\\GitHub\\SmartVillages\\SmartVillages\\Client\\SmartVillages.Client.csproj",
       "projectName": "SmartVillages.Client",
-      "projectPath": "C:\\Users\\Antonio\\source\\repos\\SmartVillages\\SmartVillages\\Client\\SmartVillages.Client.csproj",
-      "packagesPath": "C:\\Users\\Antonio\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Antonio\\source\\repos\\SmartVillages\\SmartVillages\\Client\\obj\\",
+      "projectPath": "E:\\asertic\\Documents\\GitHub\\SmartVillages\\SmartVillages\\Client\\SmartVillages.Client.csproj",
+      "packagesPath": "C:\\Users\\asertic\\.nuget\\packages\\",
+      "outputPath": "E:\\asertic\\Documents\\GitHub\\SmartVillages\\SmartVillages\\Client\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Antonio\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\asertic\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1250,14 +1250,16 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "E:\\Local_Nugets": {},
+        "http://mavenprod.unix.fina.hr:8081/artifactory/api/nuget/nuget-local": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\Antonio\\source\\repos\\SmartVillages\\SmartVillages\\Shared\\SmartVillages.Shared.csproj": {
-              "projectPath": "C:\\Users\\Antonio\\source\\repos\\SmartVillages\\SmartVillages\\Shared\\SmartVillages.Shared.csproj"
+            "E:\\asertic\\Documents\\GitHub\\SmartVillages\\SmartVillages\\Shared\\SmartVillages.Shared.csproj": {
+              "projectPath": "E:\\asertic\\Documents\\GitHub\\SmartVillages\\SmartVillages\\Shared\\SmartVillages.Shared.csproj"
             }
           }
         }
@@ -1303,7 +1305,7 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.NETCore.App.Runtime.browser-wasm",
-            "version": "[5.0.4, 5.0.4]"
+            "version": "[5.0.3, 5.0.3]"
           }
         ],
         "frameworkReferences": {
@@ -1311,7 +1313,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
       }
     },
     "runtimes": {
