@@ -13,9 +13,10 @@ namespace SmartVillages.Client.Pages.UserSign
     {
         [Parameter] public bool IsLeftOpened { get; set; }
         [Parameter] public EventCallback GoBack { get; set; }
-
+        [Inject] public ISnackbar Snackbar { get; set; }
         public UserSignUp User { get; set; } = new UserSignUp();
         public List<UserType> UserTypes { get; set; } = new List<UserType>();
+
 
         protected override Task OnInitializedAsync()
         {
@@ -32,8 +33,22 @@ namespace SmartVillages.Client.Pages.UserSign
 
         public void HandleValidSubmit()
         {
-            Console.WriteLine("Sign me up!!");
-            Console.WriteLine(exampleModel.FirstName + " " + exampleModel.LastName + " " + exampleModel.Email + " " + exampleModel.Password);
+            Console.WriteLine("Valid!");
+            Console.WriteLine(exampleModel.FirstName + " " + exampleModel.LastName + " " + exampleModel.Email + " " + exampleModel.Password + " " + exampleModel.TermsAndConditions);
+            Snackbar.Clear();
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
+            Snackbar.Configuration.SnackbarVariant = Variant.Filled;
+            Snackbar.Add("Validateing..", Severity.Success);
         }
+
+        public void HandleInvalidSubmit()
+        {
+            Console.WriteLine("Invalid!");
+            Snackbar.Clear();
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
+            Snackbar.Configuration.SnackbarVariant = Variant.Filled;
+            Snackbar.Add("All fields are required!", Severity.Error);
+        }
+        
     }
 }

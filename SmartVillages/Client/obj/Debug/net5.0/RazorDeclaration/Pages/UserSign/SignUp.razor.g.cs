@@ -113,7 +113,7 @@ using System.ComponentModel.DataAnnotations;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 98 "E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\Pages\UserSign\SignUp.razor"
+#line 124 "E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\Pages\UserSign\SignUp.razor"
        
     // password
     bool isShow;
@@ -127,7 +127,7 @@ using System.ComponentModel.DataAnnotations;
 #line hidden
 #nullable disable
 #nullable restore
-#line 105 "E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\Pages\UserSign\SignUp.razor"
+#line 131 "E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\Pages\UserSign\SignUp.razor"
          if (isShow)
         {
             isShow = false;
@@ -145,7 +145,7 @@ using System.ComponentModel.DataAnnotations;
 #line hidden
 #nullable disable
 #nullable restore
-#line 116 "E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\Pages\UserSign\SignUp.razor"
+#line 142 "E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\Pages\UserSign\SignUp.razor"
          
     }
 
