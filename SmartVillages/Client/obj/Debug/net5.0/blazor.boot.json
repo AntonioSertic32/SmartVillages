@@ -196,12 +196,13 @@
       "mscorlib.dll": "sha256-OoIy6q8Z4O5iSevqVXHfYC14mo\/kaxz74ydYX19CiAA=",
       "netstandard.dll": "sha256-FbW0xcZkySFb6B8yBpUE8XmaiMacDVdXdN9GeDH6xu4=",
       "System.Private.CoreLib.dll": "sha256-AQbVm+Z+NByScjRZWDWQnNUk5PBVgwCSWPLQN4YxxZs=",
-      "SmartVillages.Shared.dll": "sha256-VhG3h0jKDibuUi8XimXGbsiGvTFjy2zMWkrXx3JDi54=",
-      "SmartVillages.Client.dll": "sha256-zUujpOEZ8aJDQqSskLul+yySRTqQEnpQ7ltR5CQBk+k="
+      "SmartVillages.Shared.dll": "sha256-DMXNBsjpgtohNxqD+PtwDTqlFqct3R4W7xp\/d7BQESg=",
+      "SmartVillages.Client.dll": "sha256-b592hNoaTJblYSA1bBGZEUtUNoTOeBw57ZSbq1TZrjo="
     },
     "lazyAssembly": null,
     "pdb": {
-      "SmartVillages.Client.pdb": "sha256-2yvUfwPAOQ93lLWKlJRnOobhlw5io8+\/xpER0hoGRqk="
+      "SmartVillages.Shared.pdb": "sha256-EWHjYfIgPr+J9Jq7P1pe+FMbjzqgdeMyJHr4QEEx9xQ=",
+      "SmartVillages.Client.pdb": "sha256-+7mobWZef23oHjwhk1L7djYcBwespBjL40JP7Etu6Ck="
     },
     "runtime": {
       "dotnet.timezones.blat": "sha256-rFG55cwkAnfHzxmxwBL2tTwfj8X8cjcSEAlco4bc1eo=",

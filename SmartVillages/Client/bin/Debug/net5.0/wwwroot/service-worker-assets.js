@@ -9,7 +9,7 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     },
     {
-      "hash": "sha256-0kV0aiSqV1EwKBLwjgodQy6mwEFot0sLkdkVSAaY4lM=",
+      "hash": "sha256-8B19uterLpITbPAJBrbaFp4mpeSJw1ZJY3FYwFMWSic=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -797,19 +797,19 @@
       "url": "_framework\/dotnet.5.0.3.js"
     },
     {
-      "hash": "sha256-VhG3h0jKDibuUi8XimXGbsiGvTFjy2zMWkrXx3JDi54=",
+      "hash": "sha256-DMXNBsjpgtohNxqD+PtwDTqlFqct3R4W7xp\/d7BQESg=",
       "url": "_framework\/SmartVillages.Shared.dll"
     },
     {
-      "hash": "sha256-a6y9GxznmskauFS7KJm6r8l0WAvOlcLJzwJ7D16eCYE=",
+      "hash": "sha256-EWHjYfIgPr+J9Jq7P1pe+FMbjzqgdeMyJHr4QEEx9xQ=",
       "url": "_framework\/SmartVillages.Shared.pdb"
     },
     {
-      "hash": "sha256-zUujpOEZ8aJDQqSskLul+yySRTqQEnpQ7ltR5CQBk+k=",
+      "hash": "sha256-b592hNoaTJblYSA1bBGZEUtUNoTOeBw57ZSbq1TZrjo=",
       "url": "_framework\/SmartVillages.Client.dll"
     },
     {
-      "hash": "sha256-2yvUfwPAOQ93lLWKlJRnOobhlw5io8+\/xpER0hoGRqk=",
+      "hash": "sha256-+7mobWZef23oHjwhk1L7djYcBwespBjL40JP7Etu6Ck=",
       "url": "_framework\/SmartVillages.Client.pdb"
     },
     {
@@ -1601,7 +1601,7 @@
       "url": "_framework\/dotnet.5.0.3.js.gz"
     },
     {
-      "hash": "sha256-9pN9F8Qrb4bRruznFG9uBcnk7VLshFuQf2R+1mu8jvo=",
+      "hash": "sha256-dlzwZasy0Xtfer+0IbpEtr2Igv4HJlBRFjHh5+4YTJM=",
       "url": "_framework\/SmartVillages.Shared.dll.gz"
     },
     {
@@ -1753,5 +1753,5 @@
       "url": "SmartVillages.Client.bundle.scp.css"
     }
   ],
-  "version": "+YfJSHcu"
+  "version": "0gNl4Vvw"
 };
