@@ -75,9 +75,10 @@ namespace SmartVillages.Server.Controllers
 
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        [HttpPost("PostUser/{id}")]
+        public async Task<ActionResult<User>> PostUser(int id, User user)
         {
+            user.UserType = await _context.UserType.SingleOrDefaultAsync(t => t.UserTypeId == id);
             _context.User.Add(user);
             await _context.SaveChangesAsync();
 

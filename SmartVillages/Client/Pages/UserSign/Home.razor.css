@@ -72,6 +72,11 @@
         box-shadow: none;
     }
 
+::deep .naslov {
+    font-weight: 300;
+    font-size: 50px;
+}
+
 @media screen and (max-width: 992px) {
     .parent-container {
         flex-direction: column;

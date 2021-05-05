@@ -14,5 +14,12 @@ namespace SmartVillages.Server.Data
         public DbSet<User> User { get; set; }
         public DbSet<UserType> UserType { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasIndex(p => new { p.Email, p.OIB })
+                .IsUnique(true);
+        }
+
     }
 }

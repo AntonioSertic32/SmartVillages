@@ -112,46 +112,6 @@ using System.ComponentModel.DataAnnotations;
         {
         }
         #pragma warning restore 1998
-#nullable restore
-#line 76 "E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\Pages\UserSign\SignUp.razor"
-       
-    // password
-    bool isShow;
-    InputType PasswordInput = InputType.Password;
-    string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
-    void ButtonTestclick()
-    {
-        
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 83 "E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\Pages\UserSign\SignUp.razor"
-         if (isShow)
-        {
-            isShow = false;
-            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
-            PasswordInput = InputType.Password;
-        }
-        else
-        {
-            isShow = true;
-            PasswordInputIcon = Icons.Material.Filled.Visibility;
-            PasswordInput = InputType.Text;
-        }
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 94 "E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\Pages\UserSign\SignUp.razor"
-         
-    }
-
-#line default
-#line hidden
-#nullable disable
     }
 }
 #pragma warning restore 1591

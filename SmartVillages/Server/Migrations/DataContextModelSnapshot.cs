@@ -49,7 +49,7 @@ namespace SmartVillages.Server.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("EmailConfirm")
                         .HasColumnType("bit");
@@ -73,7 +73,7 @@ namespace SmartVillages.Server.Migrations
 
                     b.Property<string>("OIB")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -95,6 +95,9 @@ namespace SmartVillages.Server.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("UserTypeId");
+
+                    b.HasIndex("Email", "OIB")
+                        .IsUnique();
 
                     b.ToTable("User");
                 });

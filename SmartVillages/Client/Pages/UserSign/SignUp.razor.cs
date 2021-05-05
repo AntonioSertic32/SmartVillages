@@ -15,21 +15,19 @@ namespace SmartVillages.Client.Pages.UserSign
     {
         [Parameter] public bool IsLeftOpened { get; set; }
         [Parameter] public EventCallback GoBack { get; set; }
+        [Parameter] public EventCallback OpenSignIn { get; set; }
+        
         [Inject] public ISnackbar Snackbar { get; set; }
         [Inject] public HttpClient Http { get; set; }
         [Inject] public NavigationManager Navigation { get; set; }
-        public User User { get; set; } = new User();
-        public List<UserType> UserTypes { get; set; } = new List<UserType>();
 
-        public User[] users { get; set; }
+        public List<UserType> UserTypes { get; set; } = new List<UserType>();
         public User exampleModel { get; set; } = new User();
 
-
+        /*
         protected override async Task OnInitializedAsync()
-        {
-            UserTypes.Add(new UserType { UserTypeId = 1, UserTypeName = "Farmer" });
-            UserTypes.Add(new UserType { UserTypeId = 2, UserTypeName = "Customer" });
-        }
+        {}
+        */
 
         public async Task HandleValidSubmit()
         {
@@ -50,27 +48,48 @@ namespace SmartVillages.Client.Pages.UserSign
             Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
             Snackbar.Configuration.SnackbarVariant = Variant.Filled;
             Snackbar.Add("All fields are required!", Severity.Error);
+            if(!exampleModel.TermsAndConditions)
+                Snackbar.Add("You must agree to terms and conditions!", Severity.Error);
         }
 
         public async Task CreateUser()
         {
-            /*
-            if (IsLeftOpened)
-                exampleModel.UserType = UserTypes[0];
-            else
-                exampleModel.UserType = UserTypes[1];
-            */
+            int user_type = IsLeftOpened ? 2 : 1;
+            
             try
             {
-                var response = await Http.PostAsJsonAsync("api/users", exampleModel);
-                Console.WriteLine(response.StatusCode);
+                var response = await Http.PostAsJsonAsync($"api/users/postuser/{user_type}", exampleModel);
+
                 Snackbar.Clear();
-                Snackbar.Add("Success!", Severity.Success);
+                if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                    Snackbar.Add("Već postoji korisnik s tim email-om ili oib-om.", Severity.Error);
+                else
+                    Snackbar.Add("Success!", Severity.Success);
             }
             catch (HttpRequestException ex)
             {
-                Console.WriteLine(ex.Message);
+                Snackbar.Add(ex.Message, Severity.Error);
                 throw;
+            }
+        }
+
+        // Password
+        public bool isPassVisiable;
+        public InputType PasswordInput = InputType.Password;
+        public string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+        public void ShowHidePass()
+        {
+            if(isPassVisiable)
+            {
+                isPassVisiable = false;
+                PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+                PasswordInput = InputType.Password;
+            }
+            else
+            {
+                isPassVisiable = true;
+                PasswordInputIcon = Icons.Material.Filled.Visibility;
+                PasswordInput = InputType.Text;
             }
         }
 

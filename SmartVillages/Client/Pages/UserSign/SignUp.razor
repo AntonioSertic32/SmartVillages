@@ -5,10 +5,11 @@
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
 
-<h3>SigUp right</h3>
+<p class="naslov">Sign up</p>
+
 <EditForm Model="@exampleModel" OnInvalidSubmit="HandleInvalidSubmit" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
-    <MudCard>
+    <MudCard Elevation="10">
         <MudCardContent>
             <MudGrid>
                 <MudItem xs="12" sm="6">
@@ -27,7 +28,7 @@
 
             <MudGrid>
                 <MudItem xs="12">
-                    <MudTextField For="@(() => exampleModel.Password)" @bind-Value="exampleModel.Password" Variant="Variant.Outlined" Label="Password" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" />
+                    <MudTextField For="@(() => exampleModel.Password)" @bind-Value="exampleModel.Password" Variant="Variant.Outlined" Label="Password" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ShowHidePass" />
                 </MudItem>
             </MudGrid>
 
@@ -36,7 +37,7 @@
                     <MudTextField For="@(() => exampleModel.Number)" @bind-Value="exampleModel.Number" Variant="Variant.Outlined" Label="Number" InputType="InputType.Number" />
                 </MudItem>
                 <MudItem xs="12" sm="6">
-                    <MudDatePicker For="@(() => exampleModel.BirthDate)" @bind-Date="exampleModel.BirthDate" Label="Birth date" OpenTo="OpenTo.Year" />
+                    <MudDatePicker DateFormat="dd/MM/yyyy" For="@(() => exampleModel.BirthDate)" @bind-Date="exampleModel.BirthDate" Label="Birth date" OpenTo="OpenTo.Year" />
                 </MudItem>
             </MudGrid>
 
@@ -69,28 +70,7 @@
     </MudCard>
 </EditForm>
 
-<MudButton Variant="Variant.Filled" Color="Color.Primary">Sign in</MudButton>
-<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="GoBack">Go back</MudButton>
-
-
-@code {
-    // password
-    bool isShow;
-    InputType PasswordInput = InputType.Password;
-    string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
-    void ButtonTestclick()
-    {
-        @if (isShow)
-        {
-            isShow = false;
-            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
-            PasswordInput = InputType.Password;
-        }
-        else
-        {
-            isShow = true;
-            PasswordInputIcon = Icons.Material.Filled.Visibility;
-            PasswordInput = InputType.Text;
-        }
-    }
-}
+<div class="mt-5">
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenSignIn">Sign in</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="GoBack">Go back</MudButton>
+</div>

@@ -76,5 +76,21 @@ namespace SmartVillages.Client.Pages.UserSign
             JsRuntime.InvokeVoidAsync("scrollToElementId", "bottom-contact");
             return Task.CompletedTask;
         }
+
+        public void OpenSignIn()
+        {
+            if (isLeftOpened)
+                OpenRightSignIn();
+            else
+                OpenLeftSignIn();
+        }
+
+        public void OpenSignUp()
+        {
+            if (isLeftOpened)
+                OpenRightSignUp();
+            else
+                OpenLeftSignUp();
+        }
     }
 }

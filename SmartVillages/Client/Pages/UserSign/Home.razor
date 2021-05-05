@@ -13,11 +13,11 @@
     <div class="col home home-left-side">
         @if (leftSignInOpened)
         {
-            <SignIn isLeftOpened="isLeftOpened" goBack="GoBackPressed" />
+            <SignIn isLeftOpened="isLeftOpened" OpenSignUp="OpenSignUp" goBack="GoBackPressed" />
         }
         else if (leftSignUpOpened)
         {
-            <SignUp IsLeftOpened="isLeftOpened" GoBack="GoBackPressed" />
+            <SignUp IsLeftOpened="isLeftOpened" OpenSignIn="OpenSignIn" GoBack="GoBackPressed" />
         }
         else
         {
@@ -36,11 +36,11 @@
     <div class="col home home-right-side">
         @if (rightSignInOpened)
         {
-            <SignIn isLeftOpened="isLeftOpened" goBack="GoBackPressed" />
+            <SignIn isLeftOpened="isLeftOpened" OpenSignUp="OpenSignUp" goBack="GoBackPressed" />
         }
         else if (rightSignUpOpened)
         {
-            <SignUp IsLeftOpened="isLeftOpened" GoBack="GoBackPressed" />
+            <SignUp IsLeftOpened="isLeftOpened" OpenSignIn="OpenSignIn" GoBack="GoBackPressed" />
         }
         else
         {

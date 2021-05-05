@@ -13,6 +13,7 @@ namespace SmartVillages.Client.Pages.UserSign
     {
         [Parameter] public bool isLeftOpened { get; set; }
         [Parameter] public EventCallback goBack { get; set; }
+        [Parameter] public EventCallback OpenSignUp { get; set; }
 
         [Inject] NavigationManager NavigationManager { get; set; }
 
