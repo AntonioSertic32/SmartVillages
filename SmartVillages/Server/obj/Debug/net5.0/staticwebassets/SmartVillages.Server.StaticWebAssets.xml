@@ -1,6 +1,6 @@
 ﻿<StaticWebAssets Version="1.0">
-  <ContentRoot BasePath="/" Path="E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\" />
-  <ContentRoot BasePath="/" Path="E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\scopedcss\bundle\" />
-  <ContentRoot BasePath="/" Path="E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\wwwroot\" />
-  <ContentRoot BasePath="_content/MudBlazor" Path="C:\Users\asertic\.nuget\packages\mudblazor\5.0.8\build\..\staticwebassets\" />
+  <ContentRoot BasePath="/" Path="C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\" />
+  <ContentRoot BasePath="/" Path="C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\scopedcss\bundle\" />
+  <ContentRoot BasePath="/" Path="C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\wwwroot\" />
+  <ContentRoot BasePath="_content/MudBlazor" Path="C:\Users\Antonio\.nuget\packages\mudblazor\5.0.8\build\..\staticwebassets\" />
 </StaticWebAssets>

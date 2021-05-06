@@ -1,3 +1,51 @@
+/* /Pages/NotFound.razor.rz.scp.css */
+.div_container[b-cpntswcwjj] {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.jumbotron[b-cpntswcwjj] {
+    background-color: inherit;
+    text-align: center;
+    padding-top: 0;
+    margin-top: -30px;
+}
+
+img[b-cpntswcwjj] {
+    width: 40%;
+}
+
+@media only screen and (max-width: 1600px) {
+    img[b-cpntswcwjj] {
+        width: 45%;
+    }
+}
+@media only screen and (max-width: 1200px) {
+    img[b-cpntswcwjj] {
+        width: 60%;
+    }
+}
+@media only screen and (max-width: 992px) {
+    img[b-cpntswcwjj] {
+        width: 70%;
+    }
+}
+@media only screen and (max-width: 768px) {
+    img[b-cpntswcwjj] {
+        width: 80%;
+    }
+}
+@media only screen and (max-width: 576px) {
+    img[b-cpntswcwjj] {
+        width: 90%;
+    }
+    .display-4[b-cpntswcwjj] {
+        font-size: 3.0rem;
+    }
+}
 /* /Pages/UserSign/Home.razor.rz.scp.css */
 .parent-container[b-317gdq97dd] {
     display: flex;

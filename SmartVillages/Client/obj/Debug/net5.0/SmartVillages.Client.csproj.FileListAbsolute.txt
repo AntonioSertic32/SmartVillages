@@ -437,12 +437,6 @@ C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\Razor\Pages\UserSign\Home.razor.g.cs
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\Razor\Shared\MainLayout.razor.g.cs
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\Razor\Shared\NavMenu.razor.g.cs
-C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\h9rcXh40.gz
-C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\7+UaJMvy.gz
-C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\zjsrtxXS.gz
-C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\e5Mii6T8.gz
-C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\5P+X+8W0.gz
-C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\xP0+7+zt.gz
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\ZvtxAc+z.gz
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\iGTvG+pc.gz
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\WpsYJrBL.gz
@@ -457,8 +451,6 @@ C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\W5Lm6m8y.gz
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\zdVsmY3g.gz
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\BDBIue+9.gz
-C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\vkSPT1wK.gz
-C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\9jqu0xqO.gz
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\QUeeQ4fc.gz
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\RRDz8EdV.gz
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\H5J+dBeB.gz
@@ -649,7 +641,6 @@ C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\service-worker-assets.js
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\MudBlazor.dll.gz
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\MudBlazor.dll
-C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\rkJA0ys2.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\blazor.boot.json
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\SmartVillages.Client.StaticWebAssets.xml
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\SmartVillages.Client.dll
@@ -1302,3 +1293,17 @@ E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\Ceyn+bjn.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\nrkU4R5u.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\oAhB0Pi5.gz
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\RazorDeclaration\Pages\NotFound.razor.g.cs
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\RazorDeclaration\Shared\EmptyLayout.razor.g.cs
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\Razor\Pages\NotFound.razor.g.cs
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\Razor\Shared\EmptyLayout.razor.g.cs
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\irF6J88y.gz
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\A5F9assd.gz
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\+NRAdgmT.gz
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\eK4PSylI.gz
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\pEb1d8mp.gz
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\D88M5Vl4.gz
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\0vpVX1sL.gz
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\6YhM0OMx.gz
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\T9cBT2Z7.gz
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\scopedcss\Pages\NotFound.razor.rz.scp.css
