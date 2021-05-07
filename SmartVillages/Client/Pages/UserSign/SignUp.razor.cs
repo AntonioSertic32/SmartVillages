@@ -21,18 +21,10 @@ namespace SmartVillages.Client.Pages.UserSign
         [Inject] public HttpClient Http { get; set; }
         [Inject] public NavigationManager Navigation { get; set; }
 
-        public List<UserType> UserTypes { get; set; } = new List<UserType>();
-        public User exampleModel { get; set; } = new User();
-
-        /*
-        protected override async Task OnInitializedAsync()
-        {}
-        */
+        public User UserModel { get; set; } = new User();
 
         public async Task HandleValidSubmit()
         {
-            Console.WriteLine("Valid!");
-            Console.WriteLine(exampleModel.FirstName + " " + exampleModel.LastName + " " + exampleModel.Email + " " + exampleModel.Password + " " + exampleModel.TermsAndConditions);
             Snackbar.Clear();
             Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
             Snackbar.Configuration.SnackbarVariant = Variant.Filled;
@@ -43,12 +35,11 @@ namespace SmartVillages.Client.Pages.UserSign
 
         public void HandleInvalidSubmit()
         {
-            Console.WriteLine("Invalid!");
             Snackbar.Clear();
             Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
             Snackbar.Configuration.SnackbarVariant = Variant.Filled;
             Snackbar.Add("All fields are required!", Severity.Error);
-            if(!exampleModel.TermsAndConditions)
+            if(!UserModel.TermsAndConditions)
                 Snackbar.Add("You must agree to terms and conditions!", Severity.Error);
         }
 
@@ -58,7 +49,7 @@ namespace SmartVillages.Client.Pages.UserSign
             
             try
             {
-                var response = await Http.PostAsJsonAsync($"api/users/postuser/{user_type}", exampleModel);
+                var response = await Http.PostAsJsonAsync($"api/users/postuser/{user_type}", UserModel);
 
                 Snackbar.Clear();
                 if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)

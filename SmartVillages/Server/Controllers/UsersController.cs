@@ -85,6 +85,19 @@ namespace SmartVillages.Server.Controllers
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
 
+        [HttpPost("login")]
+        public async Task<ActionResult<User>> Login(UserSignIn user)
+        {
+            var User = await _context.User.SingleOrDefaultAsync(u => u.Email == user.Email && u.Password == user.Password && u.SecretCode == user.SecretCode);
+
+            if (User == null)
+            {
+                return NotFound();
+            }
+
+            return User;
+        }
+
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)

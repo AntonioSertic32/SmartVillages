@@ -2,35 +2,54 @@
 @page "/signin"
 @inherits SignInBase
 
+<style>
+    @@media only screen and (min-width: 576px) {
+        form {
+            width: 492px;
+        }
+    }
+    @@media only screen and (max-width: 576px) {
+        form {
+            width: 100%;
+        }
+    }
+</style>
 
-<p class="naslov">Sign up</p>
+<p class="naslov">Sign in</p>
 
-@*
-    <EditForm OnValidSubmit="args => Login(true)">
-        <DataAnnotationsValidator />
-        <div class="form-group">
-            <label>Email</label>
-            <InputText class="form-control" />
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <InputText type="password" class="form-control" />
+<EditForm Model="@UserModel" OnInvalidSubmit="HandleInvalidSubmit" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <MudCard Elevation="10">
+        <MudCardContent>
 
-        </div>
-        <div class="form-group">
-            <label>Secret code</label>
-            <InputText type="password" class="form-control" />
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField For="@(() => UserModel.Email)" @bind-Value="UserModel.Email" Variant="Variant.Outlined" Label="Email" />
+                </MudItem>
+            </MudGrid>
 
-        </div>
-        <button disabled="@loading" class="btn btn-primary">
-            @if (loading)
-            {
-                <span class="spinner-border spinner-border-sm mr-1"></span>}
-            Login
-        </button>
-        <NavLink href="account/register" class="btn btn-link">Sign in</NavLink>
-    </EditForm>
-*@
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField For="@(() => UserModel.Password)" @bind-Value="UserModel.Password" Variant="Variant.Outlined" Label="Password" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ShowHidePass" />
+                </MudItem>
+            </MudGrid>
 
-<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenSignUp">Sign up</MudButton>
-<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="GoBack">Go back</MudButton>
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField For="@(() => UserModel.SecretCode)" @bind-Value="UserModel.SecretCode" Variant="Variant.Outlined" Label="Secret code" InputType="InputType.Text" />
+                </MudItem>
+            </MudGrid>
+
+        </MudCardContent>
+
+        <MudCardActions>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Login</MudButton>
+        </MudCardActions>
+
+    </MudCard>
+</EditForm>
+
+<div class="mt-5">
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenSignUp">Sign up</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="GoBack">Go back</MudButton>
+</div>

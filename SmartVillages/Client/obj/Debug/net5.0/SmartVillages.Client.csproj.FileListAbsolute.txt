@@ -1307,3 +1307,8 @@ C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\6YhM0OMx.gz
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\T9cBT2Z7.gz
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\scopedcss\Pages\NotFound.razor.rz.scp.css
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\RazorDeclaration\Shared\EmptyLayout.razor.g.cs
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\RazorDeclaration\Pages\NotFound.razor.g.cs
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\Razor\Shared\EmptyLayout.razor.g.cs
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\Razor\Pages\NotFound.razor.g.cs
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\scopedcss\Pages\NotFound.razor.rz.scp.css
