@@ -1,6 +1,8 @@
 ﻿@page "/messages"
 @layout MainLayout
 
+@using SmartVillages.Shared;
+
 <div class="messages_container row m-0">
 
     <div class="messages_chatlist col-3 container-fluid">
@@ -19,49 +21,94 @@
             <MudButton Class="ml-3" Size="Size.Medium" Variant="Variant.Filled" Color="Color.Primary"><MudIcon Icon="@Icons.Material.Filled.FilterAlt" /></MudButton>
         </div>
 
-        <div class="messages_chat_box d-flex" @onclick="OpenMessage">
+        <div class="messages_chat_box d-flex notseen" @onclick="OpenMessage">
             <div class="image p-1">
                 <img class="author_image" src="/img/user.png" />
             </div>
             <div class="message px-3">
-                <h3 class="author_name m-0">Ivan Ivić</h3>
-                <p class="author_last_message m-0">Pozdrav!</p>
+                <h4 class="author_name m-0">Ivan Ivić</h4>
+                <p class="author_last_message m-0 text-muted">Pozdrav!</p>
             </div>
             <div class="unread_messages">
-                <span class="unread_messages">5</span>
+                <span class="">99</span>
             </div>
         </div>
 
-        <div class="messages_chat_box d-flex" @onclick="OpenMessage">
+        <div class="messages_chat_box d-flex notseen" @onclick="OpenMessage">
             <div class="image p-1">
                 <img class="author_image" src="/img/user.png" />
             </div>
             <div class="message px-3">
-                <h3 class="author_name m-0">Marijan Marinić</h3>
-                <p class="author_last_message m-0">Jesi gotov s poslom?</p>
+                <h4 class="author_name m-0">Ivan Ivić</h4>
+                <p class="author_last_message m-0 text-muted">Pozdrav!</p>
             </div>
-            <div class="unread_messages d-none">
-                <span class="unread_messages">5</span>
+            <div class="unread_messages">
+                <span class="">5</span>
             </div>
         </div>
 
-        <div class="messages_chat_box d-flex" @onclick="OpenMessage">
+        <div class="messages_chat_box d-flex seen" @onclick="OpenMessage">
             <div class="image p-1">
                 <img class="author_image" src="/img/user.png" />
             </div>
             <div class="message px-3">
-                <h3 class="author_name m-0">Matija Horvat</h3>
-                <p class="author_last_message m-0">Hoćemo na kavu?</p>
+                <h4 class="author_name m-0">Ivan Ivić</h4>
+                <p class="author_last_message m-0 text-muted">Pozdrav!</p>
             </div>
             <div class="unread_messages">
-                <span class="unread_messages">5</span>
+                <span class="">11</span>
+            </div>
+        </div>
+
+        <div class="messages_chat_box d-flex seen" @onclick="OpenMessage">
+            <div class="image p-1">
+                <img class="author_image" src="/img/user.png" />
+            </div>
+            <div class="message px-3">
+                <h4 class="author_name m-0">Ivan Ivić</h4>
+                <p class="author_last_message m-0 text-muted">Pozdrav!</p>
+            </div>
+            <div class="read_messages">
+                <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Small" Dense="true" Direction="Direction.Left" OffsetX="true">
+                    <MudMenuItem Link="/userprofile">Profile</MudMenuItem>
+                    <MudMenuItem Link="/counter">My account</MudMenuItem>
+                    <MudMenuItem Link="/fetchdata">Logout</MudMenuItem>
+                </MudMenu>
+            </div>
+        </div>
+
+        <div class="messages_chat_box d-flex seen" @onclick="OpenMessage">
+            <div class="image p-1">
+                <img class="author_image" src="/img/user.png" />
+            </div>
+            <div class="message px-3">
+                <h4 class="author_name m-0">Ivan Ivić</h4>
+                <p class="author_last_message m-0 text-muted">Pozdrav!</p>
+            </div>
+            <div class="read_messages">
+                <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Small" Dense="true" Direction="Direction.Left" OffsetX="true">
+                    <MudMenuItem Link="/userprofile">Profile</MudMenuItem>
+                    <MudMenuItem Link="/counter">My account</MudMenuItem>
+                    <MudMenuItem Link="/fetchdata">Logout</MudMenuItem>
+                </MudMenu>
             </div>
         </div>
 
     </div>
     
     <div class="messages_chat col-9">
-
+        @*
+            Primjer dropdowna
+        <select class="form-control selectpicker" @bind="User.Id">
+            <option>--select--</option>
+            @foreach (var item in Users)
+            {
+                <option value="@item.Id">@item.FirstName</option>
+                // Blazor needs to know what values it binds to!
+            }
+        </select>
+        <button class="btn btn-danger" @onclick="Prikazi">Ae</button>
+        *@
     </div>
 
 </div>
@@ -74,5 +121,21 @@
     public void OpenMessage()
     {
         NavigationManager.NavigateTo("/index");
+    }
+
+    public User User { get; set; }
+    List<User> Users = new List<User>();
+    //Department[] Departments;
+
+    protected override async Task OnInitializedAsync()
+    {
+        User = new User();
+        Users.Add(new User { Id = 1, FirstName = "Antonio" });
+        Users.Add(new User { Id = 2, FirstName = "Mirko" });
+    }
+
+    public void Prikazi()
+    {
+        Console.WriteLine(User.Id + " " + User.FirstName);
     }
 }

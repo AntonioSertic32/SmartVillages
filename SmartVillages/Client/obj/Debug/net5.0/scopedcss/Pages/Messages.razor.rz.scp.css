@@ -3,10 +3,10 @@
 }
 
 .messages_chatlist[b-sub3ksri0b] {
+    border-right: 1px solid #d6d5d5;
 }
 
 .messages_chat[b-sub3ksri0b] {
-    background-color: burlywood;
 }
 
 .messages_chatlist_top[b-sub3ksri0b] {
@@ -20,16 +20,18 @@
 
     .messages_chatlist_top .unread_messages[b-sub3ksri0b] {
         display: flex;
-        height: 100%;
+        height: 24px;
+        width: 24px;
         font-size: 14px;
         padding-left: 6px;
         padding-right: 6px;
         padding-top: 2px;
         padding-bottom: 2px;
-        background-color: crimson;
+        background-color: #302d48;
         color: white;
         font-weight: 300;
         align-items: center;
+        justify-content: center;
         border-radius: 50%;
     }
 
@@ -44,18 +46,14 @@
 
 .messages_chat_box[b-sub3ksri0b] {
     height: 80px;
-    overflow: hidden;
-    background-color: #dda;
     border-radius: 10px;
     margin-bottom: 12px;
     padding: 5px;
-
     display: flex;
     align-items: center;
 }
     .messages_chat_box:hover[b-sub3ksri0b] {
         cursor: pointer;
-        background-color: #dd7;
     }
 
     .messages_chat_box .image .author_image[b-sub3ksri0b] {
@@ -66,12 +64,32 @@
         width: 73%;
     }
     .messages_chat_box .unread_messages[b-sub3ksri0b] {
-        padding-left: 4px;
-        padding-right: 4px;
-        padding-top: 2px;
-        padding-bottom: 2px;
-        background-color: crimson;
+        background-color: #302d48;
         color: white;
         font-weight: 300;
         border-radius: 50%;
+        align-self: flex-start;
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 24px;
+        height: 24px;
+    }
+    .messages_chat_box .read_messages[b-sub3ksri0b] {
+        align-self: flex-start;
+        margin-top: 10px;
+        display: flex;
+    }
+    .notseen[b-sub3ksri0b] {
+        background-color: #ADADAD;
+    }
+    .notseen:hover[b-sub3ksri0b] {
+        background-color: #8FB792;
+    }
+.seen[b-sub3ksri0b] {
+    background-color: lightgray;
+}
+    .seen:hover[b-sub3ksri0b] {
+        background-color: #A3EA9A;
     }
