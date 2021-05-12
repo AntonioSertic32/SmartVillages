@@ -1,0 +1,78 @@
+﻿@page "/messages"
+@layout MainLayout
+
+<div class="messages_container row m-0">
+
+    <div class="messages_chatlist col-3 container-fluid">
+
+        <div class="messages_chatlist_top d-flex justify-content-between">
+            <h3 class="m-0">Messages <span class="unread_messages ml-2">5</span> </h3>
+            <div class="d-flex align-center">
+                <MudIconButton Class="p-0" Color="Color.Primary" Size="Size.Medium" Icon="@Icons.Material.Filled.AddBox"></MudIconButton>
+                <p class="mb-0 ml-1">New Chat</p>
+            </div>
+        </div>
+
+        <div class="messages_chatlist_filters d-flex">
+
+            <MudTextField Class="m-0" @bind-Value="@TextValue" Label="Search" Variant="Variant.Outlined" Margin="Margin.Dense" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" Immediate="true" />
+            <MudButton Class="ml-3" Size="Size.Medium" Variant="Variant.Filled" Color="Color.Primary"><MudIcon Icon="@Icons.Material.Filled.FilterAlt" /></MudButton>
+        </div>
+
+        <div class="messages_chat_box d-flex" @onclick="OpenMessage">
+            <div class="image p-1">
+                <img class="author_image" src="/img/user.png" />
+            </div>
+            <div class="message px-3">
+                <h3 class="author_name m-0">Ivan Ivić</h3>
+                <p class="author_last_message m-0">Pozdrav!</p>
+            </div>
+            <div class="unread_messages">
+                <span class="unread_messages">5</span>
+            </div>
+        </div>
+
+        <div class="messages_chat_box d-flex" @onclick="OpenMessage">
+            <div class="image p-1">
+                <img class="author_image" src="/img/user.png" />
+            </div>
+            <div class="message px-3">
+                <h3 class="author_name m-0">Marijan Marinić</h3>
+                <p class="author_last_message m-0">Jesi gotov s poslom?</p>
+            </div>
+            <div class="unread_messages d-none">
+                <span class="unread_messages">5</span>
+            </div>
+        </div>
+
+        <div class="messages_chat_box d-flex" @onclick="OpenMessage">
+            <div class="image p-1">
+                <img class="author_image" src="/img/user.png" />
+            </div>
+            <div class="message px-3">
+                <h3 class="author_name m-0">Matija Horvat</h3>
+                <p class="author_last_message m-0">Hoćemo na kavu?</p>
+            </div>
+            <div class="unread_messages">
+                <span class="unread_messages">5</span>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="messages_chat col-9">
+
+    </div>
+
+</div>
+
+@code {
+    [Inject] NavigationManager NavigationManager { get; set; }
+
+    public string TextValue { get; set; }
+
+    public void OpenMessage()
+    {
+        NavigationManager.NavigateTo("/index");
+    }
+}

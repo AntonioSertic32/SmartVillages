@@ -9,7 +9,7 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     },
     {
-      "hash": "sha256-pp6utIzLHDy+OFi5EuR+9j1wxjlA4etVkYPjPPQ\/nyk=",
+      "hash": "sha256-mpS5vTr1pMZ\/UcjOHqAc3MrLKUpWdSBSLyRp7auSA9A=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -797,19 +797,19 @@
       "url": "_framework\/dotnet.5.0.3.js"
     },
     {
-      "hash": "sha256-hBUhVEFtr98p0OCkLs9YxZhGPWxwqVpzqaPMr+6Euhg=",
+      "hash": "sha256-ropHOk\/TNcYhcvp4FO3x3agDJ+gqdjehroXi3EFu5Rg=",
       "url": "_framework\/SmartVillages.Shared.dll"
     },
     {
-      "hash": "sha256-9HR4vgRZXHQjZS36LZmczcQhM7R6LVLcFCxFI0nNkyE=",
+      "hash": "sha256-TKre9flnE+nVPVhWPbPwxdc008iTSzk74Wrw+j19bwo=",
       "url": "_framework\/SmartVillages.Shared.pdb"
     },
     {
-      "hash": "sha256-A+dS16EAnbW9RuR1tSvBa1o\/tm4zJaegFnWVuFBmnEU=",
+      "hash": "sha256-pKwfAQsOgs+2FxlLS3H\/tu0jFNPrbthTFzUGivysJ2I=",
       "url": "_framework\/SmartVillages.Client.dll"
     },
     {
-      "hash": "sha256-BuGvPknRYc8DNVhFOTG6QyvKi2Q6Rjxd5J7vtLORb9Q=",
+      "hash": "sha256-FSLSiLRQu+OTcZrmIn9LQ485u4+0JblNuEe8OwMkTOs=",
       "url": "_framework\/SmartVillages.Client.pdb"
     },
     {
@@ -1601,7 +1601,7 @@
       "url": "_framework\/dotnet.5.0.3.js.gz"
     },
     {
-      "hash": "sha256-kHXYdKkNQnQyLEE2cffkUEUey4J7kDQtFerGxjHYc9Y=",
+      "hash": "sha256-Z5ojyNbuX3Ll5QikeXeJcBW0eYINXswyOi9KYbkzW6w=",
       "url": "_framework\/SmartVillages.Shared.dll.gz"
     },
     {
@@ -1741,6 +1741,10 @@
       "url": "img\/pametna_sela.png"
     },
     {
+      "hash": "sha256-269XgQ4iZmR0wUA2zp1LjALHeznjotsMyh1RsGD0Z04=",
+      "url": "img\/user.png"
+    },
+    {
       "hash": "sha256-s+iTivb0Bo0GJUjrhRpUgzFMhu4I0VPdQF6DGgeA1Uc=",
       "url": "index.html"
     },
@@ -1749,13 +1753,13 @@
       "url": "manifest.json"
     },
     {
-      "hash": "sha256-3gJd12zYwPKy6ZbqVerYkOka3\/wWQoRuoHnxTa+geu0=",
+      "hash": "sha256-U1ssQVrd17E3IgeQmKg7a8DAmNpganBb435r6fdofgk=",
       "url": "SmartVillages.Client.styles.css"
     },
     {
-      "hash": "sha256-NKRFEP3cxcd7fPcmIbSQOIw+xd6T4Cl0QzMtzXnffJs=",
+      "hash": "sha256-9boGdksYPMwfRsBkOusebL9Nl7j2ciXxlYIh+02urGs=",
       "url": "SmartVillages.Client.bundle.scp.css"
     }
   ],
-  "version": "iiXgylKy"
+  "version": "EtgvE7Nf"
 };

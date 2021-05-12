@@ -1312,3 +1312,6 @@ E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\Razor\Shared\EmptyLayout.razor.g.cs
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\Razor\Pages\NotFound.razor.g.cs
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\scopedcss\Pages\NotFound.razor.rz.scp.css
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\RazorDeclaration\Pages\Messages.razor.g.cs
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\Razor\Pages\Messages.razor.g.cs
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\scopedcss\Pages\Messages.razor.rz.scp.css

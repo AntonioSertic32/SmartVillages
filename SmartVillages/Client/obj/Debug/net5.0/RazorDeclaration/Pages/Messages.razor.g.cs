@@ -4,7 +4,7 @@
 #pragma warning disable 0649
 #pragma warning disable 0169
 
-namespace SmartVillages.Client.Shared
+namespace SmartVillages.Client.Pages
 {
     #line hidden
     using System;
@@ -89,7 +89,9 @@ using MudBlazor;
 #line default
 #line hidden
 #nullable disable
-    public partial class NavMenu : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.LayoutAttribute(typeof(MainLayout))]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/messages")]
+    public partial class Messages : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -97,15 +99,15 @@ using MudBlazor;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 33 "E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\Shared\NavMenu.razor"
+#line 69 "E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\Pages\Messages.razor"
        
-    private bool collapseNavMenu = true;
+    [Inject] NavigationManager NavigationManager { get; set; }
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    public string TextValue { get; set; }
 
-    private void ToggleNavMenu()
+    public void OpenMessage()
     {
-        collapseNavMenu = !collapseNavMenu;
+        NavigationManager.NavigateTo("/index");
     }
 
 #line default
