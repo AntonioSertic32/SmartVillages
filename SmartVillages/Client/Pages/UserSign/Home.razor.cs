@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using SmartVillages.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,20 @@ namespace SmartVillages.Client.Pages.UserSign
         public bool rightSignInOpened { get; set; }
         public bool rightSignUpOpened { get; set; }
         public bool isLeftOpened { get; set; }
+        [Inject] public NavigationManager Navigation { get; set; }
+        [Inject] ILocalStorageService localStorage { get; set; }
+
+        public UserSignIn User { get; set; } = new UserSignIn();
+
+
+        protected override async Task OnInitializedAsync()
+        {
+            var user = await localStorage.GetItemAsync<User>("user");
+            if (user != null)
+            {
+                Navigation.NavigateTo("/index");
+            }
+        }
 
         public void OpenLeftSignIn()
         {

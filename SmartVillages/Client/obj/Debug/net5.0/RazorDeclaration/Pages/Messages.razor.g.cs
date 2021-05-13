@@ -90,6 +90,13 @@ using MudBlazor;
 #line hidden
 #nullable disable
 #nullable restore
+#line 3 "E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\Pages\Messages.razor"
+using Blazored.LocalStorage;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 4 "E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\Pages\Messages.razor"
 using SmartVillages.Shared;
 
@@ -106,9 +113,10 @@ using SmartVillages.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 116 "E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\Pages\Messages.razor"
+#line 269 "E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\Pages\Messages.razor"
        
     [Inject] NavigationManager NavigationManager { get; set; }
+    [Inject] ILocalStorageService localStorage { get; set; }
 
     public string TextValue { get; set; }
 
@@ -123,9 +131,14 @@ using SmartVillages.Shared;
 
     protected override async Task OnInitializedAsync()
     {
+        var user = await localStorage.GetItemAsync<User>("user");
+        
+
+        /*
         User = new User();
         Users.Add(new User { Id = 1, FirstName = "Antonio" });
         Users.Add(new User { Id = 2, FirstName = "Mirko" });
+        */
     }
 
     public void Prikazi()

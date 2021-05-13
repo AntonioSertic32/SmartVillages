@@ -7,8 +7,11 @@
   "linkerEnabled": false,
   "resources": {
     "assembly": {
+      "Blazored.LocalStorage.dll": "sha256-5Mmb3rkofuJkj2sUYYm80IUBRwC8QQO8CziqiSwsMgg=",
+      "Bunit.Core.dll": "sha256-zovgNsbcjw0E1mKARotcbS2KOf6eBmcW1ZoYMMtVIQo=",
       "Microsoft.AspNetCore.Authorization.dll": "sha256-fRsos6COcWE1mv16iL1oDlrTVo0CyzWlANOV3GVPteM=",
       "Microsoft.AspNetCore.Components.dll": "sha256-fRGuHi4QM9T4jlY+wZqfSulM4Eok2jLzIYGAet4sIok=",
+      "Microsoft.AspNetCore.Components.Authorization.dll": "sha256-RETzcaqJB7uXmSqtgbNeKNNc5YC\/Ux+Ud\/XI\/\/VCR38=",
       "Microsoft.AspNetCore.Components.Forms.dll": "sha256-VUylFBr1e5Fa+IE1BebNrQhZSNQaweOyVi12K0HI4l4=",
       "Microsoft.AspNetCore.Components.Web.dll": "sha256-PB7RGjC0vOlTOWVDePtyjOmt1Cy+7e1pakU+tclFWuw=",
       "Microsoft.AspNetCore.Components.WebAssembly.dll": "sha256-4GQ3G2Qv9UJTEcBQwvEL+Z51CpBjbgL7iG3tevRFLJc=",
@@ -27,7 +30,7 @@
       "Microsoft.Extensions.Logging.Abstractions.dll": "sha256-9UNtwDMFW86VtnTtJFk9xcc1hCnXFGXccFv3SkbgYy0=",
       "Microsoft.Extensions.Options.dll": "sha256-YfK6Zl0RmlJUqBJD7Khy7u4HEW2DRne0VSiqA6Yqs0U=",
       "Microsoft.Extensions.Primitives.dll": "sha256-f2PgoftqEkKRuuiAk6S1MHygOuqZBHzB0HOB3vR93TU=",
-      "Microsoft.JSInterop.dll": "sha256-Giz1JvBiSQH0QF96qODveJMip7exQTDFunFNTkGgPsc=",
+      "Microsoft.JSInterop.dll": "sha256-qPIvEaHuBRFKLKbFwUK34ATZV69kdVFC+lzKmpVMxpQ=",
       "Microsoft.JSInterop.WebAssembly.dll": "sha256-w0G2c9HerfjA2TOs+L4Ufnrt9MsR8b+nLA5\/yt+ytxg=",
       "MudBlazor.dll": "sha256-u99TthdKhMMAGPGL5ya+NWyYf3ArFf4c2puql6vWrBU=",
       "System.IO.Pipelines.dll": "sha256-3ET+mpR7F058YRj9YaLHOVXBqOW6iUxtIpeiKPYw4PA=",
@@ -196,13 +199,13 @@
       "mscorlib.dll": "sha256-OoIy6q8Z4O5iSevqVXHfYC14mo\/kaxz74ydYX19CiAA=",
       "netstandard.dll": "sha256-FbW0xcZkySFb6B8yBpUE8XmaiMacDVdXdN9GeDH6xu4=",
       "System.Private.CoreLib.dll": "sha256-AQbVm+Z+NByScjRZWDWQnNUk5PBVgwCSWPLQN4YxxZs=",
-      "SmartVillages.Shared.dll": "sha256-lAmBhN203ecT+Z+84yqrtq63h3UvTBPvs1N7S2uVkUE=",
-      "SmartVillages.Client.dll": "sha256-jnuT9T\/PY2m327z+C2b5ScfC9tAIYucjy\/Ox6ZrDC78="
+      "SmartVillages.Shared.dll": "sha256-LK6m7OXsvVLoQo7CjgJPVzwHU2jvIeROtmWCz78EpIQ=",
+      "SmartVillages.Client.dll": "sha256-GQgzC6iMuMTRGK1CUcSKKydQ1x9ns6p1LUOW+hqX4Qs="
     },
     "lazyAssembly": null,
     "pdb": {
-      "SmartVillages.Shared.pdb": "sha256-E61E7PIIrzc59oi4VumXkDrsQQoqqZMpfPK9DOL1br8=",
-      "SmartVillages.Client.pdb": "sha256-sVMlf5QwtR0wmxZrlAYnrU4XjhzFokhFayPhOnOxzJA="
+      "SmartVillages.Shared.pdb": "sha256-K\/AWz6nDh3D3qomvxE5Mvq\/slDg8eqxbF6cVajp3huI=",
+      "SmartVillages.Client.pdb": "sha256-g4Tk85pg+VEW9Vgd9ldX9FaPvb6DX7f68CVxnXrs2mI="
     },
     "runtime": {
       "dotnet.timezones.blat": "sha256-rFG55cwkAnfHzxmxwBL2tTwfj8X8cjcSEAlco4bc1eo=",

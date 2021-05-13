@@ -665,8 +665,11 @@ E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\SmartVillages.Client.dll
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\SmartVillages.Client.pdb
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\blazor.webassembly.js
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\Blazored.LocalStorage.dll.gz
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\Bunit.Core.dll.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\Microsoft.AspNetCore.Authorization.dll.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\Microsoft.AspNetCore.Components.dll.gz
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Authorization.dll.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Forms.dll.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Web.dll.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\Microsoft.AspNetCore.Components.WebAssembly.dll.gz
@@ -862,8 +865,11 @@ E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\icudt_no_CJK.dat.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\dotnet.5.0.3.js.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\SmartVillages.Shared.dll.gz
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\Blazored.LocalStorage.dll
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\Bunit.Core.dll
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\Microsoft.AspNetCore.Authorization.dll
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\Microsoft.AspNetCore.Components.dll
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Authorization.dll
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Forms.dll
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Web.dll
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\bin\Debug\net5.0\wwwroot\_framework\Microsoft.AspNetCore.Components.WebAssembly.dll
@@ -1102,8 +1108,11 @@ E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\Razor\Pages\UserSign\Home.razor.g.cs
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\Razor\Shared\MainLayout.razor.g.cs
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\Razor\Shared\NavMenu.razor.g.cs
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\bJeWpcO6.gz
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\hlTSFLHi.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\TIpBc4GV.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\gHf4gN7c.gz
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\2oKDf55O.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\g0tZaS6U.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\zUCQb4w9.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\6cJNJ5PI.gz
@@ -1122,7 +1131,7 @@ E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\B9y+IkLA.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\sHoQQqWl.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\86Uq97TX.gz
-E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\Ceyn+bjn.gz
+E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\8VOKHvoM.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\nrkU4R5u.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\oAhB0Pi5.gz
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\FrvvXrPi.gz

@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "/eohiTi4J79MDynC7ee/sFWpt7LBo+lEl0GP1r/AqXBy5eZ0GiLkBo4tJUvCJp7knuWExYOUsrl+LptosWOz/w==",
+  "dgSpecHash": "zn8sSwKiBI0RqkDEPDseGp4xxIB+y4IWWoIgFCKCu1jigBKfLZGZPcsmGPgX8uVZ+rsFh598CGYARv9sr7T4/g==",
   "success": true,
   "projectFilePath": "E:\\asertic\\Documents\\GitHub\\SmartVillages\\SmartVillages\\Shared\\SmartVillages.Shared.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\asertic\\.nuget\\packages\\microsoft.jsinterop\\5.0.6\\microsoft.jsinterop.5.0.6.nupkg.sha512"
+  ],
   "logs": []
 }

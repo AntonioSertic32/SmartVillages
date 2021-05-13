@@ -26,9 +26,9 @@
             <img class="home-img" src="./img/illustrations/DarkWatering.png" />
             <div class="home-container container text-center">
                 <h1>Nastavi kao poljoprivrednik</h1>
-                <div style="width: 100%">
-                    <button type="button" @onclick="OpenRightSignIn" class="btn btn-lg btn-block">Prijava</button>
-                    <button type="button" @onclick="OpenRightSignUp" class="btn btn-lg btn-block">Registracija</button>
+                <div class="d-grid gap-2 w-100">
+                    <button @onclick="OpenRightSignIn" class="btn" type="button">Prijava</button>
+                    <button @onclick="OpenRightSignUp" class="btn" type="button">Registracija</button>
                 </div>
             </div>
         }
@@ -48,9 +48,9 @@
             <img class="home-img" src="./img/illustrations/DarkNotifications.png" />
             <div class="home-container container text-center">
                 <h1>Nastavi kao kupac</h1>
-                <div style="width: 100%">
-                    <button type="button" @onclick="OpenLeftSignIn" class="btn btn-lg btn-block">Prijava</button>
-                    <button type="button" @onclick="OpenLeftSignUp" class="btn btn-lg btn-block">Registracija</button>
+                <div class="d-grid gap-2 w-100">
+                    <button @onclick="OpenLeftSignIn" class="btn" type="button">Prijava</button>
+                    <button @onclick="OpenLeftSignUp" class="btn" type="button">Registracija</button>
                 </div>
             </div>
             <section id="bottom-contact"></section>

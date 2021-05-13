@@ -4,6 +4,7 @@
 
 .messages_chatlist {
     border-right: 1px solid #d6d5d5;
+    max-height: calc(100vh - 56px);
 }
 
 .messages_chat {
@@ -63,23 +64,28 @@
     .messages_chat_box .message {
         width: 73%;
     }
+
+    .settings_and_unread {
+        align-self: flex-start;
+        margin-top: 5px;
+        display: flex;
+        flex-direction: column;
+    }
+
     .messages_chat_box .unread_messages {
         background-color: #302d48;
         color: white;
         font-weight: 300;
         border-radius: 50%;
-        align-self: flex-start;
-        margin-top: 10px;
+        align-self: center;
+        margin-top: 5px;
         display: flex;
         justify-content: center;
         align-items: center;
         width: 24px;
         height: 24px;
     }
-    .messages_chat_box .read_messages {
-        align-self: flex-start;
-        margin-top: 10px;
-        display: flex;
+    .messages_chat_box .messages_settings {
     }
     .notseen {
         background-color: #ADADAD;
@@ -93,3 +99,7 @@
     .seen:hover {
         background-color: #A3EA9A;
     }
+
+::deep .mud-list-item-clickable:hover {
+    background-color: lightblue;
+}

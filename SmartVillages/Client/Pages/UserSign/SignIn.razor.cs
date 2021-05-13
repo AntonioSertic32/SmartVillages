@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using SmartVillages.Client.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +8,7 @@ using SmartVillages.Shared;
 using MudBlazor;
 using System.Net.Http;
 using System.Net.Http.Json;
+using Blazored.LocalStorage;
 
 namespace SmartVillages.Client.Pages.UserSign
 {
@@ -21,6 +21,7 @@ namespace SmartVillages.Client.Pages.UserSign
         [Inject] public ISnackbar Snackbar { get; set; }
         [Inject] public HttpClient Http { get; set; }
         [Inject] public NavigationManager Navigation { get; set; }
+        [Inject] ILocalStorageService localStorage { get; set; }
 
         public UserSignIn UserModel { get; set; } = new UserSignIn();
 
@@ -75,6 +76,7 @@ namespace SmartVillages.Client.Pages.UserSign
             try
             {
                 var response = await Http.PostAsJsonAsync($"api/users/login", UserModel);
+                User returnValue = await response.Content.ReadFromJsonAsync<User>();
 
                 Snackbar.Clear();
                 if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -83,7 +85,7 @@ namespace SmartVillages.Client.Pages.UserSign
                 }
                 else
                 {
-                    // SPremiti u local storage ili coochie
+                    await localStorage.SetItemAsync("user", returnValue);
                     Snackbar.Add("Success!", Severity.Success);
                     Navigation.NavigateTo("/index");
                 }

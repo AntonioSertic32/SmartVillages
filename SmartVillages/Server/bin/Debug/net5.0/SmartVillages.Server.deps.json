@@ -42,7 +42,7 @@
           "Microsoft.AspNetCore.Authentication": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.OAuth": "5.0.0.0",
           "Microsoft.AspNetCore.Authorization.Policy": "5.0.0.0",
-          "Microsoft.AspNetCore.Components.Authorization": "5.0.0.0",
+          "Microsoft.AspNetCore.Components.Authorization.Reference": "5.0.0.0",
           "Microsoft.AspNetCore.Components.Server": "5.0.0.0",
           "Microsoft.AspNetCore.Connections.Abstractions": "5.0.0.0",
           "Microsoft.AspNetCore.CookiePolicy": "5.0.0.0",
@@ -317,6 +317,40 @@
           "SmartVillages.Server.dll": {}
         }
       },
+      "Blazored.LocalStorage/4.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "5.0.5",
+          "Microsoft.AspNetCore.Components.Web": "5.0.5",
+          "bunit.core": "1.1.5"
+        },
+        "runtime": {
+          "lib/net5.0/Blazored.LocalStorage.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/net5.0/Blazored.LocalStorage.dll": {}
+        }
+      },
+      "bunit.core/1.1.5": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "5.0.5",
+          "Microsoft.AspNetCore.Components.Authorization": "5.0.0",
+          "Microsoft.AspNetCore.Components.Web": "5.0.5",
+          "Microsoft.Extensions.Logging": "5.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "5.0.0"
+        },
+        "runtime": {
+          "lib/net5.0/Bunit.Core.dll": {
+            "assemblyVersion": "1.1.5.19909",
+            "fileVersion": "1.1.5.19909"
+          }
+        },
+        "compile": {
+          "lib/net5.0/Bunit.Core.dll": {}
+        }
+      },
       "Humanizer.Core/2.8.26": {
         "runtime": {
           "lib/netstandard2.0/Humanizer.dll": {
@@ -357,6 +391,12 @@
         }
       },
       "Microsoft.AspNetCore.Components.Analyzers/5.0.5": {},
+      "Microsoft.AspNetCore.Components.Authorization/5.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Authorization": "5.0.5",
+          "Microsoft.AspNetCore.Components": "5.0.5"
+        }
+      },
       "Microsoft.AspNetCore.Components.Forms/5.0.5": {
         "dependencies": {
           "Microsoft.AspNetCore.Components": "5.0.5"
@@ -376,7 +416,7 @@
           "Microsoft.AspNetCore.Components": "5.0.5",
           "Microsoft.AspNetCore.Components.Forms": "5.0.5",
           "Microsoft.Extensions.DependencyInjection": "5.0.1",
-          "Microsoft.JSInterop": "5.0.5",
+          "Microsoft.JSInterop": "5.0.6",
           "System.IO.Pipelines": "5.0.1"
         },
         "runtime": {
@@ -1120,11 +1160,11 @@
           "lib/netstandard2.0/Microsoft.IdentityModel.Tokens.dll": {}
         }
       },
-      "Microsoft.JSInterop/5.0.5": {
+      "Microsoft.JSInterop/5.0.6": {
         "runtime": {
           "lib/net5.0/Microsoft.JSInterop.dll": {
             "assemblyVersion": "5.0.0.0",
-            "fileVersion": "5.0.521.16708"
+            "fileVersion": "5.0.621.22305"
           }
         },
         "compile": {
@@ -1133,7 +1173,7 @@
       },
       "Microsoft.JSInterop.WebAssembly/5.0.5": {
         "dependencies": {
-          "Microsoft.JSInterop": "5.0.5"
+          "Microsoft.JSInterop": "5.0.6"
         },
         "runtime": {
           "lib/net5.0/Microsoft.JSInterop.WebAssembly.dll": {
@@ -2184,6 +2224,7 @@
       },
       "SmartVillages.Client/1.0.0": {
         "dependencies": {
+          "Blazored.LocalStorage": "4.0.0",
           "Microsoft.AspNetCore.Components.WebAssembly": "5.0.5",
           "MudBlazor": "5.0.8",
           "SmartVillages.Shared": "1.0.0",
@@ -2197,6 +2238,9 @@
         }
       },
       "SmartVillages.Shared/1.0.0": {
+        "dependencies": {
+          "Microsoft.JSInterop": "5.0.6"
+        },
         "runtime": {
           "SmartVillages.Shared.dll": {}
         },
@@ -2246,7 +2290,7 @@
         },
         "compileOnly": true
       },
-      "Microsoft.AspNetCore.Components.Authorization/5.0.0.0": {
+      "Microsoft.AspNetCore.Components.Authorization.Reference/5.0.0.0": {
         "compile": {
           "Microsoft.AspNetCore.Components.Authorization.dll": {}
         },
@@ -3856,6 +3900,20 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Blazored.LocalStorage/4.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cdTEpOZMvTt76AVlvl1S9GQu5zqkWSXpgTqwOPoNgphTe1wxhFb7PgrXkZoohMaLhWvz8YllpNxQN8dkCb7xvQ==",
+      "path": "blazored.localstorage/4.0.0",
+      "hashPath": "blazored.localstorage.4.0.0.nupkg.sha512"
+    },
+    "bunit.core/1.1.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4ABC3VWkcfNJTqCRbG1mhDIjmgGmHU/KA+6wcror48xH0qsqRTy/FUtGKKcaFypU4IZanNYW00c3UGyYYird9A==",
+      "path": "bunit.core/1.1.5",
+      "hashPath": "bunit.core.1.1.5.nupkg.sha512"
+    },
     "Humanizer.Core/2.8.26": {
       "type": "package",
       "serviceable": true,
@@ -3883,6 +3941,13 @@
       "sha512": "sha512-psHOvHEWJC5BDNCAp7BJQMhv68mbhZMPFArf4RArrSYzIYMxQPDS/DgnAs3getHzQhHqEkrAhfEa7YXyW+bZSw==",
       "path": "microsoft.aspnetcore.components.analyzers/5.0.5",
       "hashPath": "microsoft.aspnetcore.components.analyzers.5.0.5.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Components.Authorization/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-I++r4RdziNB9HeQbkHQvzg2N0rX4dSmA1105OnR5xMKZKL8E7TOKR+Mwf45uXgKvxYb08otPrZWTx1M5rmL/8g==",
+      "path": "microsoft.aspnetcore.components.authorization/5.0.0",
+      "hashPath": "microsoft.aspnetcore.components.authorization.5.0.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Components.Forms/5.0.5": {
       "type": "package",
@@ -4255,12 +4320,12 @@
       "path": "microsoft.identitymodel.tokens/5.6.0",
       "hashPath": "microsoft.identitymodel.tokens.5.6.0.nupkg.sha512"
     },
-    "Microsoft.JSInterop/5.0.5": {
+    "Microsoft.JSInterop/5.0.6": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Ik1tdMAIb7i9vlv5pvF+aMVnoOXWUfRFMpiyHSMg+0spbcBqqq1vBVMuyqjh7PZlqWPyFqYrfToEonGh2ztT0w==",
-      "path": "microsoft.jsinterop/5.0.5",
-      "hashPath": "microsoft.jsinterop.5.0.5.nupkg.sha512"
+      "sha512": "sha512-ME8rDsvz2hKkjKWHqzKADDPrNLSO/T2NDvZCq819z5VkEzl2eBRKbGiC+SoiRiO2rqsN/MmF98Spjzt+wgY2Ww==",
+      "path": "microsoft.jsinterop/5.0.6",
+      "hashPath": "microsoft.jsinterop.5.0.6.nupkg.sha512"
     },
     "Microsoft.JSInterop.WebAssembly/5.0.5": {
       "type": "package",
@@ -4972,7 +5037,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Microsoft.AspNetCore.Components.Authorization/5.0.0.0": {
+    "Microsoft.AspNetCore.Components.Authorization.Reference/5.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""

@@ -94,9 +94,11 @@ namespace SmartVillages.Server.Controllers
             {
                 return NotFound();
             }
-
             return User;
         }
+
+        // LOGOUT
+        // await _localStorageService.RemoveItem("user");
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
