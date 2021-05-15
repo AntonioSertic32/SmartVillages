@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartVillages.Server.Data;
 using SmartVillages.Shared;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 namespace SmartVillages.Server.Controllers
 {
@@ -85,15 +87,17 @@ namespace SmartVillages.Server.Controllers
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
 
-        [HttpPost("login")]
-        public async Task<ActionResult<User>> Login(UserSignIn user)
+        [HttpPost("login/{id}")]
+        public async Task<ActionResult<User>> Login(int id, UserSignIn user)
         {
-            var User = await _context.User.SingleOrDefaultAsync(u => u.Email == user.Email && u.Password == user.Password && u.SecretCode == user.SecretCode);
+            var type = await _context.UserType.SingleOrDefaultAsync(t => t.UserTypeId == id);
+            var User = await _context.User.SingleOrDefaultAsync(u => u.Email == user.Email && u.Password == user.Password && u.SecretCode == user.SecretCode && u.UserType == type);
 
             if (User == null)
             {
                 return NotFound();
             }
+
             return User;
         }
 
@@ -119,6 +123,28 @@ namespace SmartVillages.Server.Controllers
         private bool UserExists(int id)
         {
             return _context.User.Any(e => e.Id == id);
+        }
+
+        [HttpPost("SendEmail")]
+        public async Task SendEmail()
+        {
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Elliot ALderson","elliotalderson050@gmail.com"));
+            message.To.Add( new MailboxAddress("Antonio Sertić", "antonio.sertic@vuv.hr"));
+            message.Subject = "Test Subject";
+
+            var bodyBuilder = new BodyBuilder();
+            bodyBuilder.HtmlBody = "<h3>Please click on Confirm to confirm your email!</h3><br><a href='https://localhost:5001/index'>Confirm</a>";
+            bodyBuilder.TextBody = "This is some plain text";
+
+            message.Body = bodyBuilder.ToMessageBody();
+            using (var client = new SmtpClient())
+            {
+                client.Connect("smtp.gmail.com", 587, false);
+                client.Authenticate("elliotalderson050@gmail.com", "EvilCorp");
+                await client.SendAsync(message);
+                client.Disconnect(true);
+            }
         }
     }
 }

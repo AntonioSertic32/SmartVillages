@@ -158,7 +158,33 @@ img[b-cpntswcwjj] {
 .parent-container[b-317gdq97dd] {
     display: flex;
     flex-direction: row;
+    background-color: lightgreen;
 }
+
+.navbar[b-317gdq97dd] {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: max-content;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.navbar_header[b-317gdq97dd] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+    .navbar_header img[b-317gdq97dd] {
+        width: 50px;
+    }
+    .navbar_header h1[b-317gdq97dd] {
+        color: white;
+        margin: 0;
+        font-weight: 200;
+        margin-left: 15px;
+    }
 
 .home[b-317gdq97dd] {
     min-height: 100vh;
@@ -166,15 +192,16 @@ img[b-cpntswcwjj] {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #eee
+    background-color: #eee;
+    padding: 15px;
 }
 
 .home-left-side[b-317gdq97dd] {
-    border-right: 1px solid grey;
+    border-right: 1px solid #212529;
     background-color: lightgreen;
 }
 .home-right-side[b-317gdq97dd] {
-    border-left: 1px solid grey;
+    border-left: 1px solid #212529;
     background-color: cornsilk;
 }
 
@@ -234,6 +261,12 @@ img[b-cpntswcwjj] {
     font-size: 50px;
 }
 
+footer[b-317gdq97dd] {
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+}
+
 @media screen and (max-width: 992px) {
     .parent-container[b-317gdq97dd] {
         flex-direction: column;
@@ -242,6 +275,7 @@ img[b-cpntswcwjj] {
     .home-left-side[b-317gdq97dd] {
         border-right: none;
         border-bottom: 1px solid grey;
+        margin-top: 89px;
     }
 
     .home-right-side[b-317gdq97dd] {
@@ -254,7 +288,8 @@ img[b-cpntswcwjj] {
     }
     .home-img[b-317gdq97dd] {
         margin-bottom: 0px;
-        width: 100vw;
+        max-width: 100vw;
+        height: auto;
     }
 
     .btn[b-317gdq97dd] {
@@ -265,6 +300,23 @@ img[b-cpntswcwjj] {
         cursor: pointer;
         font-size: 20px;
     }
+
+    #top-contact[b-317gdq97dd] {
+        top: 0;
+        position: absolute;
+        margin-top: 89px;
+    }
+    #bottom-contact[b-317gdq97dd] {
+        margin-top: -15px;
+    }
+
+    footer[b-317gdq97dd] {
+        position: relative;
+    }
+        footer .container[b-317gdq97dd] {
+            flex-direction: column;
+            margin-top: 10px;
+        }
 }
 /* /Shared/MainLayout.razor.rz.scp.css */
 .page[b-zvhpk9gg6e] {

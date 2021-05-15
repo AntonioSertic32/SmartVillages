@@ -22,12 +22,19 @@ namespace SmartVillages.Client.Pages.UserSign
         [Inject] public NavigationManager Navigation { get; set; }
 
         public User UserModel { get; set; } = new User();
+        public string Message { get; set; } = "";
+
+        protected override Task OnInitializedAsync()
+        {
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
+            Snackbar.Configuration.SnackbarVariant = Variant.Filled;
+
+            return base.OnInitializedAsync();
+        }
 
         public async Task HandleValidSubmit()
         {
             Snackbar.Clear();
-            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
-            Snackbar.Configuration.SnackbarVariant = Variant.Filled;
             Snackbar.Add("Validateing..", Severity.Success);
 
             await CreateUser();
@@ -36,8 +43,6 @@ namespace SmartVillages.Client.Pages.UserSign
         public void HandleInvalidSubmit()
         {
             Snackbar.Clear();
-            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
-            Snackbar.Configuration.SnackbarVariant = Variant.Filled;
             Snackbar.Add("All fields are required!", Severity.Error);
             if(!UserModel.TermsAndConditions)
                 Snackbar.Add("You must agree to terms and conditions!", Severity.Error);
@@ -53,9 +58,15 @@ namespace SmartVillages.Client.Pages.UserSign
 
                 Snackbar.Clear();
                 if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                {
                     Snackbar.Add("Već postoji korisnik s tim email-om ili oib-om.", Severity.Error);
+                }
                 else
-                    Snackbar.Add("Success!", Severity.Success);
+                {
+                    Snackbar.Add("<p class='text-center'>SUCCESSFULLY REGISTERED! </br> Please go check you email for further validation.</p>", Severity.Success);
+                    SendEmail();
+                    await GoBack.InvokeAsync();
+                }
             }
             catch (HttpRequestException ex)
             {
@@ -82,6 +93,36 @@ namespace SmartVillages.Client.Pages.UserSign
                 PasswordInputIcon = Icons.Material.Filled.Visibility;
                 PasswordInput = InputType.Text;
             }
+        }
+
+        public async Task SendEmail()
+        {
+            //await Email.From("elliotalderson050@gmail.com").To("antonio.sertic@vuv.hr").Subject("Hows it going Antonio").Body("Yo Antonio, long time no see!").SendAsync();
+            /*
+            try
+            {
+                using (MailMessage mail = new MailMessage())
+                {
+                    mail.From = new MailAddress("elliotalderson050@gmail.com");
+                    mail.To.Add("antonio.sertic@vuv.hr");
+                    mail.Subject = "Subject";
+                    mail.Body = "<h1>This is ail body!</h1>";
+                    mail.IsBodyHtml = true;
+
+                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtp.Credentials = new System.Net.NetworkCredential("elliotalderson050@gmail.com", "EvilCorp");
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                        Message = "Mail Sent";
+                    }
+                };
+            }
+            catch (Exception ex) 
+            {
+                Message = ex.Message;
+            }
+            */
         }
 
     }

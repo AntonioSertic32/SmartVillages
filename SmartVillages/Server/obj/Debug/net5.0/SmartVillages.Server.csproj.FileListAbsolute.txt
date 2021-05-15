@@ -374,3 +374,8 @@ E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Server\obj\Debug\net5.0\
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Server\obj\Debug\net5.0\ref\SmartVillages.Server.dll
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Server\obj\Debug\net5.0\SmartVillages.Server.pdb
 E:\asertic\Documents\GitHub\SmartVillages\SmartVillages\Server\obj\Debug\net5.0\SmartVillages.Server.genruntimeconfig.cache
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Server\bin\Debug\net5.0\Blazored.LocalStorage.dll
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Server\bin\Debug\net5.0\Bunit.Core.dll
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Server\bin\Debug\net5.0\MailKit.dll
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Server\bin\Debug\net5.0\MimeKit.dll
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Server\bin\Debug\net5.0\BouncyCastle.Crypto.dll

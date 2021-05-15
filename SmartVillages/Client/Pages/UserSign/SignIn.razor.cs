@@ -14,23 +14,23 @@ namespace SmartVillages.Client.Pages.UserSign
 {
     public class SignInBase : ComponentBase
     {
-        [Parameter] public bool isLeftOpened { get; set; }
-        [Parameter] public EventCallback goBack { get; set; }
+        [Parameter] public bool IsLeftOpened { get; set; }
+        [Parameter] public EventCallback GoBack { get; set; }
         [Parameter] public EventCallback OpenSignUp { get; set; }
 
         [Inject] public ISnackbar Snackbar { get; set; }
         [Inject] public HttpClient Http { get; set; }
         [Inject] public NavigationManager Navigation { get; set; }
-        [Inject] ILocalStorageService localStorage { get; set; }
+        [Inject] ILocalStorageService LocalStorage { get; set; }
 
         public UserSignIn UserModel { get; set; } = new UserSignIn();
 
         /* neka animacija dok se logira */
         public bool Loading { get; set; }
 
-        public async Task GoBack()
+        public async Task Previouse()
         {
-            await goBack.InvokeAsync();
+            await GoBack.InvokeAsync();
         }
 
         public async Task HandleValidSubmit()
@@ -73,19 +73,20 @@ namespace SmartVillages.Client.Pages.UserSign
 
         public async Task Login()
         {
+            int user_type = IsLeftOpened ? 2 : 1;
             try
             {
-                var response = await Http.PostAsJsonAsync($"api/users/login", UserModel);
-                User returnValue = await response.Content.ReadFromJsonAsync<User>();
+                var response = await Http.PostAsJsonAsync($"api/users/login/{user_type}", UserModel);
 
                 Snackbar.Clear();
                 if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                    Snackbar.Add("Unjeli ste pogrešan email ili lozinku", Severity.Error);
+                    Snackbar.Add("Unjeli ste pogrešne podatke!", Severity.Error);
                 }
                 else
                 {
-                    await localStorage.SetItemAsync("user", returnValue);
+                    User returnValue = await response.Content.ReadFromJsonAsync<User>();
+                    await LocalStorage.SetItemAsync("user", returnValue);
                     Snackbar.Add("Success!", Severity.Success);
                     Navigation.NavigateTo("/index");
                 }

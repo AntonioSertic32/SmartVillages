@@ -12,20 +12,17 @@ namespace SmartVillages.Client.Pages.UserSign
     public class HomeBase : ComponentBase
     {
         [Inject] IJSRuntime JsRuntime { get; set; } 
-        public bool leftSignInOpened { get; set; }
-        public bool leftSignUpOpened { get; set; }
-        public bool rightSignInOpened { get; set; }
-        public bool rightSignUpOpened { get; set; }
-        public bool isLeftOpened { get; set; }
+        public bool LeftSignInOpened { get; set; }
+        public bool LeftSignUpOpened { get; set; }
+        public bool RightSignInOpened { get; set; }
+        public bool RightSignUpOpened { get; set; }
+        public bool IsLeftOpened { get; set; }
         [Inject] public NavigationManager Navigation { get; set; }
-        [Inject] ILocalStorageService localStorage { get; set; }
-
-        public UserSignIn User { get; set; } = new UserSignIn();
-
+        [Inject] ILocalStorageService LocalStorage { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            var user = await localStorage.GetItemAsync<User>("user");
+            var user = await LocalStorage.GetItemAsync<User>("user");
             if (user != null)
             {
                 Navigation.NavigateTo("/index");
@@ -35,8 +32,8 @@ namespace SmartVillages.Client.Pages.UserSign
         public void OpenLeftSignIn()
         {
             CloseAll();
-            leftSignInOpened = true;
-            isLeftOpened = false;
+            LeftSignInOpened = true;
+            IsLeftOpened = false;
             GoUp();
             StateHasChanged();
         }
@@ -44,8 +41,8 @@ namespace SmartVillages.Client.Pages.UserSign
         public void OpenLeftSignUp()
         {
             CloseAll();
-            leftSignUpOpened = true;
-            isLeftOpened = false;
+            LeftSignUpOpened = true;
+            IsLeftOpened = false;
             GoUp();
             StateHasChanged();
         }
@@ -53,8 +50,8 @@ namespace SmartVillages.Client.Pages.UserSign
         public void OpenRightSignIn()
         {
             CloseAll();
-            rightSignInOpened = true;
-            isLeftOpened = true;
+            RightSignInOpened = true;
+            IsLeftOpened = true;
             GoDown();
             StateHasChanged();
         }
@@ -62,18 +59,18 @@ namespace SmartVillages.Client.Pages.UserSign
         public void OpenRightSignUp()
         {
             CloseAll();
-            rightSignUpOpened = true;
-            isLeftOpened = true;
+            RightSignUpOpened = true;
+            IsLeftOpened = true;
             GoDown();
             StateHasChanged();
         }
 
         public void CloseAll()
         {
-            leftSignInOpened = false;
-            leftSignUpOpened = false;
-            rightSignInOpened = false;
-            rightSignUpOpened = false;
+            LeftSignInOpened = false;
+            LeftSignUpOpened = false;
+            RightSignInOpened = false;
+            RightSignUpOpened = false;
         }
 
         public void GoBackPressed()
@@ -95,7 +92,7 @@ namespace SmartVillages.Client.Pages.UserSign
 
         public void OpenSignIn()
         {
-            if (isLeftOpened)
+            if (IsLeftOpened)
                 OpenRightSignIn();
             else
                 OpenLeftSignIn();
@@ -103,7 +100,7 @@ namespace SmartVillages.Client.Pages.UserSign
 
         public void OpenSignUp()
         {
-            if (isLeftOpened)
+            if (IsLeftOpened)
                 OpenRightSignUp();
             else
                 OpenLeftSignUp();
