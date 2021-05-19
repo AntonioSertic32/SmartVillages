@@ -18,6 +18,8 @@ namespace SmartVillages.Server.Controllers
     {
         private readonly DataContext _context;
 
+        private readonly Random _random = new Random();
+
         public UsersController(DataContext context)
         {
             _context = context;
@@ -126,25 +128,115 @@ namespace SmartVillages.Server.Controllers
         }
 
         [HttpPost("SendEmail")]
-        public async Task SendEmail()
+        public async Task SendEmail(User user)
         {
+            user.EmailConfirmationCode = GenerateCode();
+
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Elliot ALderson","elliotalderson050@gmail.com"));
-            message.To.Add( new MailboxAddress("Antonio Sertić", "antonio.sertic@vuv.hr"));
-            message.Subject = "Test Subject";
+            message.From.Add(new MailboxAddress("Smart Villages", "elliotalderson050@gmail.com"));
+            message.To.Add(new MailboxAddress(user.FirstName + " " + user.LastName, user.Email));
+            message.Subject = "Email confirmation";
 
             var bodyBuilder = new BodyBuilder();
-            bodyBuilder.HtmlBody = "<h3>Please click on Confirm to confirm your email!</h3><br><a href='https://localhost:5001/index'>Confirm</a>";
-            bodyBuilder.TextBody = "This is some plain text";
+            bodyBuilder.HtmlBody = "<div style='text-align: center;height: 150px;'><h1>Welcome to Smart Villages <span style='color: lightseagreen;'>Antonio</span></h1><h3>Please click on Confirm to confirm your email!</h3><br><a style='color: white; background-color: #31B58E;padding: 10px 20px;border-radius: 5px;font-size: 17px;text-decoration: none;' href='https://localhost:5001/emailconfirmation/{" + user.EmailConfirmationCode + "}/{" + user.Email + "}'>Confirm</a></div>";
 
             message.Body = bodyBuilder.ToMessageBody();
-            using (var client = new SmtpClient())
+
+            try
             {
-                client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate("elliotalderson050@gmail.com", "EvilCorp");
-                await client.SendAsync(message);
-                client.Disconnect(true);
+                using (var client = new SmtpClient())
+                {
+                    client.Connect("smtp.gmail.com", 587, false);
+                    client.Authenticate("elliotalderson050@gmail.com", "EvilCorp");
+                    await client.SendAsync(message);
+                    client.Disconnect(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            /*
+             https://localhost:44368/api/users/CreateEmailConirmationCode
+                {
+                    "Id": 13,
+                    "FirstName": "Antonio",
+                    "LastName":	"Sertić",
+                    "Email": "a@a",
+                    "Bio": "NULL",
+                    "Sex": "NULL",
+                    "OIB": "45789658965",
+                    "EmailConfirm": false,
+                    "Locked": true,
+                    "Country": "Cro",
+                    "City": "Na",
+                    "Address": "NULL",
+                    "Number": "4789595562",
+                    "SecretCode": "NULL",
+                    "BirthDate": "2020-02-07T00:00:00.0000000",
+                    "UserTypeId": 2,
+                    "DateCreated": "2021-05-05T13:51:58.3440000",
+                    "Password": "12345678",
+                    "TermsAndConditions": true,
+                    "EmailConfirmationCode": "NULL"
+                }
+             */
+        }
+
+        [HttpPost("CreateSecretCode")]
+        public async Task<string> CreateEmailConirmationCode(User user)
+        {
+            string EmailCode = GenerateCode();
+            user.EmailConfirmationCode = EmailCode;
+
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return EmailCode;
+        }
+
+        [HttpPost("ConfirmEmail/{code}/{email}")]
+        public async Task<ActionResult<User>> ConfirmEmail(string code, string email)
+        {
+            var User = await _context.User.SingleOrDefaultAsync(u => u.EmailConfirmationCode == code && u.Email == email);
+
+            if (User == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                User.EmailConfirm = true;
+                User.Locked = false;
+                _context.Entry(User).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                // Opet poslati email a pravim SecretCod-om
+
+                return Ok();
             }
         }
+
+        public string GenerateCode()
+        {
+            string SecretCode = "";
+            char[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+
+            for(var i = 0; i < 3; i++)
+            {
+                int num = RandomNumber(0, 9);
+                int randchar = RandomNumber(0, 26);
+                SecretCode += alphabet[randchar] + num;
+            }
+
+            return SecretCode;
+        }
+  
+        public int RandomNumber(int min, int max)
+        {
+            return _random.Next(min, max);
+        }
+
     }
 }

@@ -4,7 +4,7 @@
 #pragma warning disable 0649
 #pragma warning disable 0169
 
-namespace SmartVillages.Client.Pages
+namespace SmartVillages.Client.Pages.UserSign
 {
     #line hidden
     using System;
@@ -89,66 +89,15 @@ using MudBlazor;
 #line default
 #line hidden
 #nullable disable
-#nullable restore
-#line 3 "C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\Pages\Messages.razor"
-using Blazored.LocalStorage;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 4 "C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\Pages\Messages.razor"
-using SmartVillages.Shared;
-
-#line default
-#line hidden
-#nullable disable
-    [Microsoft.AspNetCore.Components.LayoutAttribute(typeof(MainLayout))]
-    [Microsoft.AspNetCore.Components.RouteAttribute("/messages")]
-    public partial class Messages : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.LayoutAttribute(typeof(EmptyLayout))]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/emailconfirmation/{code}")]
+    public partial class EmailConfirmation : EmailConfirmationBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
         {
         }
         #pragma warning restore 1998
-#nullable restore
-#line 289 "C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\Pages\Messages.razor"
-       
-    [Inject] NavigationManager NavigationManager { get; set; }
-    [Inject] ILocalStorageService localStorage { get; set; }
-
-    public string TextValue { get; set; }
-
-    public void OpenMessage()
-    {
-        NavigationManager.NavigateTo("/index");
-    }
-
-    public User User { get; set; }
-    List<User> Users = new List<User>();
-    //Department[] Departments;
-
-    protected override async Task OnInitializedAsync()
-    {
-        var user = await localStorage.GetItemAsync<User>("user");
-        
-
-        /*
-        User = new User();
-        Users.Add(new User { Id = 1, FirstName = "Antonio" });
-        Users.Add(new User { Id = 2, FirstName = "Mirko" });
-        */
-    }
-
-    public void Prikazi()
-    {
-        Console.WriteLine(User.Id + " " + User.FirstName);
-    }
-
-#line default
-#line hidden
-#nullable disable
     }
 }
 #pragma warning restore 1591

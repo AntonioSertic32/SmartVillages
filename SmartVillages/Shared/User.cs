@@ -44,5 +44,6 @@ namespace SmartVillages.Shared
         public DateTime DateCreated { get; set; } = DateTime.Now;
         [Range(typeof(bool), "true", "true", ErrorMessage = "You must agree")]
         public bool TermsAndConditions { get; set; }
+        public string EmailConfirmationCode { get; set; }
     }
 }

@@ -1336,3 +1336,5 @@ C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\G8R6sNeL.gz
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\NFEJkYn6.gz
 C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\build-gz\mh+Y9p0H.gz
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\RazorDeclaration\Pages\UserSign\EmailConfirmation.razor.g.cs
+C:\Users\Antonio\source\repos\SmartVillages\SmartVillages\Client\obj\Debug\net5.0\Razor\Pages\UserSign\EmailConfirmation.razor.g.cs

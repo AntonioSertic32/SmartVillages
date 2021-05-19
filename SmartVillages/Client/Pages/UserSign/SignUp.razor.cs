@@ -64,7 +64,7 @@ namespace SmartVillages.Client.Pages.UserSign
                 else
                 {
                     Snackbar.Add("<p class='text-center'>SUCCESSFULLY REGISTERED! </br> Please go check you email for further validation.</p>", Severity.Success);
-                    SendEmail();
+                    await SendEmail();
                     await GoBack.InvokeAsync();
                 }
             }
@@ -97,33 +97,30 @@ namespace SmartVillages.Client.Pages.UserSign
 
         public async Task SendEmail()
         {
-            //await Email.From("elliotalderson050@gmail.com").To("antonio.sertic@vuv.hr").Subject("Hows it going Antonio").Body("Yo Antonio, long time no see!").SendAsync();
-            /*
             try
             {
-                using (MailMessage mail = new MailMessage())
-                {
-                    mail.From = new MailAddress("elliotalderson050@gmail.com");
-                    mail.To.Add("antonio.sertic@vuv.hr");
-                    mail.Subject = "Subject";
-                    mail.Body = "<h1>This is ail body!</h1>";
-                    mail.IsBodyHtml = true;
+                var response = await Http.PostAsJsonAsync($"api/users/SendEmail", UserModel);
 
-                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
-                    {
-                        smtp.Credentials = new System.Net.NetworkCredential("elliotalderson050@gmail.com", "EvilCorp");
-                        smtp.EnableSsl = true;
-                        smtp.Send(mail);
-                        Message = "Mail Sent";
-                    }
-                };
+                Snackbar.Clear();
+                if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                {
+                    Snackbar.Add("Greška kod slanja emaila.", Severity.Error);
+                }
+                else
+                {
+                    Snackbar.Add("Email uspješno poslan.", Severity.Success);
+                }
             }
-            catch (Exception ex) 
+            catch (HttpRequestException ex)
             {
-                Message = ex.Message;
+                Snackbar.Add(ex.Message, Severity.Error);
             }
-            */
         }
+        /*
+        [12:36, 19. 05. 2021.] Antonio: - Kreirati EmailConfirmationCode za tog usera, stavit mu u bazu i poslat u putanji buttona koji dobije na mail
+        - Kada dođe na tu stranicu uzme taj Code i pošalje upit na bazu za njega i ak nađe validira ga te ispiše da je validirano
+        - Pa kreira pravi SecretCode, upuca ga na bazu i posalje useru na mail
+        */
 
     }
 }
