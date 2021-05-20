@@ -89,8 +89,7 @@ using MudBlazor;
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.LayoutAttribute(typeof(EmptyLayout))]
-    [Microsoft.AspNetCore.Components.RouteAttribute("/emailconfirmation/{code}")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/emailconfirmation/{code}/{oib}")]
     public partial class EmailConfirmation : EmailConfirmationBase
     {
         #pragma warning disable 1998

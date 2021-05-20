@@ -82,11 +82,12 @@ namespace SmartVillages.Server.Controllers
         [HttpPost("PostUser/{id}")]
         public async Task<ActionResult<User>> PostUser(int id, User user)
         {
+            user.EmailConfirmationCode = GenerateCode();
             user.UserType = await _context.UserType.SingleOrDefaultAsync(t => t.UserTypeId == id);
             _context.User.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("GetUser", user);
         }
 
         [HttpPost("login/{id}")]
@@ -128,17 +129,16 @@ namespace SmartVillages.Server.Controllers
         }
 
         [HttpPost("SendEmail")]
-        public async Task SendEmail(User user)
+        public async Task SendEmail(User user, bool issecret = false)
         {
-            user.EmailConfirmationCode = GenerateCode();
-
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("Smart Villages", "elliotalderson050@gmail.com"));
             message.To.Add(new MailboxAddress(user.FirstName + " " + user.LastName, user.Email));
-            message.Subject = "Email confirmation";
+            message.Subject = issecret ? "Secret code" : "Email confirmation";
 
             var bodyBuilder = new BodyBuilder();
-            bodyBuilder.HtmlBody = "<div style='text-align: center;height: 150px;'><h1>Welcome to Smart Villages <span style='color: lightseagreen;'>Antonio</span></h1><h3>Please click on Confirm to confirm your email!</h3><br><a style='color: white; background-color: #31B58E;padding: 10px 20px;border-radius: 5px;font-size: 17px;text-decoration: none;' href='https://localhost:5001/emailconfirmation/{" + user.EmailConfirmationCode + "}/{" + user.Email + "}'>Confirm</a></div>";
+            var code = issecret ? user.SecretCode : user.EmailConfirmationCode;
+            bodyBuilder.HtmlBody = "<div style='text-align: center;height: 150px;'><h1>Welcome to Smart Villages <span style='color: lightseagreen;'>" + user.FirstName + "</span></h1><h3>Please click on Confirm to confirm your email!</h3><br><a style='color: white; background-color: #31B58E;padding: 10px 20px;border-radius: 5px;font-size: 17px;text-decoration: none;' href='https://localhost:5001/emailconfirmation/" + code + "/" + user.OIB + "'>Confirm</a></div>";
 
             message.Body = bodyBuilder.ToMessageBody();
 
@@ -158,48 +158,35 @@ namespace SmartVillages.Server.Controllers
             }
 
             /*
-             https://localhost:44368/api/users/CreateEmailConirmationCode
-                {
-                    "Id": 13,
-                    "FirstName": "Antonio",
-                    "LastName":	"Sertić",
-                    "Email": "a@a",
-                    "Bio": "NULL",
-                    "Sex": "NULL",
-                    "OIB": "45789658965",
-                    "EmailConfirm": false,
-                    "Locked": true,
-                    "Country": "Cro",
-                    "City": "Na",
-                    "Address": "NULL",
-                    "Number": "4789595562",
-                    "SecretCode": "NULL",
-                    "BirthDate": "2020-02-07T00:00:00.0000000",
-                    "UserTypeId": 2,
-                    "DateCreated": "2021-05-05T13:51:58.3440000",
-                    "Password": "12345678",
-                    "TermsAndConditions": true,
-                    "EmailConfirmationCode": "NULL"
-                }
+            {
+                "Id": 13,
+                "FirstName": "Antonio",
+                "LastName":	"Sertić",
+                "Email": "a@a",
+                "Bio": "NULL",
+                "Sex": "NULL",
+                "OIB": "45789658965",
+                "EmailConfirm": false,
+                "Locked": true,
+                "Country": "Cro",
+                "City": "Na",
+                "Address": "NULL",
+                "Number": "4789595562",
+                "SecretCode": "NULL",
+                "BirthDate": "2020-02-07T00:00:00.0000000",
+                "UserTypeId": 2,
+                "DateCreated": "2021-05-05T13:51:58.3440000",
+                "Password": "12345678",
+                "TermsAndConditions": true,
+                "EmailConfirmationCode": "NULL"
+            }
              */
         }
 
-        [HttpPost("CreateSecretCode")]
-        public async Task<string> CreateEmailConirmationCode(User user)
+        [HttpPost("ConfirmEmail/{oib}")]
+        public async Task<ActionResult> ConfirmEmail(string oib, [FromBody] string code)
         {
-            string EmailCode = GenerateCode();
-            user.EmailConfirmationCode = EmailCode;
-
-            _context.Entry(user).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            return EmailCode;
-        }
-
-        [HttpPost("ConfirmEmail/{code}/{email}")]
-        public async Task<ActionResult<User>> ConfirmEmail(string code, string email)
-        {
-            var User = await _context.User.SingleOrDefaultAsync(u => u.EmailConfirmationCode == code && u.Email == email);
+            var User = await _context.User.SingleOrDefaultAsync(u => u.EmailConfirmationCode == code && u.OIB == oib);
 
             if (User == null)
             {
@@ -209,21 +196,23 @@ namespace SmartVillages.Server.Controllers
             {
                 User.EmailConfirm = true;
                 User.Locked = false;
+                User.SecretCode = GenerateCode();
                 _context.Entry(User).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
                 // Opet poslati email a pravim SecretCod-om
+                await SendEmail(User, true);
 
-                return Ok();
+                return CreatedAtAction("ConfirmEmail", User.SecretCode);
             }
         }
 
         public string GenerateCode()
         {
             string SecretCode = "";
-            char[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+            List<string> alphabet = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
 
-            for(var i = 0; i < 3; i++)
+            for (var i = 0; i < 3; i++)
             {
                 int num = RandomNumber(0, 9);
                 int randchar = RandomNumber(0, 26);
@@ -232,7 +221,7 @@ namespace SmartVillages.Server.Controllers
 
             return SecretCode;
         }
-  
+
         public int RandomNumber(int min, int max)
         {
             return _random.Next(min, max);

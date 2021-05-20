@@ -64,7 +64,8 @@ namespace SmartVillages.Client.Pages.UserSign
                 else
                 {
                     Snackbar.Add("<p class='text-center'>SUCCESSFULLY REGISTERED! </br> Please go check you email for further validation.</p>", Severity.Success);
-                    await SendEmail();
+                    User returnValue = await response.Content.ReadFromJsonAsync<User>();
+                    await SendEmail(returnValue);
                     await GoBack.InvokeAsync();
                 }
             }
@@ -95,13 +96,12 @@ namespace SmartVillages.Client.Pages.UserSign
             }
         }
 
-        public async Task SendEmail()
+        public async Task SendEmail(User returnValue)
         {
             try
             {
-                var response = await Http.PostAsJsonAsync($"api/users/SendEmail", UserModel);
+                var response = await Http.PostAsJsonAsync($"api/users/SendEmail", returnValue);
 
-                Snackbar.Clear();
                 if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
                 {
                     Snackbar.Add("Greška kod slanja emaila.", Severity.Error);
@@ -116,11 +116,6 @@ namespace SmartVillages.Client.Pages.UserSign
                 Snackbar.Add(ex.Message, Severity.Error);
             }
         }
-        /*
-        [12:36, 19. 05. 2021.] Antonio: - Kreirati EmailConfirmationCode za tog usera, stavit mu u bazu i poslat u putanji buttona koji dobije na mail
-        - Kada dođe na tu stranicu uzme taj Code i pošalje upit na bazu za njega i ak nađe validira ga te ispiše da je validirano
-        - Pa kreira pravi SecretCode, upuca ga na bazu i posalje useru na mail
-        */
 
     }
 }

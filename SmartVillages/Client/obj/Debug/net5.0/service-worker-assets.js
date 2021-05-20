@@ -9,7 +9,7 @@
       "url": "_content\/MudBlazor\/MudBlazor.min.js"
     },
     {
-      "hash": "sha256-bJUMT6bz\/dENjEHoFZRxCjt5uPXBkIc5Nky5\/FmKLc8=",
+      "hash": "sha256-7l9buKy+3sFJ7qtE9e+Vr\/5KaNRsS1rWAty\/Mo6SDwA=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -817,11 +817,11 @@
       "url": "_framework\/SmartVillages.Shared.pdb"
     },
     {
-      "hash": "sha256-iT4NwMxbTCofADsorPdXYGryxXAVjsG6mJCNTyRyfJA=",
+      "hash": "sha256-ejfmrEV1m\/rINTFoowTZfsY4VtFRCySeaWVnumGoibI=",
       "url": "_framework\/SmartVillages.Client.dll"
     },
     {
-      "hash": "sha256-bvE8fx1Ft6LMpTej3GVF59PvkzU4l+bCCPRulmEyy6U=",
+      "hash": "sha256-cYConPUZWrOHk7P6+mEWJR0oosS0XD2uft7n0Axpni4=",
       "url": "_framework\/SmartVillages.Client.pdb"
     },
     {
@@ -1797,5 +1797,5 @@
       "url": "SmartVillages.Client.bundle.scp.css"
     }
   ],
-  "version": "rnghTlgE"
+  "version": "2EcSbeUd"
 };

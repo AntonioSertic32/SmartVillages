@@ -1,17 +1,16 @@
-﻿@page "/emailconfirmation/{code}"
+﻿@page "/emailconfirmation/{code}/{oib}"
 @inherits EmailConfirmationBase
-@layout EmptyLayout
 
 <h3>EmailConfirmation</h3>
 <p>Your code is: @Code</p>
+<p>Your email is: @Oib</p>
 
 @if (IsValid)
 {
-    <p>Valid</p>
+    <p>@Message</p>
 }
 else
 {
-    <p>Invalid</p>
+    <p>Validateing..</p>
 }
 
-            
