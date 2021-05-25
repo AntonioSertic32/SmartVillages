@@ -252,6 +252,20 @@
         </div>
 
         <div class="chat_container px-5 py-2">
+            @if (LoadingMessage)
+            {
+                <div class="w-100 h-100 d-flex align-center justify-content-center">
+                    <div class="lds-facebook">
+                        <div>
+                        </div>
+                        <div>
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+            }
+
             @foreach (var message in MessagesList)
             {
                 if (message.PersonOne.Email == User.Email)

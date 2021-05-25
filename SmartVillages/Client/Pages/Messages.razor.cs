@@ -1,6 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using MudBlazor;
 using SmartVillages.Shared;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,11 @@ namespace SmartVillages.Client.Pages
         [Inject] ILocalStorageService localStorage { get; set; }
         [Inject] public HttpClient Http { get; set; }
         [Inject] IJSRuntime JsRuntime { get; set; }
+        [Inject] public ISnackbar Snackbar { get; set; }
 
         public string TextValue { get; set; }
         public string MessageToSend { get; set; }
+        public bool LoadingMessage { get; set; }
 
         public void OpenMessage()
         {
@@ -31,6 +34,7 @@ namespace SmartVillages.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            LoadingMessage = true;
             User = await localStorage.GetItemAsync<User>("user");
 
             /*
@@ -39,6 +43,7 @@ namespace SmartVillages.Client.Pages
             Users.Add(new User { Id = 2, FirstName = "Mirko" });
             */
             await GetMessages();
+            LoadingMessage = false;
             await JsRuntime.InvokeVoidAsync("scrollToElementId", "bottom_message");
         }
 
@@ -62,24 +67,33 @@ namespace SmartVillages.Client.Pages
 
         public async Task SendMessage()
         {
-            Message NewMessage = new Message { Date = DateTime.Now, MessageContent = MessageToSend, Seen = false };
-
-            try
+            if(MessageToSend != "")
             {
-                var response = await Http.PostAsJsonAsync($"api/messages/postmessage/" + User.Id + "/" + 24, NewMessage);
+                Message NewMessage = new Message { Date = DateTime.Now, MessageContent = MessageToSend, Seen = false };
 
-                if (response.StatusCode != System.Net.HttpStatusCode.InternalServerError)
+                try
                 {
-                    var message = await response.Content.ReadFromJsonAsync<Message>();
-                    MessagesList.Add(message);
-                    StateHasChanged();
-                    await JsRuntime.InvokeVoidAsync("scrollToElementId", "bottom_message");
+                    var response = await Http.PostAsJsonAsync($"api/messages/postmessage/" + User.Id + "/" + 24, NewMessage);
+
+                    if (response.StatusCode != System.Net.HttpStatusCode.InternalServerError)
+                    {
+                        var message = await response.Content.ReadFromJsonAsync<Message>();
+                        MessagesList.Add(message);
+                        StateHasChanged();
+                        await JsRuntime.InvokeVoidAsync("scrollToElementId", "bottom_message");
+                    }
+                }
+                catch (HttpRequestException ex)
+                {
+                    Console.WriteLine(ex);
                 }
             }
-            catch (HttpRequestException ex)
+            else
             {
-                Console.WriteLine(ex);
+                Snackbar.Add("Message is empty!", Severity.Error);
             }
+
+
         }
 
         public async Task<User> GetUser( int id )

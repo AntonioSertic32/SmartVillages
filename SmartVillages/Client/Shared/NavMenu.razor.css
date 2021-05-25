@@ -50,9 +50,31 @@
     color: white;
 }
 
+.sidebar_item_name {
+    display: inline-block;
+}
+::deep .nav-link {
+    width: auto;
+}
+
 @media (min-width: 641px) {
     .navbar-toggler {
         display: none;
+    }
+
+    .sidebar_item_name {
+        display: none;
+    }
+
+    ::deep .nav-link {
+        width: 50px;
+    }
+
+    .overall {
+        height: calc(100vh - 56px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .collapse {
