@@ -103,3 +103,53 @@
 ::deep .mud-list-item-clickable:hover {
     background-color: lightblue;
 }
+
+
+/* MESSAGES */
+
+.top_track {
+    height: 70px;
+    border-bottom: 1px solid #d6d5d5;
+}
+.top_track_left {
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+}
+
+.chat_container {
+    height: calc(100vh - 206px);
+    overflow: scroll;
+}
+    .chat_container .message_left,
+    .chat_container .message_right {
+        min-height: 80px;
+    }
+
+        .chat_container .message_left .message_left_container,
+        .chat_container .message_right .message_left_container {
+            width: 50% !important;
+        }
+
+        .chat_container .message_left .chat_send_message,
+        .chat_container .message_right .chat_send_message {
+            min-height: 40px;
+            border-radius: 10px;
+            width: 90%;
+        }
+
+        .chat_container .message_left .chat_send_message {
+            border-bottom-left-radius: 5px;
+            background-color: #A3EA9A;
+        }
+        .chat_container .message_right .chat_send_message {
+            border-bottom-right-radius: 5px;
+            background-color: #8FB792;
+        }
+
+@media (max-width: 576px) {
+    .chat_container .message_left .message_left_container,
+    .chat_container .message_right .message_left_container {
+        width: 100% !important;
+    }
+}

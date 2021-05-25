@@ -75,9 +75,11 @@ namespace SmartVillages.Server.Controllers
 
         // POST: api/Messages
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Message>> PostMessage(Message message)
+        [HttpPost("postmessage/{personone}/{persontwo}")]
+        public async Task<ActionResult<Message>> PostMessage(Message message, int personone, int persontwo)
         {
+            message.PersonOne = await _context.User.SingleOrDefaultAsync(t => t.Id == personone);
+            message.PersonTwo = await _context.User.SingleOrDefaultAsync(t => t.Id == persontwo);
             _context.Message.Add(message);
             await _context.SaveChangesAsync();
 
@@ -103,6 +105,21 @@ namespace SmartVillages.Server.Controllers
         private bool MessageExists(int id)
         {
             return _context.Message.Any(e => e.Id == id);
+        }
+
+        [HttpGet("getmessagesbyuser/{personone}/{persontwo}")]
+        public async Task<ActionResult<List<Message>>> GetMessagesByUser(int personone, int persontwo)
+        {
+            var First = await _context.User.SingleOrDefaultAsync(t => t.Id == personone);
+            var Second = await _context.User.SingleOrDefaultAsync(t => t.Id == persontwo);
+            var Messages = await _context.Message.Where(u => (u.PersonOne == First && u.PersonTwo == Second) || (u.PersonTwo == First && u.PersonOne == Second)).OrderBy(d => d.Date).ToListAsync();
+
+            if (User == null)
+            {
+                return NotFound();
+            }
+
+            return Messages;
         }
     }
 }
