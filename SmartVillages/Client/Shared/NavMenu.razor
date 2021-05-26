@@ -9,15 +9,14 @@
     <ul class="nav flex-column">
         <div class="overall">
             <div class="sidebr_top">
-
-            </div>
-
-            <div class="sidebar_center">
                 <li class="nav-item px-4">
                     <NavLink class="nav-link" href="index" Match="NavLinkMatch.All">
                         <span class="oi oi-home" aria-hidden="true"></span><span class="sidebar_item_name">Home</span>
                     </NavLink>
                 </li>
+            </div>
+
+            <div class="sidebar_center">
                 <li class="nav-item px-4">
                     <NavLink class="nav-link" href="counter">
                         <span class="oi oi-plus" aria-hidden="true"></span><span class="sidebar_item_name">Counter</span>
@@ -33,16 +32,22 @@
                         <span class="oi oi-chat" aria-hidden="true"></span><span class="sidebar_item_name">Messages</span>
                     </NavLink>
                 </li>
+                <li class="nav-item px-4">
+                    <NavLink class="nav-link" style="padding: .5rem .8rem;" href="marketplace">
+                        <i class="bi bi-shop" style="font-size: 1.5rem;"></i><span class="sidebar_item_name">Marketplace</span>
+                    </NavLink>
+                </li>
             </div>
+
             <div class="sidebar_bottom">
                 <li class="nav-item px-4">
-                    <NavLink class="nav-link" style="padding: .5rem .8rem;" href="fetchdata">
-                        <i class="bi bi-gear-fill" style="font-size: 1.5rem;"></i><span class="sidebar_item_name ml-3">Fetch data</span>
+                    <NavLink class="nav-link" style="padding: .5rem .8rem;" href="settings">
+                        <i class="bi bi-gear-fill" style="font-size: 1.5rem;"></i><span class="sidebar_item_name ml-3">Settings</span>
                     </NavLink>
                 </li>
                 <li class="nav-item px-4">
-                    <NavLink class="nav-link" href="messages">
-                        <span class="oi oi-chat" aria-hidden="true"></span><span class="sidebar_item_name">Messages</span>
+                    <NavLink class="nav-link" style="padding: .5rem .8rem;" href="help">
+                        <i class="bi bi-question-lg" style="font-size: 1.5rem;"></i><span class="sidebar_item_name">Help</span>
                     </NavLink>
                 </li>
             </div>

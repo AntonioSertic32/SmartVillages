@@ -24,30 +24,51 @@ namespace SmartVillages.Client.Pages
         public string MessageToSend { get; set; }
         public bool LoadingMessage { get; set; }
 
-        public void OpenMessage()
-        {
-            NavigationManager.NavigateTo("/index");
-        }
-
         public User User { get; set; }
-        public List<Message> MessagesList { get; set; } = new List<Message>();
+        public List<Message> DirectMessagesList { get; set; } = new List<Message>();
+        public List<LastMessage> AllMessagesList { get; set; } = new List<LastMessage>();
 
         protected override async Task OnInitializedAsync()
         {
             LoadingMessage = true;
             User = await localStorage.GetItemAsync<User>("user");
 
+            /* DOHVACANJE SVIH PORUKA ZA LIJEVU STRANU KOMPONENTE */
+            await GetAllMessages();
+
             /*
             User = new User();
             Users.Add(new User { Id = 1, FirstName = "Antonio" });
             Users.Add(new User { Id = 2, FirstName = "Mirko" });
             */
-            await GetMessages();
+
+            /*
+            DOHVACANJE POSEBNIH PORUKA
+            await GetDirectMessages();
             LoadingMessage = false;
             await JsRuntime.InvokeVoidAsync("scrollToElementId", "bottom_message");
+            */
         }
 
-        public async Task GetMessages()
+        public async Task GetAllMessages()
+        {
+            try
+            {
+                var response = await Http.GetAsync($"api/messages/getalllastmessages/" + User.Id);
+
+                if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
+                {
+                    AllMessagesList = await response.Content.ReadFromJsonAsync<List<LastMessage>>();
+                    StateHasChanged();
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        public async Task GetDirectMessages()
         {
             try
             {
@@ -55,7 +76,7 @@ namespace SmartVillages.Client.Pages
 
                 if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
                 {
-                    MessagesList = await response.Content.ReadFromJsonAsync<List<Message>>();
+                    DirectMessagesList = await response.Content.ReadFromJsonAsync<List<Message>>();
                     StateHasChanged();
                 }
             }
@@ -78,7 +99,7 @@ namespace SmartVillages.Client.Pages
                     if (response.StatusCode != System.Net.HttpStatusCode.InternalServerError)
                     {
                         var message = await response.Content.ReadFromJsonAsync<Message>();
-                        MessagesList.Add(message);
+                        DirectMessagesList.Add(message);
                         StateHasChanged();
                         await JsRuntime.InvokeVoidAsync("scrollToElementId", "bottom_message");
                     }
@@ -92,8 +113,6 @@ namespace SmartVillages.Client.Pages
             {
                 Snackbar.Add("Message is empty!", Severity.Error);
             }
-
-
         }
 
         public async Task<User> GetUser( int id )
@@ -107,6 +126,12 @@ namespace SmartVillages.Client.Pages
             }
 
             return null;
+        }
+
+        public async Task OpenMessage(User user)
+        {
+            Console.WriteLine(user.Email);
+            //NavigationManager.NavigateTo("/index");
         }
     }
 }

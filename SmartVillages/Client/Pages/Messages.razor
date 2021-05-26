@@ -22,213 +22,33 @@
 
         <div class="p-3" style="overflow: scroll; max-height: calc(100vh - 176px);">
 
-            <div class="messages_chat_box d-flex notseen" @onclick="OpenMessage">
-                <div class="image p-1">
-                    <img class="author_image" src="/img/user.png" />
-                </div>
-                <div class="message px-3">
-                    <h4 class="author_name m-0">Ivan Ivić</h4>
-                    <p class="author_last_message m-0 text-muted">Pozdrav!</p>
-                </div>
-                <div class="settings_and_unread">
-                    <div class="messages_settings">
-                        <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Small" Dense="true" Direction="Direction.Left" OffsetX="true">
-                            <MudMenuItem Link="/userprofile">Obriši</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Označi kao pročitano</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Prijavi</MudMenuItem>
-                        </MudMenu>
+            @foreach (var message in AllMessagesList)
+            {
+                <div class="messages_chat_box d-flex @(message.LastIsSeen ? "seen" : "notseen")" @onclick="() => OpenMessage(message.User)">
+                    <div class="image p-1">
+                        <img class="author_image" src="/img/user.png" />
                     </div>
-                    <div class="unread_messages">
-                        <span class="">99</span>
+                    <div class="message px-3">
+                        <h4 class="author_name m-0">@message.User.FirstName @message.User.LastName</h4>
+                        <p class="author_last_message m-0 text-muted">@message.MessageContent</p>
                     </div>
-                </div>
-            </div>
-
-            <div class="messages_chat_box d-flex notseen" @onclick="OpenMessage">
-                <div class="image p-1">
-                    <img class="author_image" src="/img/user.png" />
-                </div>
-                <div class="message px-3">
-                    <h4 class="author_name m-0">Matija Marić</h4>
-                    <p class="author_last_message m-0 text-muted">Poštarina vam je besplatna.</p>
-                </div>
-                <div class="settings_and_unread">
-                    <div class="messages_settings">
-                        <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Small" Dense="true" Direction="Direction.Left" OffsetX="true">
-                            <MudMenuItem Link="/userprofile">Obriši</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Označi kao pročitano</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Prijavi</MudMenuItem>
-                        </MudMenu>
-                    </div>
-                    <div class="unread_messages">
-                        <span class="">5</span>
+                    <div class="settings_and_unread">
+                        <div class="messages_settings">
+                            <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Small" Dense="true" Direction="Direction.Left" OffsetX="true">
+                                <MudMenuItem Link="/userprofile">Obriši</MudMenuItem>
+                                <MudMenuItem Link="/fetchdata">Označi kao pročitano</MudMenuItem>
+                                <MudMenuItem Link="/fetchdata">Prijavi</MudMenuItem>
+                            </MudMenu>
+                        </div>
+                        @if (message.UnreadMessages != 0)
+                        {
+                            <div class="unread_messages">
+                                <span class="">@message.UnreadMessages</span>
+                            </div>
+                        }
                     </div>
                 </div>
-            </div>
-
-            <div class="messages_chat_box d-flex seen" @onclick="OpenMessage">
-                <div class="image p-1">
-                    <img class="author_image" src="/img/user.png" />
-                </div>
-                <div class="message px-3">
-                    <h4 class="author_name m-0">Antonio Kovač</h4>
-                    <p class="author_last_message m-0 text-muted">Imamo još dvije gajbe u skladištu!</p>
-                </div>
-                <div class="settings_and_unread">
-                    <div class="messages_settings">
-                        <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Small" Dense="true" Direction="Direction.Left" OffsetX="true">
-                            <MudMenuItem Link="/userprofile">Obriši</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Označi kao pročitano</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Prijavi</MudMenuItem>
-                        </MudMenu>
-                    </div>
-                    <div class="unread_messages">
-                        <span class="">11</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="messages_chat_box d-flex seen" @onclick="OpenMessage">
-                <div class="image p-1">
-                    <img class="author_image" src="/img/user.png" />
-                </div>
-                <div class="message px-3">
-                    <h4 class="author_name m-0">Bruno Horvat</h4>
-                    <p class="author_last_message m-0 text-muted">Radimo svih 5 radnih dana.</p>
-                </div>
-                <div class="settings_and_unread">
-                    <div class="messages_settings">
-                        <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Small" Dense="true" Direction="Direction.Left" OffsetX="true">
-                            <MudMenuItem Link="/userprofile">Obriši</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Označi kao pročitano</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Prijavi</MudMenuItem>
-                        </MudMenu>
-                    </div>
-                </div>
-            </div>
-
-            <div class="messages_chat_box d-flex seen" @onclick="OpenMessage">
-                <div class="image p-1">
-                    <img class="author_image" src="/img/user.png" />
-                </div>
-                <div class="message px-3">
-                    <h4 class="author_name m-0">Melinda Matić</h4>
-                    <p class="author_last_message m-0 text-muted">Jabuke su upravo pobrane!</p>
-                </div>
-                <div class="settings_and_unread">
-                    <div class="messages_settings">
-                        <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Small" Dense="true" Direction="Direction.Left" OffsetX="true">
-                            <MudMenuItem Link="/userprofile">Obriši</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Označi kao pročitano</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Prijavi</MudMenuItem>
-                        </MudMenu>
-                    </div>
-                </div>
-            </div>
-
-            <div class="messages_chat_box d-flex notseen" @onclick="OpenMessage">
-                <div class="image p-1">
-                    <img class="author_image" src="/img/user.png" />
-                </div>
-                <div class="message px-3">
-                    <h4 class="author_name m-0">Ivan Ivić</h4>
-                    <p class="author_last_message m-0 text-muted">Pozdrav!</p>
-                </div>
-                <div class="settings_and_unread">
-                    <div class="messages_settings">
-                        <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Small" Dense="true" Direction="Direction.Left" OffsetX="true">
-                            <MudMenuItem Link="/userprofile">Obriši</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Označi kao pročitano</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Prijavi</MudMenuItem>
-                        </MudMenu>
-                    </div>
-                    <div class="unread_messages">
-                        <span class="">99</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="messages_chat_box d-flex notseen" @onclick="OpenMessage">
-                <div class="image p-1">
-                    <img class="author_image" src="/img/user.png" />
-                </div>
-                <div class="message px-3">
-                    <h4 class="author_name m-0">Matija Marić</h4>
-                    <p class="author_last_message m-0 text-muted">Poštarina vam je besplatna.</p>
-                </div>
-                <div class="settings_and_unread">
-                    <div class="messages_settings">
-                        <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Small" Dense="true" Direction="Direction.Left" OffsetX="true">
-                            <MudMenuItem Link="/userprofile">Obriši</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Označi kao pročitano</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Prijavi</MudMenuItem>
-                        </MudMenu>
-                    </div>
-                    <div class="unread_messages">
-                        <span class="">5</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="messages_chat_box d-flex seen" @onclick="OpenMessage">
-                <div class="image p-1">
-                    <img class="author_image" src="/img/user.png" />
-                </div>
-                <div class="message px-3">
-                    <h4 class="author_name m-0">Antonio Kovač</h4>
-                    <p class="author_last_message m-0 text-muted">Imamo još dvije gajbe u skladištu!</p>
-                </div>
-                <div class="settings_and_unread">
-                    <div class="messages_settings">
-                        <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Small" Dense="true" Direction="Direction.Left" OffsetX="true">
-                            <MudMenuItem Link="/userprofile">Obriši</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Označi kao pročitano</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Prijavi</MudMenuItem>
-                        </MudMenu>
-                    </div>
-                    <div class="unread_messages">
-                        <span class="">11</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="messages_chat_box d-flex seen" @onclick="OpenMessage">
-                <div class="image p-1">
-                    <img class="author_image" src="/img/user.png" />
-                </div>
-                <div class="message px-3">
-                    <h4 class="author_name m-0">Bruno Horvat</h4>
-                    <p class="author_last_message m-0 text-muted">Radimo svih 5 radnih dana.</p>
-                </div>
-                <div class="settings_and_unread">
-                    <div class="messages_settings">
-                        <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Small" Dense="true" Direction="Direction.Left" OffsetX="true">
-                            <MudMenuItem Link="/userprofile">Obriši</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Označi kao pročitano</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Prijavi</MudMenuItem>
-                        </MudMenu>
-                    </div>
-                </div>
-            </div>
-
-            <div class="messages_chat_box d-flex seen" @onclick="OpenMessage">
-                <div class="image p-1">
-                    <img class="author_image" src="/img/user.png" />
-                </div>
-                <div class="message px-3">
-                    <h4 class="author_name m-0">Melinda Matić</h4>
-                    <p class="author_last_message m-0 text-muted">Jabuke su upravo pobrane!</p>
-                </div>
-                <div class="settings_and_unread">
-                    <div class="messages_settings">
-                        <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Small" Dense="true" Direction="Direction.Left" OffsetX="true">
-                            <MudMenuItem Link="/userprofile">Obriši</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Označi kao pročitano</MudMenuItem>
-                            <MudMenuItem Link="/fetchdata">Prijavi</MudMenuItem>
-                        </MudMenu>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 
@@ -266,7 +86,7 @@
                 </div>
             }
 
-            @foreach (var message in MessagesList)
+            @foreach (var message in DirectMessagesList)
             {
                 if (message.PersonOne.Email == User.Email)
                 {
