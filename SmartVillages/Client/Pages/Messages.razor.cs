@@ -23,6 +23,8 @@ namespace SmartVillages.Client.Pages
         public string TextValue { get; set; }
         public string MessageToSend { get; set; }
         public bool LoadingMessage { get; set; }
+        public bool MessageOpened { get; set; } = false;
+        public User OpenedUser { get; set; }
 
         public User User { get; set; }
         public List<Message> DirectMessagesList { get; set; } = new List<Message>();
@@ -30,24 +32,9 @@ namespace SmartVillages.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            LoadingMessage = true;
             User = await localStorage.GetItemAsync<User>("user");
-
             /* DOHVACANJE SVIH PORUKA ZA LIJEVU STRANU KOMPONENTE */
             await GetAllMessages();
-
-            /*
-            User = new User();
-            Users.Add(new User { Id = 1, FirstName = "Antonio" });
-            Users.Add(new User { Id = 2, FirstName = "Mirko" });
-            */
-
-            /*
-            DOHVACANJE POSEBNIH PORUKA
-            await GetDirectMessages();
-            LoadingMessage = false;
-            await JsRuntime.InvokeVoidAsync("scrollToElementId", "bottom_message");
-            */
         }
 
         public async Task GetAllMessages()
@@ -70,14 +57,17 @@ namespace SmartVillages.Client.Pages
 
         public async Task GetDirectMessages()
         {
+            LoadingMessage = true;
             try
             {
-                var response = await Http.GetAsync($"api/messages/getmessagesbyuser/24/13");
+                var response = await Http.GetAsync($"api/messages/getmessagesbyuser/{OpenedUser.Id}/{User.Id}");
 
                 if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
                 {
                     DirectMessagesList = await response.Content.ReadFromJsonAsync<List<Message>>();
+                    LoadingMessage = false;
                     StateHasChanged();
+                    await JsRuntime.InvokeVoidAsync("scrollToElementId", "bottom_message");
                 }
             }
             catch (HttpRequestException ex)
@@ -94,7 +84,7 @@ namespace SmartVillages.Client.Pages
 
                 try
                 {
-                    var response = await Http.PostAsJsonAsync($"api/messages/postmessage/" + User.Id + "/" + 24, NewMessage);
+                    var response = await Http.PostAsJsonAsync($"api/messages/postmessage/" + User.Id + "/" + OpenedUser.Id, NewMessage);
 
                     if (response.StatusCode != System.Net.HttpStatusCode.InternalServerError)
                     {
@@ -130,8 +120,19 @@ namespace SmartVillages.Client.Pages
 
         public async Task OpenMessage(User user)
         {
-            Console.WriteLine(user.Email);
-            //NavigationManager.NavigateTo("/index");
+            if(user == OpenedUser)
+            {
+                MessageOpened = false;
+            }
+            else
+            {
+                MessageOpened = true;
+                OpenedUser = user;
+            }
+            DirectMessagesList.Clear();
+            StateHasChanged();
+
+            await GetDirectMessages();
         }
     }
 }

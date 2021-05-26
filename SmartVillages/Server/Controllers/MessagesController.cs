@@ -126,34 +126,18 @@ namespace SmartVillages.Server.Controllers
         [HttpGet("getalllastmessages/{user}")]
         public async Task<ActionResult<List<LastMessage>>> GetAllLastMessages(int user)
         {
-            /*
-             * USER / MESSAGECONTENT / UNREADMESSAGES
-             * 
-             * 1. dohvatiti sve usere s kojima sam imao poruka.. znaci mogu biti i primatelj i posiljatelj
-             * 2. po svakom od tih usera iz liste ici i dohvatiti zadnju poruku s njim
-             * 3. prebrojati neprocitane poruke
-             * 
-            var First = await _context.User.SingleOrDefaultAsync(t => t.Id == personone);
-            var Second = await _context.User.SingleOrDefaultAsync(t => t.Id == persontwo);
-            var Messages = await _context.Message.Where(u => (u.PersonOne == First && u.PersonTwo == Second) || (u.PersonTwo == First && u.PersonOne == Second)).OrderBy(d => d.Date).ToListAsync();
-
-            if (User == null)
-            {
-                return NotFound();
-            }
-            */
+            /* moguć error ako korisnik nema ni jedne poruke.. */
             List<LastMessage> LastMessages = new List<LastMessage>();
             List<User> AllUsers = new List<User>();
             var User = await _context.User.SingleOrDefaultAsync(t => t.Id == user);
             var AllUsersOne = await _context.Message.Where(u => u.PersonOne == User).Select(n => n.PersonTwo).Distinct().ToListAsync();
             var AllUsersTwo = await _context.Message.Where(u => u.PersonTwo == User).Select(n => n.PersonOne).Distinct().ToListAsync();
+
             foreach (var item in AllUsersOne)
                 AllUsers.Add(item);
             foreach (var item in AllUsersTwo)
                 AllUsers.Add(item);
             AllUsers = AllUsers.DistinctBy(x => x.Id).ToList();
-
-            // AllUsersOne i AllUsersTwo distinctat u jednu
 
             foreach (var singleUser in AllUsers)
             {
