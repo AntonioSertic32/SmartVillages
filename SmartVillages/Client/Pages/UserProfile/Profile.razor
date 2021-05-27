@@ -1,0 +1,10 @@
+﻿@page "/profile"
+@inherits ProfileBase
+@layout MainLayout
+<h3>Profile</h3>
+
+
+<img src="@User.ProfileImage" alt="User Profile Picture" class="img-thumbnail">
+<br />
+<br />
+<InputFile OnChange="OnInputFileChanged" style="margin-bottom: 1rem;" class="white-text"></InputFile>

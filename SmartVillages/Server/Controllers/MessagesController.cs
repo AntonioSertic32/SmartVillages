@@ -143,14 +143,43 @@ namespace SmartVillages.Server.Controllers
             {
                 var lastMessage = _context.Message.Where(u => (u.PersonOne == User && u.PersonTwo == singleUser) || (u.PersonOne == singleUser && u.PersonTwo == User)).OrderBy(o => o.Id).Last();
                 var numOfUnread = _context.Message.Where(u => (u.PersonOne == singleUser && u.PersonTwo == User) && u.Seen == false).Count();
+                bool isLastSeen = false;
+                if (lastMessage.PersonOne == User) 
+                {
+                    isLastSeen = true;
+                }
+                else if(lastMessage.PersonTwo == User && lastMessage.Seen)
+                {
+                    isLastSeen = true;
+                }
                 LastMessages.Add(new LastMessage { 
+                    MessageID = lastMessage.Id,
                     User = singleUser,
                     MessageContent = lastMessage.MessageContent,
-                    LastIsSeen = lastMessage.Seen,
-                    UnreadMessages = numOfUnread
+                    LastIsSeen = isLastSeen,
+                    UnreadMessages = numOfUnread,
+                    Date = lastMessage.Date
                 });
             }
-            return LastMessages;
+            List<LastMessage> LastMessagesOrdered = LastMessages.OrderBy(o => o.Date, OrderByDirection.Descending).ToList();
+            return LastMessagesOrdered;
+        }
+
+        [HttpPost("setasseen")]
+        public async Task<IActionResult> SetAsSeen(LastMessage LastMessage)
+        {
+            // nade tu zadnju poruku i preko nje sve druge
+            var one = _context.Message.Where(m => m.Id == LastMessage.MessageID).Select(s => s.PersonOne);
+            var two = _context.Message.Where(m => m.Id == LastMessage.MessageID).Select(s => s.PersonTwo);
+            var messages = _context.Message.Where(u => (u.PersonOne == one.FirstOrDefault() && u.PersonTwo == two.FirstOrDefault()) && u.Seen == false).ToList();
+            foreach (var m in messages)
+            {
+                m.Seen = true;
+                _context.Entry(m).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok();
         }
     }
 }

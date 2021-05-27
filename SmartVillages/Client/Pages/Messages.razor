@@ -24,9 +24,9 @@
 
             @foreach (var message in AllMessagesList)
             {
-                <div class="messages_chat_box d-flex @(message.LastIsSeen ? "seen" : "notseen")" @onclick="() => OpenMessage(message.User)">
+                <div class="messages_chat_box d-flex @(message.LastIsSeen ? "seen" : "notseen")" @onclick="() => OpenMessage(message)">
                     <div class="image p-1">
-                        <img class="author_image" src="/img/user.png" />
+                        <MudAvatar Image="@(message.User.ProfileImage != null ? message.User.ProfileImage : "/img/default.png")" Size="Size.Large" Class="ma-2" />
                     </div>
                     <div class="message px-3">
                         <h4 class="author_name m-0">@message.User.FirstName @message.User.LastName</h4>
@@ -57,7 +57,7 @@
         {
             <div class="row m-0 top_track">
                 <div class="col top_track_left">
-                    <MudAvatar Image="/img/user.png" Size="Size.Large" Class="ma-2" />
+                    <MudAvatar Image="@(OpenedUser.ProfileImage != null ? OpenedUser.ProfileImage : "/img/default.png")" Size="Size.Large" Class="ma-2" />
                     <h4>@OpenedUser.FirstName @OpenedUser.LastName</h4>
                 </div>
 
@@ -108,7 +108,7 @@
                                     </div>
                                 </div>
                                 <div class="col-1 pa-0 d-flex align-end justify-content-center mb-5">
-                                    <MudAvatar Image="/img/user.png" Size="Size.Medium" Class="" />
+                                    <MudAvatar Image="@(OpenedUser.ProfileImage != null ? OpenedUser.ProfileImage : "/img/default.png")" Size="Size.Medium" Class="" />
                                 </div>
                             </div>
                         </div>
@@ -118,7 +118,7 @@
                         <div class="message_left w-100 d-flex align-center">
                             <div class="message_left_container d-flex row ma-0">
                                 <div class="col-1 pa-0 d-flex align-end justify-content-center mb-5">
-                                    <MudAvatar Image="/img/user.png" Size="Size.Medium" Class="" />
+                                    <MudAvatar Image="/img/default.png" Size="Size.Medium" Class="" />
                                 </div>
                                 <div class="col-11 p-0 pl-3">
                                     <div class="chat_send_message d-flex align-center p-3 col-sm-12">
@@ -153,7 +153,9 @@
         }
         else
         {
-            <h3>To open messages click on one of the cards on left side.</h3>
+            <div class="d-flex w-100 h-100 align-center justify-content-center">
+                <h3>To open messages click on one of the cards on left side.</h3>
+            </div>
         }
     </div>
 

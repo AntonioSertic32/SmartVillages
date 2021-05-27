@@ -35,6 +35,9 @@ namespace SmartVillages.Client.Pages
             User = await localStorage.GetItemAsync<User>("user");
             /* DOHVACANJE SVIH PORUKA ZA LIJEVU STRANU KOMPONENTE */
             await GetAllMessages();
+
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
+            Snackbar.Configuration.SnackbarVariant = Variant.Filled;
         }
 
         public async Task GetAllMessages()
@@ -78,7 +81,7 @@ namespace SmartVillages.Client.Pages
 
         public async Task SendMessage()
         {
-            if(MessageToSend != "")
+            if(!string.IsNullOrEmpty(MessageToSend) && !string.IsNullOrWhiteSpace(MessageToSend))
             {
                 Message NewMessage = new Message { Date = DateTime.Now, MessageContent = MessageToSend, Seen = false };
 
@@ -90,6 +93,7 @@ namespace SmartVillages.Client.Pages
                     {
                         var message = await response.Content.ReadFromJsonAsync<Message>();
                         DirectMessagesList.Add(message);
+                        MessageToSend = "";
                         StateHasChanged();
                         await JsRuntime.InvokeVoidAsync("scrollToElementId", "bottom_message");
                     }
@@ -118,21 +122,43 @@ namespace SmartVillages.Client.Pages
             return null;
         }
 
-        public async Task OpenMessage(User user)
+        public async Task OpenMessage(LastMessage lastmessage)
         {
-            if(user == OpenedUser)
+            if(lastmessage.User == OpenedUser)
             {
                 MessageOpened = false;
+                OpenedUser = new User();
             }
             else
             {
                 MessageOpened = true;
-                OpenedUser = user;
+                OpenedUser = lastmessage.User;
+                if (!lastmessage.LastIsSeen && lastmessage.User != User)
+                    await SetAsSeen(lastmessage);
             }
             DirectMessagesList.Clear();
             StateHasChanged();
 
             await GetDirectMessages();
+        }
+
+        public async Task SetAsSeen(LastMessage lastmessage)
+        {
+            var response = await Http.PostAsJsonAsync($"api/messages/setasseen", lastmessage);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                foreach(var message in AllMessagesList)
+                {
+                    if(message.MessageID == lastmessage.MessageID)
+                    {
+                        message.LastIsSeen = true;
+                        message.UnreadMessages = 0;
+                        break;
+                    }
+                }
+            }
+            StateHasChanged();
         }
     }
 }

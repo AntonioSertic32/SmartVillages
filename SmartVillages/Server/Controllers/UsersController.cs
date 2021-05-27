@@ -138,7 +138,14 @@ namespace SmartVillages.Server.Controllers
 
             var bodyBuilder = new BodyBuilder();
             var code = issecret ? user.SecretCode : user.EmailConfirmationCode;
-            bodyBuilder.HtmlBody = "<div style='text-align: center;height: 150px;'><h1>Welcome to Smart Villages <span style='color: lightseagreen;'>" + user.FirstName + "</span></h1><h3>Please click on Confirm to confirm your email!</h3><br><a style='color: white; background-color: #31B58E;padding: 10px 20px;border-radius: 5px;font-size: 17px;text-decoration: none;' href='https://localhost:5001/emailconfirmation/" + code + "/" + user.OIB + "'>Confirm</a></div>";
+            if(issecret)
+            {
+                bodyBuilder.HtmlBody = "<div style='text-align: center; height: 200px;'><h1>Welcome to Smart Villages <span style='color: lightseagreen;'>" + user.FirstName + "</span></h1><h3 style='margin-bottom: 0; margin-top: 20px'>Your secret code for login is below:</h3><br><p style='font-size: 50px;font-weight: bold;margin-top: 0;'>" + user.SecretCode + "</p></div>";
+            }
+            else
+            {
+                bodyBuilder.HtmlBody = "<div style='text-align: center;height: 150px;'><h1>Welcome to Smart Villages <span style='color: lightseagreen;'>" + user.FirstName + "</span></h1><h3>Please click on Confirm to confirm your email!</h3><br><a style='color: white; background-color: #31B58E;padding: 10px 20px;border-radius: 5px;font-size: 17px;text-decoration: none;' href='https://localhost:5001/emailconfirmation/" + code + "/" + user.OIB + "'>Confirm</a></div>";
+            }
 
             message.Body = bodyBuilder.ToMessageBody();
 

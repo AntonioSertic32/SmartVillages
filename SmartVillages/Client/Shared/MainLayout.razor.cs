@@ -11,7 +11,7 @@ namespace SmartVillages.Client.Shared
     public class MainLayoutBase : LayoutComponentBase
     {
         [Inject] NavigationManager NavigationManager { get; set; }
-        [Inject] ILocalStorageService localStorage { get; set; }
+        [Inject] ILocalStorageService LocalStorage { get; set; }
 
         public User User { get; set; } = new User();
 
@@ -19,7 +19,7 @@ namespace SmartVillages.Client.Shared
 
         protected override async Task OnInitializedAsync()
         {
-            var user = await localStorage.GetItemAsync<User>("user");
+            var user = await LocalStorage.GetItemAsync<User>("user");
             if (user == null)
             {
                 NavigationManager.NavigateTo("/");
@@ -33,8 +33,9 @@ namespace SmartVillages.Client.Shared
 
         public void Logout()
         {
-            localStorage.RemoveItemAsync("user");
+            LocalStorage.RemoveItemAsync("user");
             NavigationManager.NavigateTo("/");
         }
+
     }
 }

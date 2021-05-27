@@ -24,8 +24,8 @@ namespace SmartVillages.Client.Pages.UserSign
 
         protected async override Task OnParametersSetAsync()
         {
-            // provjeriti jel vec alidirano i preusmjeriti..
-
+            // provjeriti jel vec validirano i preusmjeriti..
+            
             try
             {
                 var response = await Http.PostAsJsonAsync($"api/users/confirmemail/{Oib}", Code);
@@ -44,7 +44,7 @@ namespace SmartVillages.Client.Pages.UserSign
                 Snackbar.Add(ex.Message, Severity.Error);
                 throw;
             }
-
+            
             // kreirati shared service EmailSender i prebaciti tako na api sve..
 
         }

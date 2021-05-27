@@ -12,8 +12,8 @@
     <div class="main">
         <div class="top-row px-4">
             <MudMenu Label="@FullName" Variant="Variant.Filled" Color="Color.Primary" Direction="Direction.Bottom" OffsetY="true"  FullWidth="true" EndIcon="@Icons.Material.Filled.ArrowDropDown">
-                <MudMenuItem>Profile</MudMenuItem>
-                <MudMenuItem>Settings</MudMenuItem>
+                <MudMenuItem Link="/profile">Profile</MudMenuItem>
+                <MudMenuItem Link="/settings">Settings</MudMenuItem>
                 <MudMenuItem OnClick="Logout">Logout</MudMenuItem>
             </MudMenu>
         </div>
