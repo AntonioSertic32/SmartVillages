@@ -5,7 +5,29 @@
 <a href="https://www.behance.net/gallery/114088219/-UI-UX-for-Marketplace?tracking_source=search_projects_recommended%7Cmarketplace">Design 1</a>
 <a href="https://www.behance.net/gallery/60103275/User-Profile-Interface-Design?tracking_source=search_projects_recommended%7Cuser%20profile">Design 2</a>
 
+<br />
 
-@code {
+<MudCard>
+    <MudCardHeader>
+        <CardHeaderAvatar>
+            <MudAvatar Color="Color.Secondary">I</MudAvatar>
+        </CardHeaderAvatar>
+        <CardHeaderContent>
+            <MudText Typo="Typo.body1">Istra Croatia</MudText>
+            <MudText Typo="Typo.body2">Peninsula in Europe</MudText>
+        </CardHeaderContent>
+        <CardHeaderActions>
+            <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
+        </CardHeaderActions>
+    </MudCardHeader>
+    <MudCardMedia Image="/img/apples1.jpg" Height="250" />
+    <MudCardContent>
+        <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.</MudText>
+    </MudCardContent>
+    <MudCardActions>
+        <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Default" />
+        <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" />
+    </MudCardActions>
+</MudCard>
 
-}
+<MudIconButton Icon="fas fa-leaf" Size="Size.Small" Color="Color.Success"></MudIconButton>
