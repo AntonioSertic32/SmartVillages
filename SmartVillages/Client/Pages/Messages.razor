@@ -108,7 +108,7 @@
                                     </div>
                                 </div>
                                 <div class="col-1 pa-0 d-flex align-end justify-content-center mb-5">
-                                    <MudAvatar Image="@(OpenedUser.ProfileImage != null ? OpenedUser.ProfileImage : "/img/default.png")" Size="Size.Medium" Class="" />
+                                    <MudAvatar Image="@(User.ProfileImage != null ? User.ProfileImage : "/img/default.png")" Size="Size.Medium" Class="" />
                                 </div>
                             </div>
                         </div>
@@ -118,7 +118,7 @@
                         <div class="message_left w-100 d-flex align-center">
                             <div class="message_left_container d-flex row ma-0">
                                 <div class="col-1 pa-0 d-flex align-end justify-content-center mb-5">
-                                    <MudAvatar Image="/img/default.png" Size="Size.Medium" Class="" />
+                                    <MudAvatar Image="@(OpenedUser.ProfileImage != null ? OpenedUser.ProfileImage : "/img/default.png")" Size="Size.Medium" Class="" />
                                 </div>
                                 <div class="col-11 p-0 pl-3">
                                     <div class="chat_send_message d-flex align-center p-3 col-sm-12">
