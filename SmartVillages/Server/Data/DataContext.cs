@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartVillages.Shared;
+using SmartVillages.Shared.Marketplace;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace SmartVillages.Server.Data
         public DbSet<User> User { get; set; }
         public DbSet<UserType> UserType { get; set; }
         public DbSet<Message> Message { get; set; }
+        public DbSet<Product> Product { get; set; }
+        public DbSet<ProductCategory> ProductCategory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
