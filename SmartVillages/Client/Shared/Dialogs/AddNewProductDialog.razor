@@ -1,0 +1,108 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudContainer Style="height: 70vh; overflow-y: scroll">
+            <div class="row m-0">
+                <div class="col-6">
+                    <MudTextField @bind-Value="TextValue" Label="Title" Variant="Variant.Outlined"></MudTextField>
+
+                    <MudTextField @bind-Value="Amount" Label="Price" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" AdornmentColor="Color.Warning" />
+
+                    <MudTextField T="string" Label="Description" Variant="Variant.Outlined" Text="@sampleText" Lines="4" />
+                    
+                    <MudSwitch @bind-Checked="@Label_Switch2" Label="Eco" Color="Color.Success" />
+                </div>
+
+                <div class="col-6">
+                    <div class="d-flex align-items-center justify-content-center" style="border: 1px solid #bdbdbd; border-radius: 4px; height: 400px;">
+                        @*<img class="w-100" src="./img/lemon2.jpg" />*@
+                    </div>
+                    <InputFile id="fileInput112" OnChange="UploadFiles" hidden multiple accept=".jpg, .jpeg, .png" />
+                    <MudButton HtmlTag="label"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Filled.CloudUpload"
+                               Class="mt-3"
+                               Style="float:right;"
+                               for="fileInput112">
+                        Upload your images
+                    </MudButton>
+                </div>
+            </div>
+
+            <MudGrid Class="px-3 mt-3">
+                <MudItem xs="12" sm="4" md="3">
+                    <MudSelect T="string" Label="Category" Strict="true" Variant="Variant.Outlined" Format="F2" OffsetY="true">
+                        @foreach (var catregory in Categories)
+                        {
+                            <MudSelectItem T="string" Value="catregory" />
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" sm="4" md="3">
+                    <MudSelect T="string" Label="SubCategory 1" Strict="true" Variant="Variant.Outlined" Format="F2" OffsetY="true">
+                        @foreach (var catregory in SubCategoriesOne)
+                        {
+                            <MudSelectItem T="string" Value="catregory" />
+                        }
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12" sm="4" md="3">
+                    <MudSelect T="string" Label="SubCategory 2" Strict="true" Variant="Variant.Outlined" Format="F2" OffsetY="true">
+                        @foreach (var catregory in SubCategoriesTwo)
+                        {
+                            <MudSelectItem T="string" Value="catregory" />
+                        }
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12" sm="4" md="3">
+                    <MudSelect T="string" Label="Species" Strict="true" Variant="Variant.Outlined" Format="F2" OffsetY="true">
+                        @foreach (var catregory in Species)
+                        {
+                            <MudSelectItem T="string" Value="catregory" />
+                        }
+                    </MudSelect>
+                </MudItem>
+
+            </MudGrid>
+
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Add</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter] public string ContentText { get; set; }
+    [Inject] public ISnackbar Snackbar { get; set; }
+
+    List<string> Categories = new List<string>() { "Biljka", "Životinja", "Mehanizacija" };
+    List<string> SubCategoriesOne = new List<string>() { "Voće", "Povrće", "Žitarice" };
+    List<string> SubCategoriesTwo = new List<string>() { "Jabuka", "Limun", "Malina" };
+    List<string> Species = new List<string>() { "Mjesečar", "Gala", "Willamette" };
+
+    public string TextValue { get; set; }
+    public double? Amount { get; set; }
+    public bool Label_Switch2 { get; set; } = true;
+    string sampleText { get; set; } //= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+    void Cancel() => MudDialog.Cancel();
+
+    private void UploadFiles(InputFileChangeEventArgs e)
+    {
+        var entries = e.GetMultipleFiles();
+        //Do your validations here
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+        Snackbar.Add($"Files with {entries.FirstOrDefault().Size} bytes size are not allowed", Severity.Error);
+        Snackbar.Add($"Files starting with letter {entries.FirstOrDefault().Name.Substring(0, 1)} are not recommended", Severity.Warning);
+        Snackbar.Add($"This file has the extension {entries.FirstOrDefault().Name.Split(".").Last()}", Severity.Info);
+
+        //TODO upload the files to the server
+    }
+}

@@ -12,13 +12,13 @@ namespace SmartVillages.Client.Pages.UserSign
     public class HomeBase : ComponentBase
     {
         [Inject] IJSRuntime JsRuntime { get; set; } 
+        [Inject] public NavigationManager Navigation { get; set; }
+        [Inject] ILocalStorageService LocalStorage { get; set; }
         public bool LeftSignInOpened { get; set; }
         public bool LeftSignUpOpened { get; set; }
         public bool RightSignInOpened { get; set; }
         public bool RightSignUpOpened { get; set; }
         public bool IsLeftOpened { get; set; }
-        [Inject] public NavigationManager Navigation { get; set; }
-        [Inject] ILocalStorageService LocalStorage { get; set; }
 
         protected override async Task OnInitializedAsync()
         {

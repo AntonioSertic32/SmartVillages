@@ -18,11 +18,26 @@ namespace SmartVillages.Client.Pages.UserProfile
         [Inject] public HttpClient Http { get; set; }
         [Inject] public ISnackbar Snackbar { get; set; }
         [Inject] ILocalStorageService LocalStorage { get; set; }
+
+        [Parameter] public string Id { get; set; }
+
         public User User { get; set; } = new User();
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnParametersSetAsync()
         {
-            User = await LocalStorage.GetItemAsync<User>("user");
+            if (Id == "0")
+            {
+                User = await LocalStorage.GetItemAsync<User>("user");
+            }
+            else
+            {
+                var response = await Http.GetAsync($"api/users/" + Id);
+                if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
+                {
+                    User = await response.Content.ReadFromJsonAsync<User>();
+                    StateHasChanged();
+                }
+            }
         }
 
         public async Task OnInputFileChanged(InputFileChangeEventArgs inputFileChangeEvent)

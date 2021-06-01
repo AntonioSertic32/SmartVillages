@@ -1,5 +1,6 @@
 ﻿@page "/marketplace"
 @layout MainLayout
+@inherits MarketplaceBase
 
 <div class="profile_header px-5" style="height: 80px;display: flex;align-items: center;justify-content: space-between;">
     <div class="ml-5 pl-5">
@@ -13,9 +14,10 @@
         </MudButton>
     </div>
     <div class="mr-5 pr-5">
-        <MudBadge Content="3" Color="Color.Dark" Bottom="true" Overlap="true">
+        <MudBadge Content="0" Color="Color.Dark" Bottom="true" Overlap="true">
             <MudButton Variant="Variant.Filled" Size="Size.Large" StartIcon="@Icons.Material.Filled.ShoppingCart" Color="Color.Success">Cart</MudButton>
         </MudBadge>
+        <MudButton Class="ml-4" Variant="Variant.Filled" Size="Size.Large" StartIcon="@Icons.Material.Filled.Add" Color="Color.Success" OnClick="OpenDialog">Add New Product</MudButton>
     </div>
 </div>
 
@@ -64,18 +66,4 @@
 else
 {
     <Product />
-}
-
-@code {
-
-    public string Search { get; set; }
-    public bool opened { get; set; }
-
-    [Inject] public NavigationManager Navigation { get; set; }
-
-
-    public async Task OpenCloseItem()
-    {
-        opened = !opened;
-    }
 }
