@@ -21,14 +21,17 @@ namespace SmartVillages.Client.Pages
         [Inject] public IDialogService DialogService { get; set; }
         public string Search { get; set; }
         public bool opened { get; set; }
-        public User User { get; set; }
+        public User User { get; set; } = new User();
+        public bool OnlyForFarmer { get; set; }
         public List<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();
+        public bool CanOpenDialog { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             User = await LocalStorage.GetItemAsync<User>("user");
-
-            await GetLastProducts();
+            OnlyForFarmer = User.UserType.UserTypeId == 2 ? true : false;
+            StateHasChanged();
+            await GetCategories();
         }
 
         public async Task OpenCloseItem()
@@ -36,22 +39,33 @@ namespace SmartVillages.Client.Pages
             opened = !opened;
         }
 
-        public async Task GetLastProducts()
+        public async Task GetCategories()
         {
             var response = await Http.GetAsync($"api/productcategories/");
             if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
             {
                 ProductCategories = await response.Content.ReadFromJsonAsync<List<ProductCategory>>();
+                CanOpenDialog = true;
                 StateHasChanged();
             }
         }
 
-        public void OpenDialog()
+        public async Task OpenDialog()
         {
-            var parameters = new DialogParameters();
-            parameters.Add("ContentText", "Are you sure you want to remove thisguy@emailz.com from this account?");
+            if (CanOpenDialog)
+            {
+                var parameters = new DialogParameters();
+                parameters.Add("User", User);
+                parameters.Add("AllCategories", ProductCategories);
 
-            DialogService.Show<AddNewProductDialog>("Add New Product", parameters);
+                var dialog = DialogService.Show<AddNewProductDialog>("Add New Product", parameters);
+                var result = await dialog.Result;
+                if (!result.Cancelled)
+                {
+                    Console.WriteLine("Evo mee");
+                }
+
+            }
         }
     }
 }

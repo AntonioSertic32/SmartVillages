@@ -95,3 +95,21 @@ a, .btn-link {
         height: 32px;
     }
 }
+
+/* Dropdown option hover background color */
+.mud-dialog .mud-list-item-clickable:hover {
+    background-color: lightgreen !important;
+}
+
+/* DIALOG */
+.mud-dialog-title {
+    background-color: #302d48;
+    color: white;
+    text-align: center;
+}
+    .mud-dialog-title button {
+        color: white;
+    }
+    .mud-dialog-title h6 {
+        font-weight: 400;
+    }
