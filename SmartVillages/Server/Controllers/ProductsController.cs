@@ -78,6 +78,12 @@ namespace SmartVillages.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
+            var category = await _context.ProductCategory.SingleOrDefaultAsync(t => t.Species == product.ProductCategory.Species);
+            product.ProductCategory = category;
+
+            var user = await _context.User.SingleOrDefaultAsync(t => t.Id == product.User.Id);
+            product.User = user;
+
             _context.Product.Add(product);
             await _context.SaveChangesAsync();
 

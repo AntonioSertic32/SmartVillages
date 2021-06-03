@@ -7,6 +7,8 @@ using SmartVillages.Shared.Marketplace;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace SmartVillages.Client.Shared.Dialogs
@@ -17,26 +19,21 @@ namespace SmartVillages.Client.Shared.Dialogs
         [Parameter] public User User { get; set; }
         [Parameter] public List<ProductCategory> AllCategories { get; set; }
         [Inject] public ISnackbar Snackbar { get; set; }
+        [Inject] public HttpClient Http { get; set; }
 
-        public string NewProduct_Title { get; set; }
-        public double? NewProduct_Price { get; set; }
-        public string NewProduct_Description { get; set; }
-        public bool NewProduct_Eco { get; set; }
-        public string NewProduct_Image { get; set; } = "";
+        public Product ProductModal { get; set; } = new Product();
+        public ProductCategory ProductCategoryModal { get; set; } = new ProductCategory();
 
         public List<string> Categories { get; set; } = new List<string>();
         public List<string> SubCategoriesOne { get; set; } = new List<string>();
         public List<string> SubCategoriesTwo { get; set; } = new List<string>();
         public List<string> Species { get; set; } = new List<string>();
 
-        public string Category { get; set; }
-        public string SubCategoryOne { get; set; }
-        public string SubCategoryTwo { get; set; }
-        public string Specie { get; set; }
-
         protected override async Task OnParametersSetAsync()
         {
             Categories = AllCategories.DistinctBy(x => x.Name).Select(s => s.Name).ToList();
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
+            Snackbar.Configuration.SnackbarVariant = Variant.Filled;
             StateHasChanged();
         }
 
@@ -45,12 +42,12 @@ namespace SmartVillages.Client.Shared.Dialogs
             if(id == 1)
             {
                 SubCategoriesOne.Clear();
-                SubCategoryOne = "";
+                ProductCategoryModal.SubCategoryOne = "";
                 SubCategoriesTwo.Clear();
-                SubCategoryTwo = "";
+                ProductCategoryModal.SubCategoryTwo = "";
                 Species.Clear();
-                Specie = "";
-                foreach (var i in AllCategories.Where(x => x.Name == Category).DistinctBy(d => d.SubCategoryOne))
+                ProductCategoryModal.Species = "";
+                foreach (var i in AllCategories.Where(x => x.Name == ProductCategoryModal.Name).DistinctBy(d => d.SubCategoryOne))
                 {
                     SubCategoriesOne.Add(i.SubCategoryOne);
                 }            
@@ -58,10 +55,10 @@ namespace SmartVillages.Client.Shared.Dialogs
             if(id == 2)
             {
                 SubCategoriesTwo.Clear();
-                SubCategoryTwo = "";
+                ProductCategoryModal.SubCategoryTwo = "";
                 Species.Clear();
-                Specie = "";
-                foreach (var i in AllCategories.Where(x => x.SubCategoryOne == SubCategoryOne).DistinctBy(d => d.SubCategoryTwo))
+                ProductCategoryModal.Species = "";
+                foreach (var i in AllCategories.Where(x => x.SubCategoryOne == ProductCategoryModal.SubCategoryOne).DistinctBy(d => d.SubCategoryTwo))
                 {
                     SubCategoriesTwo.Add(i.SubCategoryTwo);
                 }
@@ -69,15 +66,54 @@ namespace SmartVillages.Client.Shared.Dialogs
             if (id == 3)
             {
                 Species.Clear();
-                Specie = "";
-                foreach (var i in AllCategories.Where(x => x.SubCategoryTwo == SubCategoryTwo).DistinctBy(d => d.Species))
+                ProductCategoryModal.Species = "";
+                foreach (var i in AllCategories.Where(x => x.SubCategoryTwo == ProductCategoryModal.SubCategoryTwo).DistinctBy(d => d.Species))
                 {
                     Species.Add(i.Species);
                 }
             }
         }
 
-        public void Submit() => MudDialog.Close(DialogResult.Ok(true));
+        public void HandleInvalidSubmit()
+        {
+            Console.WriteLine(ProductModal.Eco);
+            Snackbar.Clear();
+            Snackbar.Add("Required fields must be filled!", Severity.Error);
+        }
+
+        public async Task AddProduct()
+        {
+            //validacija
+            if (!string.IsNullOrEmpty(ProductCategoryModal.Name) && !string.IsNullOrEmpty(ProductCategoryModal.SubCategoryOne) && !string.IsNullOrEmpty(ProductCategoryModal.SubCategoryTwo) && !string.IsNullOrEmpty(ProductCategoryModal.Species))
+            {
+                //ubacivanje
+                Snackbar.Clear();
+                Snackbar.Add("Validateing..", Severity.Success);
+                try
+                {
+                    ProductModal.ProductCategory = ProductCategoryModal;
+                    ProductModal.User = User;
+                    var response = await Http.PostAsJsonAsync($"api/products", ProductModal);
+
+                    if (response.StatusCode != System.Net.HttpStatusCode.InternalServerError)
+                    {
+                        Snackbar.Clear();
+                        Snackbar.Add("Success!", Severity.Success);
+                        MudDialog.Close(DialogResult.Ok(true));
+                    }
+                }
+                catch (HttpRequestException ex)
+                {
+                    Snackbar.Clear();
+                    Snackbar.Add("Error: " + ex.Message, Severity.Success);
+                }
+            }
+            else
+            {
+                Snackbar.Add("All category fields must be filled", Severity.Error);
+            }
+        }
+
         public void Cancel() => MudDialog.Cancel();
 
         public async Task UploadFiles(InputFileChangeEventArgs e)
@@ -95,7 +131,7 @@ namespace SmartVillages.Client.Shared.Dialogs
             var buffer = new byte[file.Size];
             await file.OpenReadStream(1512000).ReadAsync(buffer);
             //convert byte array to base 64 string
-            NewProduct_Image = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
+            ProductModal.Image = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
             StateHasChanged();
         }
     }
