@@ -1,11 +1,12 @@
 ﻿@page "/product"
 @layout MainLayout
+@inherits SingleProductBase
 
 <div class="row m-3" style="height: calc(100vh - 136px - 2rem);overflow: scroll;">
 
     <div class="col p-4">
         <div class="d-flex">
-            <img class="w-100" src="./img/lemon2.jpg" style="border-radius: 25px;">
+            <img class="w-100" src="@Product.Image" style="border-radius: 25px;">
 
             <div class="d-flex" style="width: 50px; height: 50px; background-color: white; border-radius: 15px; float: right; margin-left: -70px; margin-top: 20px;justify-content: center;">
                 <MudIconButton Icon="fas fa-heart" Size="Size.Medium" Color="Color.Secondary"></MudIconButton>
@@ -15,9 +16,9 @@
 
     <div class="col p-4 mt-5">
         <div class="row">
-            <h1 class="col-8">Tomato 'Piccolino' Grafted Bonita Coop</h1>
+            <h1 class="col-8">@Product.Title</h1>
             <div class="col-4">
-                @if (!addedornot)
+                @if (!Addedornot)
                 {
                     <MudButton FullWidth="true" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.AddShoppingCart" Color="Color.Success" OnClick="Add">Add to Cart</MudButton>
                 }
@@ -31,24 +32,14 @@
             <MudRating ReadOnly="true" SelectedValue="4" /><MudText Class="ml-2" Typo="Typo.h6">4,2</MudText>
         </div>
         <div class="d-flex align-items-center">
-            <p style="font-weight: 500;font-size: 25px;">$14.50</p>
+            <p style="font-weight: 500;font-size: 25px;">@Product.Price</p>
             <p class="text-muted">/Kg</p>
         </div>
-        <p style="font-size: 18px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse volutpat tristique quam at ornare. In ultrices, purus feugiat commodo tempor, nisl magna congue ex, at suscipit est nulla vel enim. Nam non tortor sit amet nibh laoreet ullamcorper. Curabitur consectetur enim at orci gravida molestie. Cras metus turpis, hendrerit in consequat at, eleifend eu mauris. Fusce a felis fringilla, vehicula ante accumsan, aliquam nisi. In sagittis lacinia erat vitae dignissim. Nam ac tortor quis ex interdum sollicitudin sed sed erat. Duis at luctus velit. Donec vestibulum leo vel magna pretium, sit amet volutpat nulla consectetur. Sed magna ante, tristique sed metus et, varius porttitor tellus. Pellentesque ut ex lorem. Fusce sit amet dapibus felis.</p>
+        <p style="font-size: 18px;">@Product.Description</p>
         <div>Oter info..</div>
     </div>
 
     <a href="https://www.behance.net/gallery/114088219/-UI-UX-for-Marketplace?tracking_source=search_projects_recommended%7Cmarketplace">Design 1</a>
     <a href="https://www.behance.net/gallery/60103275/User-Profile-Interface-Design?tracking_source=search_projects_recommended%7Cuser%20profile">Design 2</a>
 
-
 </div>
-
-@code {
-    public bool addedornot { get; set; }
-
-    public async Task Add()
-    {
-        addedornot = !addedornot;
-    }
-} 

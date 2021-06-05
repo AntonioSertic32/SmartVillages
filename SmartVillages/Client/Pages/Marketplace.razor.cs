@@ -20,23 +20,40 @@ namespace SmartVillages.Client.Pages
         [Inject] public HttpClient Http { get; set; }
         [Inject] public IDialogService DialogService { get; set; }
         public string Search { get; set; }
-        public bool opened { get; set; }
+        public bool Opened { get; set; }
         public User User { get; set; } = new User();
         public bool OnlyForFarmer { get; set; }
         public List<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();
+        public List<Product> Products { get; set; } = new List<Product>();
         public bool CanOpenDialog { get; set; }
+        public Product OpenedProduct { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             User = await LocalStorage.GetItemAsync<User>("user");
             OnlyForFarmer = User.UserType.UserTypeId == 2 ? true : false;
-            StateHasChanged();
-            await GetCategories();
+            await GetProducts();
         }
 
-        public async Task OpenCloseItem()
+        public async Task OpenCloseItem(int id = 0)
         {
-            opened = !opened;
+            Console.WriteLine(id);
+            if (id != 0)
+            {
+                if (!Opened)
+                {
+                    foreach (var p in Products)
+                    {
+                        if(p.Id == id)
+                        {
+                            OpenedProduct = p;
+                            break;
+                        }
+                    }
+                }
+            }
+            Opened = !Opened;
+            StateHasChanged();
         }
 
         public async Task GetCategories()
@@ -48,6 +65,16 @@ namespace SmartVillages.Client.Pages
                 CanOpenDialog = true;
                 StateHasChanged();
             }
+        }
+
+        public async Task GetProducts()
+        {
+            var response = await Http.GetAsync($"api/products/getlastten/");
+            if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
+            {
+                Products = await response.Content.ReadFromJsonAsync<List<Product>>();
+            }
+            await GetCategories();
         }
 
         public async Task OpenDialog()

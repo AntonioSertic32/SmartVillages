@@ -110,5 +110,21 @@ namespace SmartVillages.Server.Controllers
         {
             return _context.Product.Any(e => e.Id == id);
         }
+
+
+        [HttpGet("getlastten")]
+        public async Task<ActionResult<List<Product>>> GeTLastTen()
+        {
+            List<Product> products = new List<Product>();
+            products = _context.Product.OrderByDescending(t => t.Id).Include(f => f.User).Include(f => f.ProductCategory).Take(10).ToList();
+            if (products == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return products;
+            }
+        }
     }
 }
