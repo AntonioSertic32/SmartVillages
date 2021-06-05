@@ -8,11 +8,26 @@
 
         <div class="text-center py-5" style="height: 300px; background-color: white;">
             <img src="@(User.ProfileImage != null ? User.ProfileImage : "/img/default.png")" class="rounded img-fluid h-100" alt="User Profile Picture">
-            <div class="upload-profile-image" style="margin-top: -28px;">
-                <InputFile id="fileInput" OnChange="UploadFiles" hidden accept=".jpg, .jpeg, .png" />
-                <MudIconButton HtmlTag="label" Icon="@Icons.Filled.PhotoCamera" for="fileInput" Style="background-color: lightgreen;">
-                </MudIconButton>
-            </div>
+            @if (ProfileOfSignInUser)
+            {
+                if (EditingProfileImage)
+                {
+                    <div class="upload-profile-image" style="margin-top: -28px;">
+                        <MudIconButton Class="mr-5" Icon="@Icons.Filled.Close" Style="background-color: lightcoral;" OnClick="CancelUpdateingImage" />
+                        <MudIconButton Class="ml-5" Icon="@Icons.Filled.Check" Style="background-color: lightgreen;" OnClick="DoUpdateingImage" />
+                    </div>
+                }
+                else
+                {
+                    <div class="upload-profile-image" style="margin-top: -28px;">
+                        <InputFile id="fileInput" OnChange="UploadFiles" hidden accept=".jpg, .jpeg, .png" />
+                        <MudIconButton HtmlTag="label" Icon="@Icons.Filled.PhotoCamera" for="fileInput" Style="background-color: lightgreen;" />
+                    </div>
+                }
+            }
+        </div>
+        <div class="mt-2 d-flex justify-content-center w-100">
+            <p class="m-0" style=" font-size: 28px;">@User.FirstName @User.LastName</p>
         </div>
         <hr />
         <div class="px-5">
@@ -41,64 +56,47 @@
 
         <MudTabs Style="z-index: 0;" Centered="true" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
             <MudTabPanel Text="Profile details">
-                <MudText>Profile details</MudText>
-                <MudSimpleTable Style="overflow-x: auto;">
-                    <thead>
-                        <tr>
-                            @foreach (var h in headings)
-                            {
-                                <th>@h</th>
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var row in rows)
-                        {
-                            <tr>
-                                @foreach (var x in row.Split())
-                                {
-                                    <td>@x</td>
-                                }
-                            </tr>
-                        }
-                    </tbody>
-                </MudSimpleTable>
+                @if (User.FirstName != null)
+                {
+                    <div class="d-flex align-items-center">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;">Titula: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.UserType.UserTypeName</p>
+                    </div>
+                    <div class="@(User.Bio != null ? "d-flex align-items-center" : "d-none")">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;align-self:flex-start">Biography: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.Bio</p>
+                    </div>
+                    <div class="@(User.Sex != null ? "d-flex align-items-center" : "d-none")">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;">Sex: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.Sex</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;">Birth date: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.BirthDate?.ToString("dd/MM/yyyy")</p>
+                    </div>
+                }
             </MudTabPanel>
 
             <MudTabPanel Text="Contact details">
-                <MudText>Contact details</MudText>
-
-                <InputFile OnChange="OnInputFileChanged" style="margin-bottom: 1rem;" class="white-text"></InputFile>
-
+                @if (User.FirstName != null)
+                {
+                    <div class="d-flex align-items-center">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;">Email: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.Email</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;">OIB: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.OIB</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;">Country: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.Country</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;">City: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.City</p>
+                    </div>
+                    <div class="@(User.Address != null ? "d-flex align-items-center" : "d-none")">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;">Address: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.Address</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;">Number: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.Number</p>
+                    </div>
+                }
             </MudTabPanel>
         </MudTabs>
 
-
     </div>
-
 </div>
-
-@code
-{
-    private void UploadFiles(InputFileChangeEventArgs e)
-    {
-        var entries = e.GetMultipleFiles();
-        //Do your validations here
-        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
-        Snackbar.Add($"Files with {entries.FirstOrDefault().Size} bytes size are not allowed", Severity.Error);
-        Snackbar.Add($"Files starting with letter {entries.FirstOrDefault().Name.Substring(0, 1)} are not recommended", Severity.Warning);
-        Snackbar.Add($"This file has the extension {entries.FirstOrDefault().Name.Split(".").Last()}", Severity.Info);
-
-        //TODO upload the files to the server
-    }
-
-    string[] headings = { "ID", "Name", "Email", "Gender", "IP Address" };
-    string[] rows = {
-        @"1 Krishna kpartner0@usatoday.com Male 28.25.250.202",
-        @"2 Webb wstitle1@ning.com Male 237.168.134.114",
-        @"3 Nathanil nneal2@cyberchimps.com Male 92.6.0.175",
-        @"4 Adara alockwood3@patch.com Female 182.174.217.152",
-        @"5 Cecilius cchaplin4@shinystat.com Male 195.124.144.18",
-        @"6 Cicely cemerine9@soup.io Female 138.94.191.43",
-    };
-}

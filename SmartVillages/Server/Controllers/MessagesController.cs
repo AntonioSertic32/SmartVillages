@@ -144,6 +144,7 @@ namespace SmartVillages.Server.Controllers
                 var lastMessage = _context.Message.Where(u => (u.PersonOne == User && u.PersonTwo == singleUser) || (u.PersonOne == singleUser && u.PersonTwo == User)).OrderBy(o => o.Id).Last();
                 var numOfUnread = _context.Message.Where(u => (u.PersonOne == singleUser && u.PersonTwo == User) && u.Seen == false).Count();
                 bool isLastSeen = false;
+                lastMessage.MessageContent = lastMessage.MessageContent.Substring(0, 80) + "...";
                 if (lastMessage.PersonOne == User) 
                 {
                     isLastSeen = true;

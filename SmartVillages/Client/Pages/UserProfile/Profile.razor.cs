@@ -22,15 +22,20 @@ namespace SmartVillages.Client.Pages.UserProfile
         [Parameter] public string Id { get; set; }
 
         public User User { get; set; } = new User();
+        public bool ProfileOfSignInUser { get; set; }
+        public bool EditingProfileImage { get; set; }
+        public string UserOldImage { get; set; }
 
         protected override async Task OnParametersSetAsync()
         {
             if (Id == "0")
             {
+                ProfileOfSignInUser = true;
                 User = await LocalStorage.GetItemAsync<User>("user");
             }
             else
             {
+                ProfileOfSignInUser = false;
                 var response = await Http.GetAsync($"api/users/" + Id);
                 if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
                 {
@@ -40,44 +45,45 @@ namespace SmartVillages.Client.Pages.UserProfile
             }
         }
 
-        public async Task OnInputFileChanged(InputFileChangeEventArgs inputFileChangeEvent)
+        public async Task UploadFiles(InputFileChangeEventArgs e)
         {
+            var entries = e.GetMultipleFiles();
+            //Do your validations here
+            /*
+            Snackbar.Add($"Files with {entries.FirstOrDefault().Size} bytes size are not allowed", Severity.Error);
+            Snackbar.Add($"Files starting with letter {entries.FirstOrDefault().Name.Substring(0, 1)} are not recommended", Severity.Warning);
+            Snackbar.Add($"This file has the extension {entries.FirstOrDefault().Name.Split(".").Last()}", Severity.Info);
+            */
+
             //get the file
-            var file = inputFileChangeEvent.File;
+            var file = e.File;
             //read that file in a byte array
             var buffer = new byte[file.Size];
             await file.OpenReadStream(1512000).ReadAsync(buffer);
             //convert byte array to base 64 string
+            UserOldImage = User.ProfileImage;
             User.ProfileImage = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
 
-            await UploadImage();
-            // sprmeim u bazu imageData
-            //kad iscitavam samo ubacim u search user.image jel..
+            EditingProfileImage = true;
+            StateHasChanged();
         }
 
-        public async Task UploadImage()
+        public async Task CancelUpdateingImage()
         {
-            try
-            {
-                var response = await Http.PutAsJsonAsync($"api/users/{User.Id}", User);
-
-                Snackbar.Clear();
-                if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
-                {
-                    Snackbar.Add("Error.", Severity.Error);
-                }
-                else
-                {
-                    Snackbar.Add("GOOD", Severity.Success);
-                    StateHasChanged();
-                }
-            }
-            catch (HttpRequestException ex)
-            {
-                Snackbar.Add(ex.Message, Severity.Error);
-                throw;
-            }
+            EditingProfileImage = false;
+            User.ProfileImage = UserOldImage;
+            StateHasChanged();
         }
 
+        public async Task DoUpdateingImage()
+        {
+            EditingProfileImage = false;
+            StateHasChanged();
+
+            var response = await Http.PutAsJsonAsync($"api/users/{User.Id}", User);
+            Snackbar.Clear();
+            Snackbar.Add("GOOD", Severity.Success);
+            await LocalStorage.SetItemAsync("user", User);
+        }
     }
 }
