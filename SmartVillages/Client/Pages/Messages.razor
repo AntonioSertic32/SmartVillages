@@ -1,4 +1,4 @@
-﻿@page "/messages"
+﻿@page "/messages/{id}"
 @layout MainLayout
 @inherits MessagesBase
 
@@ -7,19 +7,20 @@
     <div class="messages_chatlist col-lg-5 col-xxl-3 container-fluid p-0">
 
         <div class="messages_chatlist_top d-flex justify-content-between p-3">
-            <h3 class="m-0">Messages <span class="unread_messages ml-2">5</span> </h3>
+            <h3 class="m-0">Messages @*<span class="unread_messages ml-2">5</span>*@ </h3>
+            @*
             <div class="d-flex align-center">
                 <MudIconButton Class="p-0" Color="Color.Primary" Size="Size.Medium" Icon="@Icons.Material.Filled.AddBox"></MudIconButton>
                 <p class="mb-0 ml-1">New Chat</p>
             </div>
+            *@
         </div>
-
+        @*
         <div class="messages_chatlist_filters d-flex p-3">
-
             <MudTextField Class="m-0" @bind-Value="@TextValue" Label="Search" Variant="Variant.Outlined" Margin="Margin.Dense" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" Immediate="true" />
             <MudButton Class="ml-3" Size="Size.Medium" Variant="Variant.Filled" Color="Color.Primary"><MudIcon Icon="@Icons.Material.Filled.FilterAlt" /></MudButton>
         </div>
-
+        *@
         <div class="p-3" style="overflow: scroll; max-height: calc(100vh - 176px);">
 
             @foreach (var message in AllMessagesList)
@@ -33,6 +34,7 @@
                         <p class="author_last_message m-0 text-muted">@message.MessageContent</p>
                     </div>
                     <div class="settings_and_unread">
+                        @*
                         <div class="messages_settings">
                             <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Small" Dense="true" Direction="Direction.Left" OffsetX="true">
                                 <MudMenuItem Link="/userprofile">Obriši</MudMenuItem>
@@ -40,6 +42,7 @@
                                 <MudMenuItem Link="/fetchdata">Prijavi</MudMenuItem>
                             </MudMenu>
                         </div>
+                        *@
                         @if (message.UnreadMessages != 0)
                         {
                             <div class="unread_messages">
@@ -61,7 +64,7 @@
                     <h4>@OpenedUser.FirstName @OpenedUser.LastName</h4>
                 </div>
 
-
+                @*
                 <div class="col d-flex justify-content-end">
                     <div class="messages_settings d-flex align-center">
                         <MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Medium" Dense="true" Direction="Direction.Left" OffsetX="true">
@@ -71,6 +74,7 @@
                         </MudMenu>
                     </div>
                 </div>
+                *@
             </div>
 
             <div class="chat_container px-5 py-2">

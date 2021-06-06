@@ -25,6 +25,7 @@ namespace SmartVillages.Client.Pages.UserProfile
         public bool ProfileOfSignInUser { get; set; }
         public bool EditingProfileImage { get; set; }
         public string UserOldImage { get; set; }
+        public bool Loaded { get; set; }
 
         protected override async Task OnParametersSetAsync()
         {
@@ -32,17 +33,20 @@ namespace SmartVillages.Client.Pages.UserProfile
             {
                 ProfileOfSignInUser = true;
                 User = await LocalStorage.GetItemAsync<User>("user");
+                Loaded = true;
             }
             else
             {
                 ProfileOfSignInUser = false;
-                var response = await Http.GetAsync($"api/users/" + Id);
+                var response = await Http.GetAsync($"api/users/{Id}");
                 if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
                 {
-                    User = await response.Content.ReadFromJsonAsync<User>();
-                    StateHasChanged();
+                    List<User> users = await response.Content.ReadFromJsonAsync<List<User>>();
+                    User = users.LastOrDefault();
+                    Loaded = true;
                 }
             }
+            StateHasChanged();
         }
 
         public async Task UploadFiles(InputFileChangeEventArgs e)

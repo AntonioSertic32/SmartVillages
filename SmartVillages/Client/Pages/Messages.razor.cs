@@ -14,7 +14,7 @@ namespace SmartVillages.Client.Pages
 {
     public class MessagesBase : ComponentBase
     {
-        [Inject] NavigationManager NavigationManager { get; set; }
+        [Parameter] public string Id { get; set; }
         [Inject] ILocalStorageService localStorage { get; set; }
         [Inject] public HttpClient Http { get; set; }
         [Inject] IJSRuntime JsRuntime { get; set; }
@@ -26,6 +26,8 @@ namespace SmartVillages.Client.Pages
         public bool MessageOpened { get; set; } = false;
         public User OpenedUser { get; set; }
 
+        public bool Found { get; set; }
+
         public User User { get; set; }
         public List<Message> DirectMessagesList { get; set; } = new List<Message>();
         public List<LastMessage> AllMessagesList { get; set; } = new List<LastMessage>();
@@ -35,6 +37,23 @@ namespace SmartVillages.Client.Pages
             User = await localStorage.GetItemAsync<User>("user");
             /* DOHVACANJE SVIH PORUKA ZA LIJEVU STRANU KOMPONENTE */
             await GetAllMessages();
+
+            foreach(var me in AllMessagesList)
+            {
+                // pogledat jel ima sa userom pod ovim id-om
+                if (me.User.Id == int.Parse(Id))
+                {
+                    // otvoriti te poruke
+                    Found = true;
+                    await OpenMessage(me);
+                    break;
+                }
+            }
+            if(!Found && Id != "0")
+            {
+                // ili samo ispisati informacije (otvaranje nove poruke)
+                await OpenNewMessage();
+            }
 
             Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
             Snackbar.Configuration.SnackbarVariant = Variant.Filled;
@@ -96,6 +115,7 @@ namespace SmartVillages.Client.Pages
                         MessageToSend = "";
                         StateHasChanged();
                         await JsRuntime.InvokeVoidAsync("scrollToElementId", "bottom_message");
+                        await GetAllMessages();
                     }
                 }
                 catch (HttpRequestException ex)
@@ -140,6 +160,18 @@ namespace SmartVillages.Client.Pages
             StateHasChanged();
 
             await GetDirectMessages();
+        }
+
+        public async Task OpenNewMessage()
+        {
+            // dohvatiti usera preko id-a
+            var response = await Http.GetAsync($"api/users/{Id}");
+            if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
+            {
+                List<User> users = await response.Content.ReadFromJsonAsync<List<User>>();
+                OpenedUser = users.LastOrDefault();
+                MessageOpened = true;
+            }
         }
 
         public async Task SetAsSeen(LastMessage lastmessage)

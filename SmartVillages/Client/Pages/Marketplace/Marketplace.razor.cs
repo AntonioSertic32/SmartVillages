@@ -27,17 +27,19 @@ namespace SmartVillages.Client.Pages
         public List<Product> Products { get; set; } = new List<Product>();
         public bool CanOpenDialog { get; set; }
         public Product OpenedProduct { get; set; }
+        public List<int> Cart { get; set; } = new List<int>();
 
         protected override async Task OnInitializedAsync()
         {
             User = await LocalStorage.GetItemAsync<User>("user");
             OnlyForFarmer = User.UserType.UserTypeId == 2 ? true : false;
             await GetProducts();
+            Cart = await LocalStorage.GetItemAsync<List<int>>("cart");
+            StateHasChanged();
         }
 
         public async Task OpenCloseItem(int id = 0)
         {
-            Console.WriteLine(id);
             if (id != 0)
             {
                 if (!Opened)
@@ -73,6 +75,7 @@ namespace SmartVillages.Client.Pages
             if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
             {
                 Products = await response.Content.ReadFromJsonAsync<List<Product>>();
+                StateHasChanged();
             }
             await GetCategories();
         }
@@ -93,6 +96,12 @@ namespace SmartVillages.Client.Pages
                 }
 
             }
+        }
+
+        public async Task UpdateOnCart()
+        {
+            Cart = await LocalStorage.GetItemAsync<List<int>>("cart");
+            StateHasChanged();
         }
     }
 }

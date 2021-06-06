@@ -34,9 +34,10 @@ namespace SmartVillages.Server.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<List<User>>> GetUser(int id)
         {
-            var user = await _context.User.FindAsync(id);
+            //var user = await _context.User.Include(i => i.UserType).FindAsync(id);
+            var user = _context.User.Where(t => t.Id == id).Include(i => i.UserType).ToList();
 
             if (user == null)
             {
