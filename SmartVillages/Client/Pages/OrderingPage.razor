@@ -1,0 +1,46 @@
+﻿@page "/order"
+@layout MainLayout
+
+<MudTabs Elevation="0" Centered="true" Rounded="true" @ref="tabs">
+    <MudTabPanel Icon="@Icons.Material.Filled.LocalGroceryStore" @ref="panel01" ID="@("pn_one")">
+
+        <p>Preview</p>
+        <MudIconButton Icon="@Icons.Material.Filled.ChevronRight" OnClick="() => Activate(1)"></MudIconButton>
+
+    </MudTabPanel>
+    <MudTabPanel Icon="@Icons.Material.Filled.LocalShipping" @ref="panel02" ID="@("pn_two")">
+
+        <p>Shipping</p>
+        <MudIconButton Icon="@Icons.Material.Filled.ChevronLeft" OnClick="() => Activate(0)"></MudIconButton>
+        <MudIconButton Icon="@Icons.Material.Filled.ChevronRight" OnClick="() => Activate(2)"></MudIconButton>
+
+    </MudTabPanel>
+    <MudTabPanel Icon="@Icons.Material.Filled.Verified" @ref="panel03" ID="@("pn_three")">
+
+        <p>Checkout</p>
+        <MudIconButton Icon="@Icons.Material.Filled.ChevronLeft" OnClick="() => Activate(1)"></MudIconButton>
+
+    </MudTabPanel>
+</MudTabs>
+
+@code {
+    MudTabs tabs;
+    MudTabPanel panel01;
+    MudTabPanel panel02;
+    MudTabPanel panel03;
+
+    void Activate(int index)
+    {
+        tabs.ActivatePanel(index);
+    }
+
+    void Activate(MudTabPanel panel)
+    {
+        tabs.ActivatePanel(panel);
+    }
+
+    void Activate(object id)
+    {
+        tabs.ActivatePanel(id);
+    }
+}

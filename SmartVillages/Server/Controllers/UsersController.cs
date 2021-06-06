@@ -214,7 +214,7 @@ namespace SmartVillages.Server.Controllers
             }
         }
 
-        public string GenerateCode()
+        protected string GenerateCode()
         {
             string SecretCode = "";
             List<string> alphabet = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
@@ -229,7 +229,7 @@ namespace SmartVillages.Server.Controllers
             return SecretCode;
         }
 
-        public int RandomNumber(int min, int max)
+        protected int RandomNumber(int min, int max)
         {
             return _random.Next(min, max);
         }
