@@ -1,0 +1,66 @@
+﻿@layout MainLayout
+
+<MudTabs Elevation="0" Centered="true" Rounded="true" @ref="tabs">
+    <MudTabPanel Icon="@Icons.Material.Filled.LocalGroceryStore" @ref="panel01" ID="@("pn_one")">
+
+        <div class="d-flex justify-content-center align-items-center" style="flex-direction: column;">
+            <MudPaper Class="pa-10 my-5" Elevation="10" Style="width: 70%; height: 600px;">
+                <MudSimpleTable Hover="true" Dense="true" FixedHeader="true" Style="height: 90%">
+                    <thead>
+                        <tr>
+                            <th class="w-50">Product</th>
+                            <th class="w-25 text-center">Quantity</th>
+                            <th class="w-25 text-center">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(int i = 0; i < Cart.Count; i++)
+                        {
+                            int locale = i;
+                            <tr>
+                                <td>@Cart[i].ProductTitle</td>
+                                <td><MudNumericField @bind-Value="Cart[locale].ProductQuantity" TextChanged="() => NewPrice(Cart[locale].ProductId)" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentText="Kg" AdornmentColor="Color.Info" /></td>
+                                <td class="text-center">@Cart[locale].FinalPrice</td>
+                            </tr>
+                        }
+                    </tbody>
+                </MudSimpleTable>
+                <div class="d-flex w-100 align-items-center justify-content-between" style="height: 10%">
+                    <p>All</p>
+                    <p>550$</p>
+                </div>
+            </MudPaper>
+            <div class="d-flex justify-content-between" style="width: 400px;">
+                <div></div>
+                <MudIconButton Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Large" OnClick="() => Activate(1)"></MudIconButton>
+            </div>
+        </div>
+
+    </MudTabPanel>
+    <MudTabPanel Icon="@Icons.Material.Filled.LocalShipping" @ref="panel02" ID="@("pn_two")">
+
+        <div class="d-flex justify-content-center align-items-center" style="flex-direction: column;">
+            <MudPaper Class="pa-10 my-5" Elevation="10" Style="width: 40%; height: 600px; }">
+                <p>Shipping</p>
+            </MudPaper>
+            <div class="d-flex justify-content-between" style="width: 400px;">
+                <MudIconButton Icon="@Icons.Material.Filled.ChevronLeft" Size="Size.Large" OnClick="() => Activate(0)"></MudIconButton>
+                <MudIconButton Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Large" OnClick="() => Activate(2)"></MudIconButton>
+            </div>
+        </div>
+
+    </MudTabPanel>
+    <MudTabPanel Icon="@Icons.Material.Filled.Verified" @ref="panel03" ID="@("pn_three")">
+
+        <div class="d-flex justify-content-center align-items-center" style="flex-direction: column;">
+            <MudPaper Class="pa-10 my-5" Elevation="10" Style="width: 40%; height: 600px; }">
+                <p>Checkout</p>
+            </MudPaper>
+            <div class="d-flex justify-content-between" style="width: 400px;">
+                <MudIconButton Icon="@Icons.Material.Filled.ChevronLeft" OnClick="() => Activate(1)"></MudIconButton>
+                <MudIconButton Icon="@Icons.Material.Filled.Check" OnClick="() => Activate(1)"></MudIconButton>
+            </div>
+        </div>
+
+    </MudTabPanel>
+</MudTabs>

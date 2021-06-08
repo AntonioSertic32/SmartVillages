@@ -9,6 +9,10 @@ namespace SmartVillages.Shared.Marketplace
     public class CartItem
     {
         public int ProductId { get; set; }
-        public float ProductWeight { get; set; }
+        public string ProductTitle { get; set; }
+        public float ProductQuantity { get; set; }
+        public float FinalPrice { get; set; }
+        public float PriceOfOne { get; set; }
+
     }
 }

@@ -58,7 +58,7 @@ namespace SmartVillages.Client.Pages
         public async void OpenAddToChartDialog()
         {
             var parameters = new DialogParameters();
-            parameters.Add("ProductId", Product.Id);
+            parameters.Add("Product", Product);
             parameters.Add("CartList", Cart);
 
             var dialog = DialogService.Show<AddToCartDialog>("Add to cart", parameters);

@@ -28,6 +28,7 @@ namespace SmartVillages.Client.Pages
         public bool CanOpenDialog { get; set; }
         public Product OpenedProduct { get; set; }
         public List<CartItem> Cart { get; set; } = new List<CartItem>();
+        public bool CartOpened { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -39,23 +40,28 @@ namespace SmartVillages.Client.Pages
             StateHasChanged();
         }
 
-        public async Task OpenCloseItem(int id = 0)
+        public async Task OpenItem(int id, bool isOpenCart = false)
         {
-            if (id != 0)
+            if(isOpenCart)
+                CartOpened = true;
+            else
             {
-                if (!Opened)
+                foreach (var p in Products)
                 {
-                    foreach (var p in Products)
+                    if (p.Id == id)
                     {
-                        if(p.Id == id)
-                        {
-                            OpenedProduct = p;
-                            break;
-                        }
+                        OpenedProduct = p;
+                        break;
                     }
                 }
+                Opened = true;
             }
-            Opened = !Opened;
+            StateHasChanged();
+        }
+        public async Task CloseItem()
+        {
+            CartOpened = false;
+            Opened = false;
             StateHasChanged();
         }
 
@@ -117,8 +123,8 @@ namespace SmartVillages.Client.Pages
         public async void OpenAddToChartDialog(int id)
         {
             var parameters = new DialogParameters();
-            parameters.Add("ProductId", id);
             parameters.Add("CartList", Cart);
+            parameters.Add("Product", Products.Where(c => c.Id == id).FirstOrDefault());
 
             var dialog = DialogService.Show<AddToCartDialog>("Add to cart", parameters);
             var result = await dialog.Result;
