@@ -27,14 +27,15 @@ namespace SmartVillages.Client.Pages
         public List<Product> Products { get; set; } = new List<Product>();
         public bool CanOpenDialog { get; set; }
         public Product OpenedProduct { get; set; }
-        public List<int> Cart { get; set; } = new List<int>();
+        public List<CartItem> Cart { get; set; } = new List<CartItem>();
 
         protected override async Task OnInitializedAsync()
         {
             User = await LocalStorage.GetItemAsync<User>("user");
             OnlyForFarmer = User.UserType.UserTypeId == 2 ? true : false;
             await GetProducts();
-            Cart = await LocalStorage.GetItemAsync<List<int>>("cart");
+            await GetCategories();
+            Cart = await LocalStorage.GetItemAsync<List<CartItem>>("cart");
             StateHasChanged();
         }
 
@@ -71,13 +72,13 @@ namespace SmartVillages.Client.Pages
 
         public async Task GetProducts()
         {
+            Products.Clear();
             var response = await Http.GetAsync($"api/products/getlastten/");
             if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
             {
                 Products = await response.Content.ReadFromJsonAsync<List<Product>>();
                 StateHasChanged();
             }
-            await GetCategories();
         }
 
         public async Task OpenDialog()
@@ -88,11 +89,13 @@ namespace SmartVillages.Client.Pages
                 parameters.Add("User", User);
                 parameters.Add("AllCategories", ProductCategories);
 
-                var dialog = DialogService.Show<AddNewProductDialog>("Add New Product", parameters);
+                DialogOptions maxWidth = new DialogOptions() { MaxWidth = MaxWidth.Medium };
+
+                var dialog = DialogService.Show<AddNewProductDialog>("Add New Product", parameters, maxWidth);
                 var result = await dialog.Result;
                 if (!result.Cancelled)
                 {
-                    Console.WriteLine("Evo mee");
+                    await GetProducts();
                 }
 
             }
@@ -100,8 +103,29 @@ namespace SmartVillages.Client.Pages
 
         public async Task UpdateOnCart()
         {
-            Cart = await LocalStorage.GetItemAsync<List<int>>("cart");
+            Cart = await LocalStorage.GetItemAsync<List<CartItem>>("cart");
             StateHasChanged();
+        }
+
+        public async Task RemoveFromCart(int id)
+        {
+            var item = Cart.Where(c => c.ProductId == id).FirstOrDefault();
+            Cart.Remove(item);
+            await LocalStorage.SetItemAsync("cart", Cart);
+        }
+
+        public async void OpenAddToChartDialog(int id)
+        {
+            var parameters = new DialogParameters();
+            parameters.Add("ProductId", id);
+            parameters.Add("CartList", Cart);
+
+            var dialog = DialogService.Show<AddToCartDialog>("Add to cart", parameters);
+            var result = await dialog.Result;
+            if (!result.Cancelled)
+            {
+                await UpdateOnCart();
+            }
         }
     }
 }

@@ -1,0 +1,10 @@
+﻿@inherits AddToCartDialogBase
+<MudDialog>
+    <DialogContent>
+        <MudNumericField @bind-Value="Weight" Label="Weight" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentText="Kg" AdornmentColor="Color.Primary" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="Cancel">Cancel</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddToCart">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
