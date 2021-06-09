@@ -1,16 +1,18 @@
 ﻿@layout MainLayout
+@inherits CartOrderBase
 
 <MudTabs Elevation="0" Centered="true" Rounded="true" @ref="tabs">
-    <MudTabPanel Icon="@Icons.Material.Filled.LocalGroceryStore" @ref="panel01" ID="@("pn_one")">
+    <MudTabPanel Icon="@Icons.Material.Filled.LocalGroceryStore" OnClick="Reset">
 
         <div class="d-flex justify-content-center align-items-center" style="flex-direction: column;">
             <MudPaper Class="pa-10 my-5" Elevation="10" Style="width: 70%; height: 600px;">
                 <MudSimpleTable Hover="true" Dense="true" FixedHeader="true" Style="height: 90%">
                     <thead>
                         <tr>
-                            <th class="w-50">Product</th>
-                            <th class="w-25 text-center">Quantity</th>
-                            <th class="w-25 text-center">Price</th>
+                            <th style="width: 50%">Product</th>
+                            <th class="text-center" style="width: 20%">Quantity</th>
+                            <th class="text-center" style="width: 20%">Price</th>
+                            <th class="text-center" style="width: 10%">Remove</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -19,15 +21,16 @@
                             int locale = i;
                             <tr>
                                 <td>@Cart[i].ProductTitle</td>
-                                <td><MudNumericField @bind-Value="Cart[locale].ProductQuantity" TextChanged="() => NewPrice(Cart[locale].ProductId)" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentText="Kg" AdornmentColor="Color.Info" /></td>
-                                <td class="text-center">@Cart[locale].FinalPrice</td>
+                                <td><MudNumericField @bind-Value="Cart[locale].ProductQuantity" Max="Cart[locale].MaxQuantity"  TextChanged="() => NewPrice(Cart[locale].ProductId)" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentText="Kg" AdornmentColor="Color.Info" /></td>
+                                <td class="text-center">@Cart[locale].FinalPrice$</td>
+                                <td class="text-center"><MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="() => RemoveFromCart(Cart[locale])" /></td>
                             </tr>
                         }
                     </tbody>
                 </MudSimpleTable>
-                <div class="d-flex w-100 align-items-center justify-content-between" style="height: 10%">
-                    <p>All</p>
-                    <p>550$</p>
+                <div class="d-flex w-100 align-items-end justify-content-between" style="height: 10%">
+                    <MudText Typo="Typo.h6">All</MudText>
+                    <MudText Typo="Typo.h6">@FinalCartPrice$</MudText>
                 </div>
             </MudPaper>
             <div class="d-flex justify-content-between" style="width: 400px;">
@@ -37,11 +40,27 @@
         </div>
 
     </MudTabPanel>
-    <MudTabPanel Icon="@Icons.Material.Filled.LocalShipping" @ref="panel02" ID="@("pn_two")">
+
+    <MudTabPanel Icon="@Icons.Material.Filled.LocalShipping">
 
         <div class="d-flex justify-content-center align-items-center" style="flex-direction: column;">
             <MudPaper Class="pa-10 my-5" Elevation="10" Style="width: 40%; height: 600px; }">
-                <p>Shipping</p>
+
+                <MudText Typo="Typo.h6">Country</MudText>
+                <MudText Style="margin-left: 20px;" Typo="Typo.body1">@User.Country</MudText>
+
+                <MudText Typo="Typo.h6">City</MudText>
+                <MudText Style="margin-left: 20px;" Typo="Typo.body1">@User.City</MudText>
+
+                <MudText Typo="Typo.h6">Address</MudText>
+                <MudText Style="margin-left: 20px;" Typo="Typo.body1">@User.Address</MudText>
+
+                <div style="margin-bottom: 2.5rem; margin-top: 2.5rem;">
+                    <MudDatePicker Label="Order date" @bind-Date="date" DisableToolbar="true" />
+                </div>
+
+                <MudTextField T="string" Label="Description" Variant="Variant.Outlined" Text="@sampleText" Lines="8" />
+
             </MudPaper>
             <div class="d-flex justify-content-between" style="width: 400px;">
                 <MudIconButton Icon="@Icons.Material.Filled.ChevronLeft" Size="Size.Large" OnClick="() => Activate(0)"></MudIconButton>
@@ -50,7 +69,8 @@
         </div>
 
     </MudTabPanel>
-    <MudTabPanel Icon="@Icons.Material.Filled.Verified" @ref="panel03" ID="@("pn_three")">
+
+    <MudTabPanel Icon="@Icons.Material.Filled.Verified">
 
         <div class="d-flex justify-content-center align-items-center" style="flex-direction: column;">
             <MudPaper Class="pa-10 my-5" Elevation="10" Style="width: 40%; height: 600px; }">

@@ -35,7 +35,7 @@ namespace SmartVillages.Client.Shared.Dialogs
             {
                 CartList = new List<CartItem>();
             }
-            CartItem item = new CartItem { ProductId = Product.Id, ProductQuantity = Weight, FinalPrice = FinalPrice, ProductTitle = Product.Title, PriceOfOne = Convert.ToSingle(Product.Price) };
+            CartItem item = new CartItem { ProductId = Product.Id, MaxQuantity = Convert.ToSingle(Product.Quantity), ProductQuantity = Weight, FinalPrice = FinalPrice, ProductTitle = Product.Title, PriceOfOne = Convert.ToSingle(Product.Price) };
             CartList.Add(item);
             await LocalStorage.SetItemAsync("cart", CartList);
             MudDialog.Close(DialogResult.Ok(true));

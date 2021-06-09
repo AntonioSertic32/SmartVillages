@@ -15,17 +15,31 @@
     </div>
     <div class="mr-5 pr-5">
         <MudBadge Content="@(Cart == null ? 0 : Cart.Count())" Color="Color.Dark" Bottom="true" Overlap="true">
-            <MudButton Variant="Variant.Filled" Size="Size.Large" StartIcon="@Icons.Material.Filled.ShoppingCart" Color="Color.Success" OnClick="() => OpenItem(0, true)">Cart</MudButton>
+            <MudButton Disabled="Cart.Count < 1" Variant="Variant.Filled" Size="Size.Large" StartIcon="@Icons.Material.Filled.ShoppingCart" Color="Color.Success" OnClick="() => OpenItem(0, true)">Cart</MudButton>
         </MudBadge>
         @*
-        <MudButton Class="ml-4" Variant="Variant.Filled" Size="Size.Large" StartIcon="fas fa-heart" Color="Color.Success">Favorite</MudButton>
+            <MudButton Class="ml-4" Variant="Variant.Filled" Size="Size.Large" StartIcon="fas fa-heart" Color="Color.Success">Favorite</MudButton>
         *@
         <MudButton Class="ml-4" Style="@(OnlyForFarmer ? "" : "display: none;")" Variant="Variant.Filled" Size="Size.Large" StartIcon="@Icons.Material.Filled.Add" Color="Color.Success" OnClick="OpenDialog">Add New Product</MudButton>
     </div>
 </div>
+
+@if (!Loaded)
+{
+    <div class="w-100 h-100 d-flex align-center justify-content-center" style="margin-top: 30vh;">
+        <div class="lds-facebook">
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+        </div>
+    </div>
+}
 @if (CartOpened)
 {
-    <CartOrder />
+    <CartOrder CartUpdate="UpdateOnCart" />
 }
 else
 {
@@ -44,10 +58,10 @@ else
                                 <MudIconButton Class="mr-2 mb-2" Icon="fas fa-leaf" Size="Size.Small" Color="Color.Success"></MudIconButton>
                             </div>
                         }
-                        @if(product.User.Id != User.Id)
+                        @if (product.User.Id != User.Id)
                         {
                             @if (Cart != null && Cart.Where(c => c.ProductId == product.Id).FirstOrDefault() != null)
-                            {                    
+                            {
                                 <div class="d-flex" style="width: 50px; height: 50px; background-color: white; align-items: center; justify-content: center; float: right; margin-top: -240px; border-radius: 15px; margin-right: 10px;">
                                     <MudIconButton Icon="@Icons.Material.Filled.RemoveShoppingCart" Size="Size.Medium" Color="Color.Error" OnClick="() => RemoveFromCart(product.Id)"></MudIconButton>
                                 </div>
@@ -58,25 +72,25 @@ else
                                     <MudIconButton Icon="@Icons.Material.Filled.AddShoppingCart" Size="Size.Medium" Color="Color.Dark" OnClick="() => OpenAddToChartDialog(product.Id)"></MudIconButton>
                                 </div>
                                 @*
-                                <MudPopover Open="@PopoverIsOpen" Class="px-4 pt-4 w-100" Style="width: 170px !important" OffsetX="true" OffsetY="false" Direction="Direction.Bottom">
-                                    <div class="d-flex flex-column">
-                                        <MudText>Content of the popover can be anything.</MudText>
-                                        <MudButton OnClick="ClosePopover" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
-                                    </div>
-                                </MudPopover>
-                                <MudPopover Open="@PopoverIsOpen" Class="px-4 pt-4 w-100" Style="position:relative;">
-                                    <div class="d-flex flex-column">
-                                        <MudText>Content of the popover can be anything.</MudText>
-                                        <MudButton OnClick="ClosePopover" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
-                                    </div>
-                                </MudPopover>
+                                    <MudPopover Open="@PopoverIsOpen" Class="px-4 pt-4 w-100" Style="width: 170px !important" OffsetX="true" OffsetY="false" Direction="Direction.Bottom">
+                                        <div class="d-flex flex-column">
+                                            <MudText>Content of the popover can be anything.</MudText>
+                                            <MudButton OnClick="ClosePopover" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
+                                        </div>
+                                    </MudPopover>
+                                    <MudPopover Open="@PopoverIsOpen" Class="px-4 pt-4 w-100" Style="position:relative;">
+                                        <div class="d-flex flex-column">
+                                            <MudText>Content of the popover can be anything.</MudText>
+                                            <MudButton OnClick="ClosePopover" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
+                                        </div>
+                                    </MudPopover>
                                 *@
                             }
                         }
                         @*
-                        <div class="d-flex" style="width: 50px;height: 50px;background-color: white;align-items: center;justify-content: center;position: absolute;margin-top: -240px;border-radius: 15px;margin-left: 10px;">
-                            <MudIconButton Icon="fas fa-heart" Size="Size.Medium" Color="Color.Secondary"></MudIconButton>
-                        </div>
+                            <div class="d-flex" style="width: 50px;height: 50px;background-color: white;align-items: center;justify-content: center;position: absolute;margin-top: -240px;border-radius: 15px;margin-left: 10px;">
+                                <MudIconButton Icon="fas fa-heart" Size="Size.Medium" Color="Color.Secondary"></MudIconButton>
+                            </div>
                         *@
                         <MudCardHeader>
                             <CardHeaderAvatar>
@@ -87,9 +101,9 @@ else
                                 <MudText Typo="Typo.body2">By: @product.User.FirstName @product.User.LastName</MudText>
                             </CardHeaderContent>
                             @*
-                            <CardHeaderActions>
-                                <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
-                            </CardHeaderActions>
+                                <CardHeaderActions>
+                                    <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
+                                </CardHeaderActions>
                             *@
                         </MudCardHeader>
                         <MudCardContent Class="py-0" Style="min-height:92px;">

@@ -29,6 +29,7 @@ namespace SmartVillages.Client.Pages
         public Product OpenedProduct { get; set; }
         public List<CartItem> Cart { get; set; } = new List<CartItem>();
         public bool CartOpened { get; set; }
+        public bool Loaded { get; set; } = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -83,6 +84,7 @@ namespace SmartVillages.Client.Pages
             if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
             {
                 Products = await response.Content.ReadFromJsonAsync<List<Product>>();
+                Loaded = true;
                 StateHasChanged();
             }
         }
