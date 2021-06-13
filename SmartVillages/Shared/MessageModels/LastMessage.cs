@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SmartVillages.Shared.UserModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartVillages.Shared
+namespace SmartVillages.Shared.MessageModels
 {
     public class LastMessage
     {

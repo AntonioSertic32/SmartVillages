@@ -9,6 +9,7 @@ using MudBlazor;
 using System.Net.Http;
 using System.Net.Http.Json;
 using Blazored.LocalStorage;
+using SmartVillages.Shared.UserModels;
 
 namespace SmartVillages.Client.Pages.UserSign
 {

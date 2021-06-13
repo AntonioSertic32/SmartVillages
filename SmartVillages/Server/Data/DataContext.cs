@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartVillages.Shared;
-using SmartVillages.Shared.Marketplace;
+using SmartVillages.Shared.MarketplaceModels;
+using SmartVillages.Shared.MessageModels;
+using SmartVillages.Shared.UserModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +14,18 @@ namespace SmartVillages.Server.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) {}
 
-        public DbSet<User> User { get; set; }
-        public DbSet<UserType> UserType { get; set; }
-        public DbSet<Message> Message { get; set; }
-        public DbSet<Product> Product { get; set; }
-        public DbSet<ProductCategory> ProductCategory { get; set; }
-        public DbSet<Order> Order { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<ProductCategory> ProductCategorys { get; set; }
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<Message> Messages { get; set; }
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<User> UserImages { get; set; }
+        public DbSet<UserType> UserTypes { get; set; }
+        public DbSet<Place> Places { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,6 +33,8 @@ namespace SmartVillages.Server.Data
                 .HasIndex(p => new { p.Email, p.OIB })
                 .IsUnique(true);
         }
+
+        public DbSet<SmartVillages.Shared.UserModels.UserImage> UserImage { get; set; }
 
     }
 }

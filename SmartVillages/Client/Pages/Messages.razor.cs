@@ -9,19 +9,22 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using SmartVillages.Shared.UserModels;
+using SmartVillages.Shared.MessageModels;
 
 namespace SmartVillages.Client.Pages
 {
     public class MessagesBase : ComponentBase
     {
         [Parameter] public string Id { get; set; }
-        [Inject] ILocalStorageService localStorage { get; set; }
+        [Inject] ILocalStorageService LocalStorage { get; set; }
         [Inject] public HttpClient Http { get; set; }
         [Inject] IJSRuntime JsRuntime { get; set; }
         [Inject] public ISnackbar Snackbar { get; set; }
 
         public string TextValue { get; set; }
         public string MessageToSend { get; set; }
+        public bool LoadingMessages { get; set; }
         public bool LoadingMessage { get; set; }
         public bool MessageOpened { get; set; } = false;
         public User OpenedUser { get; set; }
@@ -34,11 +37,11 @@ namespace SmartVillages.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            User = await localStorage.GetItemAsync<User>("user");
+            User = await LocalStorage.GetItemAsync<User>("user");
             /* DOHVACANJE SVIH PORUKA ZA LIJEVU STRANU KOMPONENTE */
             await GetAllMessages();
 
-            foreach(var me in AllMessagesList)
+            foreach (var me in AllMessagesList)
             {
                 // pogledat jel ima sa userom pod ovim id-om
                 if (me.User.Id == int.Parse(Id))
@@ -51,7 +54,7 @@ namespace SmartVillages.Client.Pages
             }
             if(!Found && Id != "0")
             {
-                // ili samo ispisati informacije (otvaranje nove poruke)
+                // ispisati informacije (otvaranje nove poruke)
                 await OpenNewMessage();
             }
 
@@ -68,6 +71,7 @@ namespace SmartVillages.Client.Pages
                 if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
                 {
                     AllMessagesList = await response.Content.ReadFromJsonAsync<List<LastMessage>>();
+                    LoadingMessages = true;
                     StateHasChanged();
                 }
             }

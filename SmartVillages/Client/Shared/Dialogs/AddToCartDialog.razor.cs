@@ -1,7 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using SmartVillages.Shared.Marketplace;
+using SmartVillages.Shared.MarketplaceModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +35,10 @@ namespace SmartVillages.Client.Shared.Dialogs
             {
                 CartList = new List<CartItem>();
             }
-            CartItem item = new CartItem { ProductId = Product.Id, MaxQuantity = Convert.ToSingle(Product.Quantity), ProductQuantity = Weight, FinalPrice = FinalPrice, ProductTitle = Product.Title, PriceOfOne = Convert.ToSingle(Product.Price) };
+            Product NewProduct = Product;
+            NewProduct.ProductImage = null;
+            NewProduct.User.UserImage = null;
+            CartItem item = new CartItem { Product = NewProduct, Quantity = Weight, Price = FinalPrice, StatusCode = 1 };
             CartList.Add(item);
             await LocalStorage.SetItemAsync("cart", CartList);
             MudDialog.Close(DialogResult.Ok(true));

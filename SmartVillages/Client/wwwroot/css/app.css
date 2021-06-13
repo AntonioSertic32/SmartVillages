@@ -113,3 +113,23 @@ a, .btn-link {
     .mud-dialog-title h6 {
         font-weight: 400;
     }
+
+/* ZIG ZAG BORDER */
+
+.bill_container_before:before {
+    background: linear-gradient( -45deg, #edf4e5 16px, transparent 0), linear-gradient( 45deg, #edf4e5 16px, transparent 0);
+    background-repeat: repeat-x;
+    background-size: 32px 32px;
+    content: " ";
+    display: block;
+    height: 32px;
+}
+.bill_container_after:after {
+    background-color: #edf4e5;
+    background: linear-gradient( -45deg, #fff 16px, transparent 0), linear-gradient( 45deg, #fff 16px, transparent 0);
+    background-repeat: repeat-x;
+    background-size: 32px 32px;
+    content: " ";
+    display: block;
+    height: 32px;
+}

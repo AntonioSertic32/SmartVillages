@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartVillages.Shared
+namespace SmartVillages.Shared.UserModels
 {
     public class UserSignIn
     {

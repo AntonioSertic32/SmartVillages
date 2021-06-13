@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using SmartVillages.Client.Shared.Dialogs;
 using SmartVillages.Shared;
-using SmartVillages.Shared.Marketplace;
+using SmartVillages.Shared.MarketplaceModels;
+using SmartVillages.Shared.UserModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,12 @@ namespace SmartVillages.Client.Pages
             OnlyForFarmer = User.UserType.UserTypeId == 2 ? true : false;
             await GetProducts();
             await GetCategories();
-            Cart = await LocalStorage.GetItemAsync<List<CartItem>>("cart");
+            var Container = await LocalStorage.GetItemAsync<List<CartItem>>("cart");
+            if (Container != null)
+                Cart = Container;
+            else
+                Cart = new List<CartItem>();
+
             StateHasChanged();
         }
 
@@ -68,7 +74,7 @@ namespace SmartVillages.Client.Pages
 
         public async Task GetCategories()
         {
-            var response = await Http.GetAsync($"api/productcategories/");
+            var response = await Http.GetAsync($"api/productcategories");
             if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
             {
                 ProductCategories = await response.Content.ReadFromJsonAsync<List<ProductCategory>>();
@@ -117,7 +123,7 @@ namespace SmartVillages.Client.Pages
 
         public async Task RemoveFromCart(int id)
         {
-            var item = Cart.Where(c => c.ProductId == id).FirstOrDefault();
+            var item = Cart.Where(c => c.Id == id).FirstOrDefault();
             Cart.Remove(item);
             await LocalStorage.SetItemAsync("cart", Cart);
         }

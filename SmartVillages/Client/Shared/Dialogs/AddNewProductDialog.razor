@@ -62,14 +62,14 @@
                         </div>
 
                         <div class="col-6" style="justify-content: center; display: flex; flex-direction: column;">
-                            <div class="d-flex align-items-center justify-content-center" style="border: 1px solid #bdbdbd; border-radius: 4px; height: @(ProductModal.Image == "" ? "500px;" : "auto;");background-color: lightgray;">
-                                @if (string.IsNullOrEmpty(ProductModal.Image))
+                            <div class="d-flex align-items-center justify-content-center" style="border: 1px solid #bdbdbd; border-radius: 4px; height: @(ProductModal.ProductImage.Image == "" ? "500px;" : "auto;");background-color: lightgray;">
+                                @if (string.IsNullOrEmpty(ProductModal.ProductImage.Image))
                                 {
                                     <MudIcon Class="m-5" Icon="@Icons.Material.Filled.Landscape" Size="Size.Large" Title="Photo" />
                                 }
                                 else
                                 {
-                                    <img class="w-100 h-100" style="border-radius: 4px;" src="@ProductModal.Image" />
+                                    <img class="w-100 h-100" style="border-radius: 4px;" src="@ProductModal.ProductImage.Image" />
                                 }
                             </div>
                             <InputFile id="fileInput112" OnChange="UploadFiles" hidden accept=".jpg, .jpeg, .png" />

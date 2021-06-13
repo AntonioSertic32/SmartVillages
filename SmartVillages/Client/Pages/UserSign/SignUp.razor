@@ -6,7 +6,7 @@
 
 <EditForm Model="@UserModel" OnInvalidSubmit="HandleInvalidSubmit" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
-    <MudCard Elevation="10">
+    <MudCard Style="max-width: 492px;" Elevation="10">
         <MudCardContent>
             <MudGrid>
                 <MudItem xs="12" sm="6">
@@ -46,10 +46,21 @@
 
             <MudGrid>
                 <MudItem xs="12" sm="6">
-                    <MudTextField For="@(() => UserModel.Country)" @bind-Value="UserModel.Country" Variant="Variant.Outlined" Label="Country" />
+                    <MudSelect Variant="Variant.Outlined" Label="City" Text="@UserModel.Place.Name" @bind-Value="UserModel.Place">
+                        @foreach (var place in Places)
+                        {
+                            <MudSelectItem Value="@place">@place.Name</MudSelectItem>
+                        }
+                    </MudSelect>
                 </MudItem>
                 <MudItem xs="12" sm="6">
-                    <MudTextField For="@(() => UserModel.City)" @bind-Value="UserModel.City" Variant="Variant.Outlined" Label="City" />
+                    <MudTextField For="@(() => UserModel.Place.PostalCode)" Disabled="true" @bind-Value="UserModel.Place.PostalCode" Variant="Variant.Outlined" Label="Postal code" />
+                </MudItem>
+            </MudGrid>
+
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField For="@(() => UserModel.Address)" @bind-Value="UserModel.Address" Variant="Variant.Outlined" Label="Address" />
                 </MudItem>
             </MudGrid>
 

@@ -22,35 +22,57 @@
         </div>
         *@
         <div class="p-3" style="overflow: scroll; max-height: calc(100vh - 176px);">
-
-            @foreach (var message in AllMessagesList)
+            @if (!LoadingMessages)
             {
-                <div class="messages_chat_box d-flex @(message.LastIsSeen ? "seen" : "notseen")" @onclick="() => OpenMessage(message)">
-                    <div class="image p-1">
-                        <MudAvatar Image="@(message.User.ProfileImage != null ? message.User.ProfileImage : "/img/default.png")" Size="Size.Large" Class="ma-2" />
-                    </div>
-                    <div class="message px-3">
-                        <h4 class="author_name m-0">@message.User.FirstName @message.User.LastName</h4>
-                        <p class="author_last_message m-0 text-muted">@message.MessageContent</p>
-                    </div>
-                    <div class="settings_and_unread">
-                        @*
-                        <div class="messages_settings">
-                            <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Small" Dense="true" Direction="Direction.Left" OffsetX="true">
-                                <MudMenuItem Link="/userprofile">Obriši</MudMenuItem>
-                                <MudMenuItem Link="/fetchdata">Označi kao pročitano</MudMenuItem>
-                                <MudMenuItem Link="/fetchdata">Prijavi</MudMenuItem>
-                            </MudMenu>
+                <div class="w-100 h-100 d-flex align-center justify-content-center">
+                    <div class="lds-facebook">
+                        <div>
                         </div>
-                        *@
-                        @if (message.UnreadMessages != 0)
-                        {
-                            <div class="unread_messages">
-                                <span class="">@message.UnreadMessages</span>
-                            </div>
-                        }
+                        <div>
+                        </div>
+                        <div>
+                        </div>
                     </div>
                 </div>
+            }
+            else
+            {
+                @if(AllMessagesList.Count > 0)
+                {
+                    @foreach (var message in AllMessagesList)
+                    {
+                        <div class="messages_chat_box d-flex @(message.LastIsSeen ? "seen" : "notseen")" @onclick="() => OpenMessage(message)">
+                            <div class="image p-1">
+                                <MudAvatar Image="@(message.User.UserImage != null ? message.User.UserImage.Image : "/img/default.png")" Size="Size.Large" Class="ma-2" />
+                            </div>
+                            <div class="message px-3">
+                                <h4 class="author_name m-0">@message.User.FirstName @message.User.LastName</h4>
+                                <p class="author_last_message m-0 text-muted">@message.MessageContent</p>
+                            </div>
+                            <div class="settings_and_unread">
+                                @*
+                                <div class="messages_settings">
+                                    <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Small" Dense="true" Direction="Direction.Left" OffsetX="true">
+                                        <MudMenuItem Link="/userprofile">Obriši</MudMenuItem>
+                                        <MudMenuItem Link="/fetchdata">Označi kao pročitano</MudMenuItem>
+                                        <MudMenuItem Link="/fetchdata">Prijavi</MudMenuItem>
+                                    </MudMenu>
+                                </div>
+                                *@
+                                @if (message.UnreadMessages != 0)
+                                {
+                                    <div class="unread_messages">
+                                        <span class="">@message.UnreadMessages</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>No messages!</p>
+                }
             }
         </div>
     </div>
@@ -60,7 +82,7 @@
         {
             <div class="row m-0 top_track">
                 <div class="col top_track_left">
-                    <MudAvatar Image="@(OpenedUser.ProfileImage != null ? OpenedUser.ProfileImage : "/img/default.png")" Size="Size.Large" Class="ma-2" />
+                    <MudAvatar Image="@(OpenedUser.UserImage != null ? OpenedUser.UserImage.Image : "/img/default.png")" Size="Size.Large" Class="ma-2" />
                     <h4>@OpenedUser.FirstName @OpenedUser.LastName</h4>
                 </div>
 
@@ -112,7 +134,7 @@
                                     </div>
                                 </div>
                                 <div class="col-1 pa-0 d-flex align-end justify-content-center mb-5">
-                                    <MudAvatar Image="@(User.ProfileImage != null ? User.ProfileImage : "/img/default.png")" Size="Size.Medium" Class="" />
+                                    <MudAvatar Image="@(User.UserImage != null ? User.UserImage.Image : "/img/default.png")" Size="Size.Medium" Class="" />
                                 </div>
                             </div>
                         </div>
@@ -122,7 +144,7 @@
                         <div class="message_left w-100 d-flex align-center">
                             <div class="message_left_container d-flex row ma-0">
                                 <div class="col-1 pa-0 d-flex align-end justify-content-center mb-5">
-                                    <MudAvatar Image="@(OpenedUser.ProfileImage != null ? OpenedUser.ProfileImage : "/img/default.png")" Size="Size.Medium" Class="" />
+                                    <MudAvatar Image="@(OpenedUser.UserImage != null ? OpenedUser.UserImage.Image : "/img/default.png")" Size="Size.Medium" Class="" />
                                 </div>
                                 <div class="col-11 p-0 pl-3">
                                     <div class="chat_send_message d-flex align-center p-3 col-sm-12">

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartVillages.Server.Data;
-using SmartVillages.Shared.Marketplace;
+using SmartVillages.Shared.MarketplaceModels;
 
 namespace SmartVillages.Server.Controllers
 {
@@ -25,14 +25,14 @@ namespace SmartVillages.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
         {
-            return await _context.Product.ToListAsync();
+            return await _context.Products.ToListAsync();
         }
 
         // GET: api/Products/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            var product = await _context.Product.FindAsync(id);
+            var product = await _context.Products.FindAsync(id);
 
             if (product == null)
             {
@@ -78,13 +78,16 @@ namespace SmartVillages.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
-            var category = await _context.ProductCategory.SingleOrDefaultAsync(t => t.Species == product.ProductCategory.Species);
+            var image = await _context.ProductImages.SingleOrDefaultAsync(t => t.Id == product.ProductImage.Id);
+            product.ProductImage = image;
+
+            var category = await _context.ProductCategorys.SingleOrDefaultAsync(t => t.Species == product.ProductCategory.Species);
             product.ProductCategory = category;
 
-            var user = await _context.User.SingleOrDefaultAsync(t => t.Id == product.User.Id);
+            var user = await _context.Users.SingleOrDefaultAsync(t => t.Id == product.User.Id);
             product.User = user;
 
-            _context.Product.Add(product);
+            _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetProduct", new { id = product.Id }, product);
@@ -94,13 +97,13 @@ namespace SmartVillages.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            var product = await _context.Product.FindAsync(id);
+            var product = await _context.Products.FindAsync(id);
             if (product == null)
             {
                 return NotFound();
             }
 
-            _context.Product.Remove(product);
+            _context.Products.Remove(product);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -108,7 +111,7 @@ namespace SmartVillages.Server.Controllers
 
         private bool ProductExists(int id)
         {
-            return _context.Product.Any(e => e.Id == id);
+            return _context.Products.Any(e => e.Id == id);
         }
 
 
@@ -116,7 +119,7 @@ namespace SmartVillages.Server.Controllers
         public async Task<ActionResult<List<Product>>> GeTLastTen()
         {
             List<Product> products = new List<Product>();
-            products = _context.Product.OrderByDescending(t => t.Id).Include(f => f.User).Include(f => f.ProductCategory).Take(10).ToList();
+            products = _context.Products.OrderByDescending(t => t.Id).Include(f => f.User).Include(f => f.User.UserImage).Include(f => f.User.Place).Include(f => f.ProductCategory).Include(i => i.ProductImage).Take(10).ToList();
             if (products == null)
             {
                 return NotFound();

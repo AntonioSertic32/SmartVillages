@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using SmartVillages.Client.Shared.Dialogs;
 using SmartVillages.Shared;
-using SmartVillages.Shared.Marketplace;
+using SmartVillages.Shared.MarketplaceModels;
+using SmartVillages.Shared.UserModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace SmartVillages.Client.Pages
             if(cart != null)
             {
                 Cart = cart;
-                Addedornot = Cart.Where(c => c.ProductId == Product.Id).FirstOrDefault() != null ? true : false;
+                Addedornot = Cart.Where(c => c.Id == Product.Id).FirstOrDefault() != null ? true : false;
             }
             LinkToProfile = "/profile/" + Product.User.Id;
             LinkToMessages = "/messages/" + Product.User.Id;
@@ -47,7 +48,7 @@ namespace SmartVillages.Client.Pages
 
         public async Task RemoveFromCart()
         {
-            var item = Cart.Where(c => c.ProductId == Product.Id).FirstOrDefault();
+            var item = Cart.Where(c => c.Id == Product.Id).FirstOrDefault();
             Cart.Remove(item);
             Addedornot = !Addedornot;
             StateHasChanged();

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using SmartVillages.Shared;
+using SmartVillages.Shared.UserModels;
 
 namespace SmartVillages.Client.Shared
 {
@@ -34,6 +35,7 @@ namespace SmartVillages.Client.Shared
         public void Logout()
         {
             LocalStorage.RemoveItemAsync("user");
+            LocalStorage.RemoveItemAsync("cart");
             NavigationManager.NavigateTo("/");
         }
 

@@ -51,7 +51,7 @@ else
                 @foreach (var product in Products)
                 {
                     <MudCard Style="width: 400px;" Elevation="5">
-                        <MudCardMedia Image="@product.Image" Height="250" Style="border-top-right-radius: 4px; border-top-left-radius: 4px;" />
+                        <MudCardMedia Image="@(product.ProductImage != null ? product.ProductImage.Image : "" )" Height="250" Style="border-top-right-radius: 4px; border-top-left-radius: 4px;" />
                         @if (product.Eco)
                         {
                             <div class="d-flex" style="width: 50px; height: 50px; background-color: white; align-items: flex-end; justify-content: flex-end; float: right; border-top-left-radius: 100%; margin-top: -50px;">
@@ -60,7 +60,7 @@ else
                         }
                         @if (product.User.Id != User.Id)
                         {
-                            @if (Cart != null && Cart.Where(c => c.ProductId == product.Id).FirstOrDefault() != null)
+                            @if (Cart != null && Cart.Where(c => c.Product.Id == product.Id).FirstOrDefault() != null)
                             {
                                 <div class="d-flex" style="width: 50px; height: 50px; background-color: white; align-items: center; justify-content: center; float: right; margin-top: -240px; border-radius: 15px; margin-right: 10px;">
                                     <MudIconButton Icon="@Icons.Material.Filled.RemoveShoppingCart" Size="Size.Medium" Color="Color.Error" OnClick="() => RemoveFromCart(product.Id)"></MudIconButton>
@@ -94,7 +94,7 @@ else
                         *@
                         <MudCardHeader>
                             <CardHeaderAvatar>
-                                <MudAvatar Size="Size.Large" Image="@product.User.ProfileImage" />
+                                <MudAvatar Size="Size.Large" Image="@(product.User.UserImage != null ? product.User.UserImage.Image : "/img/default.png")" />
                             </CardHeaderAvatar>
                             <CardHeaderContent>
                                 <MudText Typo="Typo.h5">@product.Title</MudText>

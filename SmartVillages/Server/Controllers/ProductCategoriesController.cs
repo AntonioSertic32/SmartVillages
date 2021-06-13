@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartVillages.Server.Data;
-using SmartVillages.Shared.Marketplace;
+using SmartVillages.Shared.MarketplaceModels;
 
 namespace SmartVillages.Server.Controllers
 {
@@ -23,16 +23,16 @@ namespace SmartVillages.Server.Controllers
 
         // GET: api/ProductCategories
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductCategory>>> GetProductCategory()
+        public async Task<ActionResult<IEnumerable<ProductCategory>>> GetProductCategorys()
         {
-            return await _context.ProductCategory.ToListAsync();
+            return await _context.ProductCategorys.ToListAsync();
         }
 
         // GET: api/ProductCategories/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductCategory>> GetProductCategory(int id)
         {
-            var productCategory = await _context.ProductCategory.FindAsync(id);
+            var productCategory = await _context.ProductCategorys.FindAsync(id);
 
             if (productCategory == null)
             {
@@ -78,7 +78,7 @@ namespace SmartVillages.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<ProductCategory>> PostProductCategory(ProductCategory productCategory)
         {
-            _context.ProductCategory.Add(productCategory);
+            _context.ProductCategorys.Add(productCategory);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetProductCategory", new { id = productCategory.Id }, productCategory);
@@ -88,13 +88,13 @@ namespace SmartVillages.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProductCategory(int id)
         {
-            var productCategory = await _context.ProductCategory.FindAsync(id);
+            var productCategory = await _context.ProductCategorys.FindAsync(id);
             if (productCategory == null)
             {
                 return NotFound();
             }
 
-            _context.ProductCategory.Remove(productCategory);
+            _context.ProductCategorys.Remove(productCategory);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -102,7 +102,7 @@ namespace SmartVillages.Server.Controllers
 
         private bool ProductCategoryExists(int id)
         {
-            return _context.ProductCategory.Any(e => e.Id == id);
+            return _context.ProductCategorys.Any(e => e.Id == id);
         }
     }
 }

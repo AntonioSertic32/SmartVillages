@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartVillages.Server.Data;
 
 namespace SmartVillages.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210612210535_UltimateMigration")]
+    partial class UltimateMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,7 +28,7 @@ namespace SmartVillages.Server.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<float>("Price")
@@ -38,12 +40,19 @@ namespace SmartVillages.Server.Migrations
                     b.Property<float>("Quantity")
                         .HasColumnType("real");
 
+                    b.Property<int?>("SellerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("StatusCode")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OrderId");
+
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("SellerId");
 
                     b.ToTable("CartItems");
                 });
@@ -194,24 +203,6 @@ namespace SmartVillages.Server.Migrations
                     b.ToTable("Messages");
                 });
 
-            modelBuilder.Entity("SmartVillages.Shared.UserModels.Place", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Places");
-                });
-
             modelBuilder.Entity("SmartVillages.Shared.UserModels.User", b =>
                 {
                     b.Property<int>("Id")
@@ -220,7 +211,6 @@ namespace SmartVillages.Server.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Bio")
@@ -229,6 +219,14 @@ namespace SmartVillages.Server.Migrations
                     b.Property<DateTime?>("BirthDate")
                         .IsRequired()
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -269,9 +267,6 @@ namespace SmartVillages.Server.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int?>("PlaceId")
-                        .HasColumnType("int");
-
                     b.Property<string>("SecretCode")
                         .HasColumnType("nvarchar(max)");
 
@@ -288,8 +283,6 @@ namespace SmartVillages.Server.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PlaceId");
 
                     b.HasIndex("UserImageId");
 
@@ -333,11 +326,21 @@ namespace SmartVillages.Server.Migrations
 
             modelBuilder.Entity("SmartVillages.Shared.MarketplaceModels.CartItem", b =>
                 {
+                    b.HasOne("SmartVillages.Shared.MarketplaceModels.Order", null)
+                        .WithMany("CartItems")
+                        .HasForeignKey("OrderId");
+
                     b.HasOne("SmartVillages.Shared.MarketplaceModels.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId");
 
+                    b.HasOne("SmartVillages.Shared.UserModels.User", "Seller")
+                        .WithMany()
+                        .HasForeignKey("SellerId");
+
                     b.Navigation("Product");
+
+                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("SmartVillages.Shared.MarketplaceModels.Order", b =>
@@ -387,10 +390,6 @@ namespace SmartVillages.Server.Migrations
 
             modelBuilder.Entity("SmartVillages.Shared.UserModels.User", b =>
                 {
-                    b.HasOne("SmartVillages.Shared.UserModels.Place", "Place")
-                        .WithMany()
-                        .HasForeignKey("PlaceId");
-
                     b.HasOne("SmartVillages.Shared.UserModels.UserImage", "UserImage")
                         .WithMany()
                         .HasForeignKey("UserImageId");
@@ -399,11 +398,14 @@ namespace SmartVillages.Server.Migrations
                         .WithMany()
                         .HasForeignKey("UserTypeId");
 
-                    b.Navigation("Place");
-
                     b.Navigation("UserImage");
 
                     b.Navigation("UserType");
+                });
+
+            modelBuilder.Entity("SmartVillages.Shared.MarketplaceModels.Order", b =>
+                {
+                    b.Navigation("CartItems");
                 });
 #pragma warning restore 612, 618
         }

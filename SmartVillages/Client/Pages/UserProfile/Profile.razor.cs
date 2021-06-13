@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using SmartVillages.Shared.UserModels;
 
 namespace SmartVillages.Client.Pages.UserProfile
 {
@@ -65,8 +66,12 @@ namespace SmartVillages.Client.Pages.UserProfile
             var buffer = new byte[file.Size];
             await file.OpenReadStream(1512000).ReadAsync(buffer);
             //convert byte array to base 64 string
-            UserOldImage = User.ProfileImage;
-            User.ProfileImage = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
+            if (User.UserImage != null)
+                UserOldImage = User.UserImage.Image;
+            else
+                UserOldImage = "";
+            User.UserImage = new UserImage();
+            User.UserImage.Image = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
 
             EditingProfileImage = true;
             StateHasChanged();
@@ -75,7 +80,10 @@ namespace SmartVillages.Client.Pages.UserProfile
         public async Task CancelUpdateingImage()
         {
             EditingProfileImage = false;
-            User.ProfileImage = UserOldImage;
+            if (UserOldImage == "")
+                User.UserImage = null;
+            else
+                User.UserImage.Image = UserOldImage;
             StateHasChanged();
         }
 
@@ -83,8 +91,17 @@ namespace SmartVillages.Client.Pages.UserProfile
         {
             EditingProfileImage = false;
             StateHasChanged();
-
-            var response = await Http.PutAsJsonAsync($"api/users/{User.Id}", User);
+            if(UserOldImage == "")
+            {
+                var response = await Http.PostAsJsonAsync($"api/userimages", User.UserImage);
+                UserImage Image = await response.Content.ReadFromJsonAsync<UserImage>();
+                User.UserImage = Image;
+                await Http.PostAsJsonAsync($"api/users/putimage", User);
+            }
+            else
+            {
+                await Http.PutAsJsonAsync($"api/users/updateuserimage", User);
+            }
             Snackbar.Clear();
             Snackbar.Add("GOOD", Severity.Success);
             await LocalStorage.SetItemAsync("user", User);

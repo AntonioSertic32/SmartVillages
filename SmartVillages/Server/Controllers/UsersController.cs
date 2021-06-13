@@ -9,6 +9,7 @@ using SmartVillages.Server.Data;
 using SmartVillages.Shared;
 using MimeKit;
 using MailKit.Net.Smtp;
+using SmartVillages.Shared.UserModels;
 
 namespace SmartVillages.Server.Controllers
 {
@@ -29,7 +30,7 @@ namespace SmartVillages.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
-            return await _context.User.ToListAsync();
+            return await _context.Users.ToListAsync();
         }
 
         // GET: api/Users/5
@@ -37,7 +38,7 @@ namespace SmartVillages.Server.Controllers
         public async Task<ActionResult<List<User>>> GetUser(int id)
         {
             //var user = await _context.User.Include(i => i.UserType).FindAsync(id);
-            var user = _context.User.Where(t => t.Id == id).Include(i => i.UserType).ToList();
+            var user = _context.Users.Where(t => t.Id == id).Include(i => i.UserType).Include(i => i.UserImage).Include(i => i.Place).ToList();
 
             if (user == null)
             {
@@ -78,14 +79,34 @@ namespace SmartVillages.Server.Controllers
             return NoContent();
         }
 
+        [HttpPost("updateuserimage")]
+        public async Task<IActionResult> UpdateUserImage(UserImage userImage)
+        {
+            _context.Entry(userImage).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+        
+        [HttpPost("putimage")]
+        public async Task<ActionResult<User>> PutImage(User user)
+        {
+            var Image = _context.UserImage.Where(i => i.Id == user.UserImage.Id).FirstOrDefault();
+            user.UserImage = Image;
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetUser", user);
+        }
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("PostUser/{id}")]
+        [HttpPost("postuser/{id}")]
         public async Task<ActionResult<User>> PostUser(int id, User user)
         {
+            user.Place = _context.Places.Where(p => p.Id == user.Place.Id).FirstOrDefault();
             user.EmailConfirmationCode = GenerateCode();
-            user.UserType = await _context.UserType.SingleOrDefaultAsync(t => t.UserTypeId == id);
-            _context.User.Add(user);
+            user.UserType = await _context.UserTypes.SingleOrDefaultAsync(t => t.UserTypeId == id);
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUser", user);
@@ -94,8 +115,8 @@ namespace SmartVillages.Server.Controllers
         [HttpPost("login/{id}")]
         public async Task<ActionResult<User>> Login(int id, UserSignIn user)
         {
-            var type = await _context.UserType.SingleOrDefaultAsync(t => t.UserTypeId == id);
-            var User = await _context.User.SingleOrDefaultAsync(u => u.Email == user.Email && u.Password == user.Password && u.SecretCode == user.SecretCode && u.UserType == type);
+            var type = await _context.UserTypes.SingleOrDefaultAsync(t => t.UserTypeId == id);
+            var User = await _context.Users.Include(i => i.Place).Include(j => j.UserType).Include(k => k.UserImage).SingleOrDefaultAsync(u => u.Email == user.Email && u.Password == user.Password && u.SecretCode == user.SecretCode && u.UserType == type);
 
             if (User == null)
             {
@@ -112,13 +133,13 @@ namespace SmartVillages.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            _context.User.Remove(user);
+            _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -126,7 +147,7 @@ namespace SmartVillages.Server.Controllers
 
         private bool UserExists(int id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.Users.Any(e => e.Id == id);
         }
 
         [HttpPost("SendEmail")]
@@ -194,7 +215,7 @@ namespace SmartVillages.Server.Controllers
         [HttpPost("ConfirmEmail/{oib}")]
         public async Task<ActionResult> ConfirmEmail(string oib, [FromBody] string code)
         {
-            var User = await _context.User.SingleOrDefaultAsync(u => u.EmailConfirmationCode == code && u.OIB == oib);
+            var User = await _context.Users.SingleOrDefaultAsync(u => u.EmailConfirmationCode == code && u.OIB == oib);
 
             if (User == null)
             {

@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using SmartVillages.Shared.UserModels;
 
 namespace SmartVillages.Client.Pages.UserSign
 {
@@ -23,13 +24,14 @@ namespace SmartVillages.Client.Pages.UserSign
 
         public User UserModel { get; set; } = new User();
         public string Message { get; set; } = "";
+        public List<Place> Places { get; set; } = new List<Place>();
 
-        protected override Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
             Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
             Snackbar.Configuration.SnackbarVariant = Variant.Filled;
-
-            return base.OnInitializedAsync();
+            UserModel.Place = new Place { Id = 0, Name = "", PostalCode = "00000" };
+            await GetPlaces();
         }
 
         public async Task HandleValidSubmit()
@@ -46,6 +48,16 @@ namespace SmartVillages.Client.Pages.UserSign
             Snackbar.Add("All fields are required!", Severity.Error);
             if(!UserModel.TermsAndConditions)
                 Snackbar.Add("You must agree to terms and conditions!", Severity.Error);
+        }
+
+        public async Task GetPlaces()
+        {
+            Places = new List<Place>();
+            var response = await Http.GetAsync("api/Places");
+            if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
+            {
+                Places = await response.Content.ReadFromJsonAsync<List<Place>>();
+            }
         }
 
         public async Task CreateUser()

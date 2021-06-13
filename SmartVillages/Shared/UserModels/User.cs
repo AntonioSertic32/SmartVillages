@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SmartVillages.Shared
+namespace SmartVillages.Shared.UserModels
 {
     public class User
     {
@@ -26,10 +26,8 @@ namespace SmartVillages.Shared
         public string OIB { get; set; }
         public bool EmailConfirm { get; set; } = false;
         public bool Locked { get; set; } = true;
-        [Required(ErrorMessage = "Molimo unesite svoju državu")]
-        public string Country { get; set; }
-        [Required(ErrorMessage = "Molimo unesite svoj grad")]
-        public string City { get; set; }
+        public Place Place { get; set; }
+        [Required(ErrorMessage = "Molimo unesite svoju adresu")]
         public string Address { get; set; }
         [Required(ErrorMessage = "Molimo unesite svoj broj")]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Uneseni broj nije pravilnog formata")]
@@ -45,6 +43,6 @@ namespace SmartVillages.Shared
         [Range(typeof(bool), "true", "true", ErrorMessage = "You must agree")]
         public bool TermsAndConditions { get; set; }
         public string EmailConfirmationCode { get; set; }
-        public string ProfileImage { get; set; }
+        public UserImage UserImage { get; set; }
     }
 }

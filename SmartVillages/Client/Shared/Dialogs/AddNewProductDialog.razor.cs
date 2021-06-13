@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Components.Forms;
 using MoreLinq;
 using MudBlazor;
 using SmartVillages.Shared;
-using SmartVillages.Shared.Marketplace;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using SmartVillages.Shared.UserModels;
+using SmartVillages.Shared.MarketplaceModels;
 
 namespace SmartVillages.Client.Shared.Dialogs
 {
@@ -34,6 +35,7 @@ namespace SmartVillages.Client.Shared.Dialogs
             Categories = AllCategories.DistinctBy(x => x.Name).Select(s => s.Name).ToList();
             Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
             Snackbar.Configuration.SnackbarVariant = Variant.Filled;
+            ProductModal.ProductImage = new ProductImage();
             StateHasChanged();
         }
 
@@ -93,8 +95,12 @@ namespace SmartVillages.Client.Shared.Dialogs
                 {
                     ProductModal.ProductCategory = ProductCategoryModal;
                     ProductModal.User = User;
-                    var response = await Http.PostAsJsonAsync($"api/products", ProductModal);
 
+                    var responseone = await Http.PostAsJsonAsync($"api/productimages", ProductModal.ProductImage);
+                    ProductImage returnValue = await responseone.Content.ReadFromJsonAsync<ProductImage>();
+
+                    ProductModal.ProductImage = returnValue;
+                    var response = await Http.PostAsJsonAsync($"api/products", ProductModal);
                     if (response.StatusCode != System.Net.HttpStatusCode.InternalServerError)
                     {
                         Snackbar.Clear();
@@ -131,7 +137,7 @@ namespace SmartVillages.Client.Shared.Dialogs
             var buffer = new byte[file.Size];
             await file.OpenReadStream(1512000).ReadAsync(buffer);
             //convert byte array to base 64 string
-            ProductModal.Image = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
+            ProductModal.ProductImage.Image = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
             StateHasChanged();
         }
     }
