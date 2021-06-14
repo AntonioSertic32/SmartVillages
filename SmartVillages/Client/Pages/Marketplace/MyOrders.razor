@@ -1,0 +1,41 @@
+﻿@layout MainLayout
+@inherits MyOrdersBase
+
+<MudText Align="Align.Center" Typo="Typo.h5">My Orders</MudText>
+
+<MudPaper Class="pa-16 m-auto mt-3" Style="width: 80vw;" Elevation="10">
+    <MudSimpleTable Style="overflow-x: auto;">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Products</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Orders.Count; i++)
+            {
+                int locale = i;
+                int num = i + 1;
+                <tr>
+                    <td>@num.</td>
+                    <td>@Orders[i].FromDate</td>
+                    <td>
+                        @if (Orders[i].CartItems != null)
+                        {
+                            string titles = "";
+                            for(var j = 0; j < Orders[i].CartItems.Count(); j++)
+                            {
+                                titles += Orders[i].CartItems[j].Product.Title;
+                            }
+                            @titles
+                        }
+                    </td>
+                    <td class="text-center">@Orders[locale].Price$</td>
+                    <td class="text-center"><MudIconButton Icon="@Icons.Material.Filled.Visibility" Color="Color.Primary" /></td>
+                </tr>
+            }
+        </tbody>
+    </MudSimpleTable>
+</MudPaper>

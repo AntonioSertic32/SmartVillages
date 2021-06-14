@@ -105,5 +105,19 @@ namespace SmartVillages.Server.Controllers
         {
             return _context.Orders.Any(e => e.Id == id);
         }
+
+        [HttpGet("getmyorders/{id}")]
+        public async Task<ActionResult<IEnumerable<OrderViewModel>>> GetMyOrders(int id)
+        {
+            List<OrderViewModel> ordersvm = new List<OrderViewModel>();
+            var orders = await _context.Orders.Where(o => o.Buyer.Id == id).Include(i => i.Buyer).ToListAsync();
+            foreach (var item in orders)
+            {
+                var products = await _context.CartItems.Where(o => o.OrderId == item.Id).Include(j => j.Product).ToListAsync();
+                ordersvm.Add( new OrderViewModel { Id = item.Id, Buyer = item.Buyer, Description = item.Description, FromDate = item.FromDate, Price = item.Price, CartItems = products, ToDate = item.ToDate });
+            }
+
+            return ordersvm;
+        }
     }
 }

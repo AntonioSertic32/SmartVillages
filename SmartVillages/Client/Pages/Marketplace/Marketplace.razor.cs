@@ -21,7 +21,7 @@ namespace SmartVillages.Client.Pages
         [Inject] public HttpClient Http { get; set; }
         [Inject] public IDialogService DialogService { get; set; }
         public string Search { get; set; }
-        public bool Opened { get; set; }
+        public bool SingleProductOpened { get; set; }
         public User User { get; set; } = new User();
         public bool OnlyForFarmer { get; set; }
         public List<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();
@@ -31,6 +31,7 @@ namespace SmartVillages.Client.Pages
         public List<CartItem> Cart { get; set; } = new List<CartItem>();
         public bool CartOpened { get; set; }
         public bool Loaded { get; set; } = false;
+        public bool MyOrdersOpened { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -49,7 +50,8 @@ namespace SmartVillages.Client.Pages
 
         public async Task OpenItem(int id, bool isOpenCart = false)
         {
-            if(isOpenCart)
+            CloseItem();
+            if (isOpenCart)
                 CartOpened = true;
             else
             {
@@ -61,15 +63,15 @@ namespace SmartVillages.Client.Pages
                         break;
                     }
                 }
-                Opened = true;
+                SingleProductOpened = true;
             }
             StateHasChanged();
         }
-        public async Task CloseItem()
+        public void CloseItem()
         {
             CartOpened = false;
-            Opened = false;
-            StateHasChanged();
+            SingleProductOpened = false;
+            MyOrdersOpened = false;
         }
 
         public async Task GetCategories()
@@ -146,6 +148,13 @@ namespace SmartVillages.Client.Pages
             await LocalStorage.RemoveItemAsync("cart");
             CartOpened = false;
             Cart.Clear();
+        }
+
+        public async Task OpenCloseMyOrders()
+        {
+            CloseItem();
+            MyOrdersOpened = true;
+            StateHasChanged();
         }
     }
 }
