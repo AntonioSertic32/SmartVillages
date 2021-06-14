@@ -111,7 +111,6 @@ namespace SmartVillages.Client.Pages
                 {
                     await GetProducts();
                 }
-
             }
         }
 
@@ -123,7 +122,7 @@ namespace SmartVillages.Client.Pages
 
         public async Task RemoveFromCart(int id)
         {
-            var item = Cart.Where(c => c.Id == id).FirstOrDefault();
+            var item = Cart.Where(c => c.Product.Id == id).FirstOrDefault();
             Cart.Remove(item);
             await LocalStorage.SetItemAsync("cart", Cart);
         }
@@ -140,6 +139,13 @@ namespace SmartVillages.Client.Pages
             {
                 await UpdateOnCart();
             }
+        }
+
+        public async Task CloseCart()
+        {
+            await LocalStorage.RemoveItemAsync("cart");
+            CartOpened = false;
+            Cart.Clear();
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using SmartVillages.Shared.MarketplaceModels;
+using SmartVillages.Shared.UserModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,12 +36,20 @@ namespace SmartVillages.Client.Shared.Dialogs
             {
                 CartList = new List<CartItem>();
             }
+
+            ProductImage productImage = Product.ProductImage;
+            UserImage userImage = Product.User.UserImage;
+
             Product NewProduct = Product;
             NewProduct.ProductImage = null;
             NewProduct.User.UserImage = null;
             CartItem item = new CartItem { Product = NewProduct, Quantity = Weight, Price = FinalPrice, StatusCode = 1 };
             CartList.Add(item);
             await LocalStorage.SetItemAsync("cart", CartList);
+
+            Product.ProductImage = productImage;
+            Product.User.UserImage = userImage;
+
             MudDialog.Close(DialogResult.Ok(true));
         }
 

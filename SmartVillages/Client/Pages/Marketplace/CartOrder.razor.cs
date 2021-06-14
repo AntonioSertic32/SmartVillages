@@ -16,6 +16,7 @@ namespace SmartVillages.Client.Pages.Marketplace
     public class CartOrderBase : ComponentBase
     {
         [Parameter] public EventCallback CartUpdate { get; set; }
+        [Parameter] public EventCallback CloseCart { get; set; }
         [Inject] ILocalStorageService LocalStorage { get; set; }
         [Inject] public HttpClient Http { get; set; }
         public float Weight { get; set; }
@@ -26,7 +27,8 @@ namespace SmartVillages.Client.Pages.Marketplace
         public User User { get; set; }
         public DateTime? date { get; set; } = DateTime.Today.AddDays(1);
         public Order Order { get; set; } = new Order();
-        protected override async Task OnParametersSetAsync()
+
+        protected override async Task OnInitializedAsync()
         {
             Cart = await LocalStorage.GetItemAsync<List<CartItem>>("cart");
             User = await LocalStorage.GetItemAsync<User>("user");
@@ -38,9 +40,9 @@ namespace SmartVillages.Client.Pages.Marketplace
             Count = 0;
         }
 
-        public void Activate(int index)
+        public async void Activate(int index)
         {
-            Reset();
+            await Reset();
             tabs.ActivatePanel(index);
         }
 
@@ -80,7 +82,7 @@ namespace SmartVillages.Client.Pages.Marketplace
                 await Http.PostAsJsonAsync("api/cartitems", item);
             }
 
-            //zatvorit cart i ispraznit ga
+            await CloseCart.InvokeAsync();
         }
     }
 }

@@ -32,7 +32,7 @@ namespace SmartVillages.Client.Pages
             if(cart != null)
             {
                 Cart = cart;
-                Addedornot = Cart.Where(c => c.Id == Product.Id).FirstOrDefault() != null ? true : false;
+                Addedornot = Cart.Where(c => c.Product.Id == Product.Id).FirstOrDefault() != null ? true : false;
             }
             LinkToProfile = "/profile/" + Product.User.Id;
             LinkToMessages = "/messages/" + Product.User.Id;
@@ -48,7 +48,7 @@ namespace SmartVillages.Client.Pages
 
         public async Task RemoveFromCart()
         {
-            var item = Cart.Where(c => c.Id == Product.Id).FirstOrDefault();
+            var item = Cart.Where(c => c.Product.Id == Product.Id).FirstOrDefault();
             Cart.Remove(item);
             Addedornot = !Addedornot;
             StateHasChanged();
