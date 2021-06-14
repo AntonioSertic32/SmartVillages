@@ -23,11 +23,12 @@ namespace SmartVillages.Client.Shared.Dialogs
         public float fPrice { get; set; } = 0;
         public float FinalPrice { get; set; } = 0;
 
-        protected override async Task OnInitializedAsync()
+        protected override Task OnInitializedAsync()
         {
             MaxValue = Convert.ToSingle(Product.Quantity);
             fPrice = Convert.ToSingle(Product.Price);
-            await NewPrice();
+            NewPrice();
+            return base.OnInitializedAsync();
         }
 
         public async Task AddToCart()
@@ -53,7 +54,7 @@ namespace SmartVillages.Client.Shared.Dialogs
             MudDialog.Close(DialogResult.Ok(true));
         }
 
-        public async Task NewPrice()
+        public void NewPrice()
         {
             FinalPrice = Weight * fPrice;
             StateHasChanged();

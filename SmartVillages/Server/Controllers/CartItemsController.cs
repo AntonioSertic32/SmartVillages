@@ -82,6 +82,12 @@ namespace SmartVillages.Server.Controllers
             _context.CartItems.Add(cartItem);
             await _context.SaveChangesAsync();
 
+            // oduzet quantity na produktu
+            Product product = cartItem.Product;
+            product.Quantity -= cartItem.Quantity;
+            _context.Entry(product).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
             return CreatedAtAction("GetCartItem", new { id = cartItem.Id }, cartItem);
         }
 

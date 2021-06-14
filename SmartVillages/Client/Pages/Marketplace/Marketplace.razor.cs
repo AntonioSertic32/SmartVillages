@@ -48,7 +48,7 @@ namespace SmartVillages.Client.Pages
             StateHasChanged();
         }
 
-        public async Task OpenItem(int id, bool isOpenCart = false)
+        public void OpenItem(int id, bool isOpenCart = false)
         {
             CloseItem();
             if (isOpenCart)
@@ -148,9 +148,11 @@ namespace SmartVillages.Client.Pages
             await LocalStorage.RemoveItemAsync("cart");
             CartOpened = false;
             Cart.Clear();
+            Loaded = false;
+            await GetProducts();
         }
 
-        public async Task OpenCloseMyOrders()
+        public void OpenCloseMyOrders()
         {
             CloseItem();
             MyOrdersOpened = true;

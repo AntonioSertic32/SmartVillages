@@ -77,7 +77,7 @@ namespace SmartVillages.Client.Pages.UserProfile
             StateHasChanged();
         }
 
-        public async Task CancelUpdateingImage()
+        public void CancelUpdateingImage()
         {
             EditingProfileImage = false;
             if (UserOldImage == "")

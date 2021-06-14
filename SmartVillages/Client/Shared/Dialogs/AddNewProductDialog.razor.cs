@@ -30,16 +30,16 @@ namespace SmartVillages.Client.Shared.Dialogs
         public List<string> SubCategoriesTwo { get; set; } = new List<string>();
         public List<string> Species { get; set; } = new List<string>();
 
-        protected override async Task OnParametersSetAsync()
+        protected override Task OnParametersSetAsync()
         {
             Categories = AllCategories.DistinctBy(x => x.Name).Select(s => s.Name).ToList();
             Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
             Snackbar.Configuration.SnackbarVariant = Variant.Filled;
             ProductModal.ProductImage = new ProductImage();
-            StateHasChanged();
+            return base.OnParametersSetAsync();
         }
 
-        public async Task Sort(int id)
+        public void Sort(int id)
         {
             if(id == 1)
             {

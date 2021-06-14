@@ -18,6 +18,7 @@ namespace SmartVillages.Client.Pages.Marketplace
         [Parameter] public EventCallback CartUpdate { get; set; }
         [Parameter] public EventCallback CloseCart { get; set; }
         [Inject] ILocalStorageService LocalStorage { get; set; }
+        [Inject] public NavigationManager Navigation { get; set; }
         [Inject] public HttpClient Http { get; set; }
         public float Weight { get; set; }
         public float FinalCartPrice { get; set; }
@@ -35,14 +36,14 @@ namespace SmartVillages.Client.Pages.Marketplace
             FinalCartPrice = Cart.Select(s => s.Price).Sum();
         }
 
-        public async Task Reset()
+        public void Reset()
         {
             Count = 0;
         }
 
-        public async void Activate(int index)
+        public void Activate(int index)
         {
-            await Reset();
+            Reset();
             tabs.ActivatePanel(index);
         }
 

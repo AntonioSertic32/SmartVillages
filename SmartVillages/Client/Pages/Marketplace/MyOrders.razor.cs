@@ -1,5 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
+using SmartVillages.Client.Shared.Dialogs;
 using SmartVillages.Shared.MarketplaceModels;
 using SmartVillages.Shared.UserModels;
 using System;
@@ -15,6 +17,7 @@ namespace SmartVillages.Client.Pages.Marketplace
     {
         [Inject] public HttpClient Http { get; set; }
         [Inject] ILocalStorageService LocalStorage { get; set; }
+        [Inject] public IDialogService DialogService { get; set; }
         public User User { get; set; }
         public List<OrderViewModel> Orders { get; set; } = new List<OrderViewModel>();
 
@@ -32,6 +35,16 @@ namespace SmartVillages.Client.Pages.Marketplace
             List<OrderViewModel> returnValue = await response.Content.ReadFromJsonAsync<List<OrderViewModel>>();
             Orders = returnValue;
             StateHasChanged();
+        }
+
+        public void OpenDialog(Order order)
+        {
+            var parameters = new DialogParameters();
+            parameters.Add("Order", order);
+
+            DialogOptions maxWidth = new DialogOptions() { MaxWidth = MaxWidth.Medium };
+
+            DialogService.Show<OpenMyOrdersMoreDetailsDialog>("Order review", parameters, maxWidth);
         }
     }
 }

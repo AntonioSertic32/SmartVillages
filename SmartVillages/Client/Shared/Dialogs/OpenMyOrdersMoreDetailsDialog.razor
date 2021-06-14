@@ -1,0 +1,16 @@
+﻿@inherits OpenMyOrdersMoreDetailsDialogBase
+
+<MudDialog>
+    <DialogContent>
+        <div class="row">
+            Preview
+            @Order.Id
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="Cancel">Cancel</MudButton>
+        @*
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddToCart">Ok</MudButton>
+        *@
+    </DialogActions>
+</MudDialog>

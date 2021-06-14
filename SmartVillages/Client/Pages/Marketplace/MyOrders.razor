@@ -32,8 +32,8 @@
                             @titles
                         }
                     </td>
-                    <td class="text-center">@Orders[locale].Price$</td>
-                    <td class="text-center"><MudIconButton Icon="@Icons.Material.Filled.Visibility" Color="Color.Primary" /></td>
+                    <td class="text-center">@Orders[i].Price$</td>
+                    <td class="text-center"><MudIconButton Icon="@Icons.Material.Filled.Visibility" Color="Color.Primary" OnClick="() => OpenDialog(Orders[locale])"/></td>
                 </tr>
             }
         </tbody>

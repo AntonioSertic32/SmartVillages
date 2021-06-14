@@ -38,11 +38,11 @@ namespace SmartVillages.Client.Pages
             LinkToMessages = "/messages/" + Product.User.Id;
         }
 
-        public async Task Edit()
+        public void Edit()
         {
         }
 
-        public async Task Delete()
+        public void Delete()
         {
         }
 
