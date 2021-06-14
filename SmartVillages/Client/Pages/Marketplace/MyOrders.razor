@@ -10,7 +10,8 @@
                 <th>Id</th>
                 <th>Date</th>
                 <th>Products</th>
-                <th>Price</th>
+                <th class="text-center">Price</th>
+                <th class="text-center">View more</th>
             </tr>
         </thead>
         <tbody>
@@ -27,7 +28,14 @@
                             string titles = "";
                             for(var j = 0; j < Orders[i].CartItems.Count(); j++)
                             {
-                                titles += Orders[i].CartItems[j].Product.Title;
+                                if(j + 1 != Orders[i].CartItems.Count())
+                                {
+                                    titles += Orders[i].CartItems[j].Product.Title + ", ";
+                                }
+                                else
+                                {
+                                    titles += Orders[i].CartItems[j].Product.Title;
+                                }
                             }
                             @titles
                         }

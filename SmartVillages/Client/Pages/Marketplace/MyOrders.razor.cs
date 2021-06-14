@@ -37,7 +37,7 @@ namespace SmartVillages.Client.Pages.Marketplace
             StateHasChanged();
         }
 
-        public void OpenDialog(Order order)
+        public void OpenDialog(OrderViewModel order)
         {
             var parameters = new DialogParameters();
             parameters.Add("Order", order);

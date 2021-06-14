@@ -11,7 +11,7 @@ namespace SmartVillages.Client.Shared.Dialogs
     public class OpenMyOrdersMoreDetailsDialogBase : ComponentBase
     {
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
-        [Parameter] public Order Order { get; set; }
+        [Parameter] public OrderViewModel Order { get; set; }
 
         public void Cancel() => MudDialog.Cancel();
     }
