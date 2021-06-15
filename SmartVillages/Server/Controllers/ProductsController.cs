@@ -44,31 +44,21 @@ namespace SmartVillages.Server.Controllers
 
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        [HttpPut]
+        public async Task<IActionResult> PutProduct(Product product)
         {
-            if (id != product.Id)
-            {
-                return BadRequest();
-            }
+            var image = await _context.ProductImages.SingleOrDefaultAsync(t => t.Id == product.ProductImage.Id);
+            product.ProductImage = image;
+
+            var category = await _context.ProductCategorys.SingleOrDefaultAsync(t => t.Species == product.ProductCategory.Species);
+            product.ProductCategory = category;
+
+            var user = await _context.Users.SingleOrDefaultAsync(t => t.Id == product.User.Id);
+            product.User = user;
 
             _context.Entry(product).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
@@ -97,13 +87,10 @@ namespace SmartVillages.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
+            var product = _context.Products.Where(p => p.Id == id).FirstOrDefault();
+            product.Deleted = true;
 
-            _context.Products.Remove(product);
+            _context.Entry(product).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -119,7 +106,7 @@ namespace SmartVillages.Server.Controllers
         public async Task<ActionResult<List<Product>>> GeTLastTen()
         {
             List<Product> products = new List<Product>();
-            products = _context.Products.OrderByDescending(t => t.Id).Include(f => f.User).Include(f => f.User.UserImage).Include(f => f.User.Place).Include(f => f.ProductCategory).Include(i => i.ProductImage).Take(10).ToList();
+            products = _context.Products.Where(p => p.Deleted != true).OrderByDescending(t => t.Id).Include(f => f.User).Include(f => f.User.UserImage).Include(f => f.User.Place).Include(f => f.ProductCategory).Include(i => i.ProductImage).Take(10).ToList();
             if (products == null)
             {
                 return NotFound();

@@ -158,5 +158,12 @@ namespace SmartVillages.Client.Pages
             MyOrdersOpened = true;
             StateHasChanged();
         }
+
+        public async Task DeletedOrEdited()
+        {
+            CloseItem();
+            Loaded = false;
+            await GetProducts();
+        }
     }
 }

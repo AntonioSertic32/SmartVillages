@@ -78,6 +78,7 @@ namespace SmartVillages.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<ProductImage>> PostProductImage(ProductImage productImage)
         {
+            productImage.Id = 0;
             _context.ProductImages.Add(productImage);
             await _context.SaveChangesAsync();
 

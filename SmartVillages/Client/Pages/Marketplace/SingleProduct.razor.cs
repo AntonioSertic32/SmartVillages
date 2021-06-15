@@ -8,6 +8,8 @@ using SmartVillages.Shared.UserModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace SmartVillages.Client.Pages
@@ -16,10 +18,13 @@ namespace SmartVillages.Client.Pages
     {
         [Parameter] public Product Product { get; set; }
         [Parameter] public User User { get; set; }
+        [Parameter] public List<ProductCategory> ProductCategories { get; set; }
         [Parameter] public EventCallback ChartCallback { get; set; }
+        [Parameter] public EventCallback DeletedOrEdited { get; set; }
 
         [Inject] ILocalStorageService LocalStorage { get; set; }
         [Inject] public IDialogService DialogService { get; set; }
+        [Inject] public HttpClient Http { get; set; }
 
         public bool Addedornot { get; set; }
         public string LinkToProfile { get; set; }
@@ -38,12 +43,39 @@ namespace SmartVillages.Client.Pages
             LinkToMessages = "/messages/" + Product.User.Id;
         }
 
-        public void Edit()
+        public async Task Edit()
         {
+            var parameters = new DialogParameters();
+            var product = Product;
+            parameters.Add("Product", product);
+            parameters.Add("AllCategories", ProductCategories);
+            DialogOptions maxWidth = new DialogOptions() { MaxWidth = MaxWidth.Medium };
+
+            var dialog = DialogService.Show<EditProductDialog>("Edit product", parameters, maxWidth);
+            var result = await dialog.Result;
+            if (!result.Cancelled)
+            {
+                Console.WriteLine("nije cancel");
+                // update ui
+            }
+            else
+            {
+                Console.WriteLine("je cancel");
+            }
         }
 
-        public void Delete()
+        public async Task Delete()
         {
+            var dialog = DialogService.Show<DeleteProductDialog>("Delete product");
+            var result = await dialog.Result;
+            if (!result.Cancelled)
+            {
+                var response = await Http.DeleteAsync($"api/products/{Product.Id}");
+                if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                {
+                    await DeletedOrEdited.InvokeAsync();
+                }
+            }
         }
 
         public async Task RemoveFromCart()

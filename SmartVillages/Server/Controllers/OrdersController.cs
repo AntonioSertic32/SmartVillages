@@ -113,7 +113,7 @@ namespace SmartVillages.Server.Controllers
             var orders = await _context.Orders.Where(o => o.Buyer.Id == id).Include(i => i.Buyer).ToListAsync();
             foreach (var item in orders)
             {
-                var products = await _context.CartItems.Where(o => o.OrderId == item.Id).Include(j => j.Product).ToListAsync();
+                var products = await _context.CartItems.Where(o => o.OrderId == item.Id).Include(j => j.Product).Include(j => j.Product.User).ToListAsync();
                 ordersvm.Add( new OrderViewModel { Id = item.Id, Buyer = item.Buyer, Description = item.Description, FromDate = item.FromDate, Price = item.Price, CartItems = products, ToDate = item.ToDate });
             }
 
