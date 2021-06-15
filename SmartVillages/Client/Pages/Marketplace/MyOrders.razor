@@ -66,7 +66,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @*
                         @for (int i = 0; i < EndedOrders.Count; i++)
                         {
                             int locale = i;
@@ -77,10 +76,9 @@
                                 <td>@EndedOrders[i].ToDate.ToString("dd/MM/yyyy")</td>
                                 <td>@EndedOrders[i].Buyer.FirstName @EndedOrders[i].Buyer.LastName</td>
                                 <td>@EndedOrders[i].Buyer.Place.Name, @EndedOrders[i].Buyer.Address</td>
-                                <td class="text-center"><MudIconButton Icon="@Icons.Material.Filled.Visibility" Color="Color.Primary" OnClick="() => OpenActiveEndedDialog(EndedOrders[locale])" /></td>
+                                <td class="text-center"><MudIconButton Icon="@Icons.Material.Filled.Visibility" Color="Color.Primary" OnClick="() => OpenActiveEndedDialog(EndedOrders[locale], true)" /></td>
                             </tr>
                         }
-                        *@
                     </tbody>
                 </MudSimpleTable>
             </MudPaper>

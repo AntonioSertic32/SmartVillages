@@ -16,6 +16,7 @@ namespace SmartVillages.Client.Shared.Dialogs
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
         [Parameter] public OrderViewModel Order { get; set; }
         [Parameter] public User User { get; set; }
+        [Parameter] public bool IsForCustomerEnded { get; set; }
         [Inject] public ISnackbar Snackbar { get; set; }
         [Inject] public HttpClient Http { get; set; }
         public float MyPrice { get; set; } = 0;
@@ -45,6 +46,29 @@ namespace SmartVillages.Client.Shared.Dialogs
             await Http.PostAsJsonAsync($"api/orders/setasordered/{User.Id}", Order);
 
             MudDialog.Close(DialogResult.Ok(true));
+        }
+
+        // RATEING AND COMMENTING
+
+        public string sampleText = "";
+
+        public int selectedVal = 0;
+        public int? activeVal;
+        public void HandleHoveredValueChanged(int? val) => activeVal = val;
+        public string LabelText => (activeVal ?? selectedVal) switch
+        {
+            1 => "Very bad",
+            2 => "Bad",
+            3 => "Sufficient",
+            4 => "Good",
+            5 => "Awesome!",
+            _ => "Rate our product!"
+        };
+
+        public void RateAndComment(int id)
+        {
+            // dodat ocjenu u ocjene i onda azurirati produt sa ocjenom
+            Console.WriteLine(id);
         }
     }
 }

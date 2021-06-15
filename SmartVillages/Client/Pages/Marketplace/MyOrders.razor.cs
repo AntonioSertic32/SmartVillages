@@ -34,6 +34,10 @@ namespace SmartVillages.Client.Pages.Marketplace
                 await GetActiveOrders();
                 await GetEndedOrders();
             }
+            else
+            {
+                await GetEndedOrdersCustomer();
+            }
         }
 
         public async Task GetMyOrders()
@@ -72,11 +76,13 @@ namespace SmartVillages.Client.Pages.Marketplace
             DialogService.Show<OpenMyOrdersMoreDetailsDialog>("Order review", parameters, maxWidth);
         }
 
-        public async Task OpenActiveEndedDialog(OrderViewModel item)
+        public async Task OpenActiveEndedDialog(OrderViewModel item, bool isForCustomerEnded = false)
         {
             var parameters = new DialogParameters();
             parameters.Add("Order", item);
             parameters.Add("User", User);
+            if (isForCustomerEnded)
+                parameters.Add("IsForCustomerEnded", true);
 
             DialogOptions maxWidth = new DialogOptions() { MaxWidth = MaxWidth.Medium };
 
@@ -87,6 +93,15 @@ namespace SmartVillages.Client.Pages.Marketplace
                 await GetActiveOrders();
                 await GetEndedOrders();
             }
+        }
+
+        public async Task GetEndedOrdersCustomer()
+        {
+            EndedOrders.Clear();
+            var response = await Http.GetAsync($"api/orders/getendedorderscustomer/{User.Id}");
+            List<OrderViewModel> returnValue = await response.Content.ReadFromJsonAsync<List<OrderViewModel>>();
+            EndedOrders = returnValue;
+            StateHasChanged();
         }
 
     }

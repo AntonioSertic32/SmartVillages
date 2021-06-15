@@ -91,7 +91,7 @@ namespace SmartVillages.Server.Controllers
         [HttpPost("putimage")]
         public async Task<ActionResult<User>> PutImage(User user)
         {
-            var Image = _context.UserImage.Where(i => i.Id == user.UserImage.Id).FirstOrDefault();
+            var Image = _context.UserImages.Where(i => i.Id == user.UserImage.Id).FirstOrDefault();
             user.UserImage = Image;
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();

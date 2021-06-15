@@ -25,14 +25,14 @@ namespace SmartVillages.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserImage>>> GetUserImage()
         {
-            return await _context.UserImage.ToListAsync();
+            return await _context.UserImages.ToListAsync();
         }
 
         // GET: api/UserImages/5
         [HttpGet("{id}")]
         public async Task<ActionResult<UserImage>> GetUserImage(int id)
         {
-            var userImage = await _context.UserImage.FindAsync(id);
+            var userImage = await _context.UserImages.FindAsync(id);
 
             if (userImage == null)
             {
@@ -78,7 +78,7 @@ namespace SmartVillages.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<UserImage>> PostUserImage(UserImage userImage)
         {
-            _context.UserImage.Add(userImage);
+            _context.UserImages.Add(userImage);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUserImage", new { id = userImage.Id }, userImage);
@@ -88,13 +88,13 @@ namespace SmartVillages.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserImage(int id)
         {
-            var userImage = await _context.UserImage.FindAsync(id);
+            var userImage = await _context.UserImages.FindAsync(id);
             if (userImage == null)
             {
                 return NotFound();
             }
 
-            _context.UserImage.Remove(userImage);
+            _context.UserImages.Remove(userImage);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -102,7 +102,7 @@ namespace SmartVillages.Server.Controllers
 
         private bool UserImageExists(int id)
         {
-            return _context.UserImage.Any(e => e.Id == id);
+            return _context.UserImages.Any(e => e.Id == id);
         }
     }
 }

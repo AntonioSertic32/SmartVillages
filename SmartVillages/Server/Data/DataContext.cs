@@ -19,11 +19,12 @@ namespace SmartVillages.Server.Data
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<ProductCategory> ProductCategorys { get; set; }
         public DbSet<Order> Orders { get; set; }
-
+        public DbSet<ProductRate> ProductRate { get; set; }
+        
         public DbSet<Message> Messages { get; set; }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<User> UserImages { get; set; }
+        public DbSet<UserImage> UserImages { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
         public DbSet<Place> Places { get; set; }
 
@@ -33,8 +34,6 @@ namespace SmartVillages.Server.Data
                 .HasIndex(p => new { p.Email, p.OIB })
                 .IsUnique(true);
         }
-
-        public DbSet<SmartVillages.Shared.UserModels.UserImage> UserImage { get; set; }
 
     }
 }

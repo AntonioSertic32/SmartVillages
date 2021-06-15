@@ -24,6 +24,7 @@ namespace SmartVillages.Shared.MarketplaceModels
         [Required, Range(1.0, Double.MaxValue, ErrorMessage = "Količina mora biti veća od 0")]
         public double Quantity { get; set; }
         public bool Deleted { get; set; }
+        public ProductRate ProductRate { get; set; }
 
     }
 }

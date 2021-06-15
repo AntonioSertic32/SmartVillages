@@ -188,5 +188,21 @@ namespace SmartVillages.Server.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("getendedorderscustomer/{id}")]
+        public async Task<ActionResult<IEnumerable<OrderViewModel>>> GetEndedOrdersCustomer(int id)
+        {
+            List<OrderViewModel> ordersvm = new List<OrderViewModel>();
+            var orders = await _context.Orders.Where(o => o.Buyer.Id == id).Include(i => i.Buyer).Include(i => i.Buyer.Place).ToListAsync();
+            foreach (var item in orders)
+            {
+                var products = await _context.CartItems.Where(o => o.OrderId == item.Id && o.StatusCode > 1).Include(j => j.Product).Include(j => j.Product.User).ToListAsync();
+                if (products.Count == 0)
+                    continue;
+                ordersvm.Add(new OrderViewModel { Id = item.Id, Buyer = item.Buyer, Description = item.Description, FromDate = item.FromDate, Price = item.Price, CartItems = products, ToDate = item.ToDate });
+            }
+
+            return ordersvm;
+        }
     }
 }
