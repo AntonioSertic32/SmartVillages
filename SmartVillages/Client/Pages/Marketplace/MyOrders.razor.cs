@@ -19,21 +19,41 @@ namespace SmartVillages.Client.Pages.Marketplace
         [Inject] ILocalStorageService LocalStorage { get; set; }
         [Inject] public IDialogService DialogService { get; set; }
         public User User { get; set; }
-        public List<OrderViewModel> Orders { get; set; } = new List<OrderViewModel>();
-
+        public List<OrderViewModel> MyOrders { get; set; } = new List<OrderViewModel>();
+        public List<CartItem> ActiveOrders { get; set; } = new List<CartItem>();
+        public List<OrderViewModel> EndedOrders { get; set; } = new List<OrderViewModel>();
+        public bool IsFarmer { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-
             User = await LocalStorage.GetItemAsync<User>("user");
+            IsFarmer = User.UserType.UserTypeId == 2 ? true : false;
             await GetMyOrders();
+            await GetActiveOrders();
+            await GetEndedOrders();
         }
 
         public async Task GetMyOrders()
         {
             var response = await Http.GetAsync($"api/orders/getmyorders/{User.Id}");
             List<OrderViewModel> returnValue = await response.Content.ReadFromJsonAsync<List<OrderViewModel>>();
-            Orders = returnValue;
+            MyOrders = returnValue;
+            StateHasChanged();
+        }
+
+        public async Task GetActiveOrders()
+        {
+            var response = await Http.GetAsync($"api/orders/getactiveorders/{User.Id}");
+            List<CartItem> returnValue = await response.Content.ReadFromJsonAsync<List<CartItem>>();
+            ActiveOrders = returnValue;
+            StateHasChanged();
+        }
+
+        public async Task GetEndedOrders()
+        {
+            var response = await Http.GetAsync($"api/orders/getendedorders/{User.Id}");
+            List<OrderViewModel> returnValue = await response.Content.ReadFromJsonAsync<List<OrderViewModel>>();
+            EndedOrders = returnValue;
             StateHasChanged();
         }
 

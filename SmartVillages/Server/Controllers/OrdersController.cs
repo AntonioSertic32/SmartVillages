@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MoreLinq;
 using SmartVillages.Server.Data;
 using SmartVillages.Shared.MarketplaceModels;
 
@@ -115,6 +116,28 @@ namespace SmartVillages.Server.Controllers
             {
                 var products = await _context.CartItems.Where(o => o.OrderId == item.Id).Include(j => j.Product).Include(j => j.Product.User).ToListAsync();
                 ordersvm.Add( new OrderViewModel { Id = item.Id, Buyer = item.Buyer, Description = item.Description, FromDate = item.FromDate, Price = item.Price, CartItems = products, ToDate = item.ToDate });
+            }
+
+            return ordersvm;
+        }
+
+        [HttpGet("getactiveorders/{id}")]
+        public async Task<ActionResult<IEnumerable<CartItem>>> GetActiveOrders(int id)
+        {
+            List<CartItem> CartItems = await _context.CartItems.Where(o => o.Product.User.Id == id && o.StatusCode == 1).Include(i => i.Product).ToListAsync();
+
+            return CartItems;
+        }
+
+        [HttpGet("getendedorders/{id}")]
+        public async Task<ActionResult<IEnumerable<OrderViewModel>>> GetEndedOrders(int id)
+        {
+            List<OrderViewModel> ordersvm = new List<OrderViewModel>();
+            var orders = await _context.Orders.Where(o => o.Buyer.Id == id).Include(i => i.Buyer).ToListAsync();
+            foreach (var item in orders)
+            {
+                var products = await _context.CartItems.Where(o => o.OrderId == item.Id).Include(j => j.Product).Include(j => j.Product.User).ToListAsync();
+                ordersvm.Add(new OrderViewModel { Id = item.Id, Buyer = item.Buyer, Description = item.Description, FromDate = item.FromDate, Price = item.Price, CartItems = products, ToDate = item.ToDate });
             }
 
             return ordersvm;
