@@ -26,8 +26,8 @@
         </MudSimpleTable>
         <p class="mt-5"><span style="font-weight: 500; font-size: 18px;">Description: </span>@Order.Description</p>
         <p class="mt-5"><span style="font-weight: 500; font-size: 18px;">Price: </span>@Order.Price</p>
-        <p class="mt-5"><span style="font-weight: 500; font-size: 18px;">Ordered from: </span>@Order.FromDate</p>
-        <p class="mt-5"><span style="font-weight: 500; font-size: 18px;">Ordered for: </span>@Order.ToDate</p>
+        <p class="mt-5"><span style="font-weight: 500; font-size: 18px;">Ordered from: </span>@Order.FromDate.ToString("dd/MM/yyyy")</p>
+        <p class="mt-5"><span style="font-weight: 500; font-size: 18px;">Ordered for: </span>@Order.ToDate.ToString("dd/MM/yyyy")</p>
     </DialogContent>
     <DialogActions>
         <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="Cancel">Close</MudButton>

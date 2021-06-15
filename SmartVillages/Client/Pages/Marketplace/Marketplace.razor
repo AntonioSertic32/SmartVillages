@@ -20,7 +20,7 @@
         @*
             <MudButton Class="ml-4" Variant="Variant.Filled" Size="Size.Large" StartIcon="fas fa-heart" Color="Color.Success">Favorite</MudButton>
         *@
-        <MudButton Class="ml-4" Variant="Variant.Filled" Size="Size.Large" StartIcon="@Icons.Material.Filled.ViewList" Color="Color.Warning" OnClick="OpenCloseMyOrders">@(OnlyForFarmer ? "Orders" : "My Orders")</MudButton>
+        <MudButton Class="ml-4" Variant="Variant.Filled" Size="Size.Large" StartIcon="@Icons.Material.Filled.ViewList" Color="Color.Warning" OnClick="OpenCloseMyOrders">Orders</MudButton>
         @if (OnlyForFarmer)
         {
             <MudButton Class="ml-4" Variant="Variant.Filled" Size="Size.Large" StartIcon="@Icons.Material.Filled.Add" Color="Color.Success" OnClick="OpenDialog">Add New Product</MudButton>

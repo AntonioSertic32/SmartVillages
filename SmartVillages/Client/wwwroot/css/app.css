@@ -133,3 +133,9 @@ a, .btn-link {
     display: block;
     height: 32px;
 }
+
+/* Tabs z-index 0 */
+
+.mud-tabs-toolbar {
+    z-index: 0 !important;
+}

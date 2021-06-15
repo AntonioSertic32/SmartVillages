@@ -122,25 +122,71 @@ namespace SmartVillages.Server.Controllers
         }
 
         [HttpGet("getactiveorders/{id}")]
-        public async Task<ActionResult<IEnumerable<CartItem>>> GetActiveOrders(int id)
+        public async Task<ActionResult<IEnumerable<OrderViewModel>>> GetActiveOrders(int id)
         {
             List<CartItem> CartItems = await _context.CartItems.Where(o => o.Product.User.Id == id && o.StatusCode == 1).Include(i => i.Product).ToListAsync();
+            List<Order> orders = new List<Order>();
+            List<OrderViewModel> OrdersVM = new List<OrderViewModel>();
 
-            return CartItems;
+            // trebam orders..
+            // za svaki cartitem dohvatti order i stavit u listu pa distinctat..
+            foreach (var item in CartItems)
+            {
+                var order = _context.Orders.Where(o => o.Id == item.OrderId).Include(j => j.Buyer).Include(j => j.Buyer.Place).FirstOrDefault();
+                orders.Add(order);
+            }
+
+            var Orders = orders.DistinctBy(d => d.Id);
+
+            foreach (var item in Orders)
+            {
+                var products = await _context.CartItems.Where(o => o.OrderId == item.Id).Include(j => j.Product).Include(j => j.Product.User).ToListAsync();
+                OrdersVM.Add(new OrderViewModel { Id = item.Id, Buyer = item.Buyer, Description = item.Description, FromDate = item.FromDate, Price = item.Price, CartItems = products, ToDate = item.ToDate });
+            }
+
+            return OrdersVM;
         }
 
         [HttpGet("getendedorders/{id}")]
         public async Task<ActionResult<IEnumerable<OrderViewModel>>> GetEndedOrders(int id)
         {
-            List<OrderViewModel> ordersvm = new List<OrderViewModel>();
-            var orders = await _context.Orders.Where(o => o.Buyer.Id == id).Include(i => i.Buyer).ToListAsync();
-            foreach (var item in orders)
+            List<CartItem> CartItems = await _context.CartItems.Where(o => o.Product.User.Id == id && o.StatusCode > 1).Include(i => i.Product).ToListAsync();
+            List<Order> orders = new List<Order>();
+            List<OrderViewModel> OrdersVM = new List<OrderViewModel>();
+
+            // trebam orders..
+            // za svaki cartitem dohvatti order i stavit u listu pa distinctat..
+            foreach (var item in CartItems)
             {
-                var products = await _context.CartItems.Where(o => o.OrderId == item.Id).Include(j => j.Product).Include(j => j.Product.User).ToListAsync();
-                ordersvm.Add(new OrderViewModel { Id = item.Id, Buyer = item.Buyer, Description = item.Description, FromDate = item.FromDate, Price = item.Price, CartItems = products, ToDate = item.ToDate });
+                var order = _context.Orders.Where(o => o.Id == item.OrderId).Include(j => j.Buyer).Include(j => j.Buyer.Place).FirstOrDefault();
+                orders.Add(order);
             }
 
-            return ordersvm;
+            var Orders = orders.DistinctBy(d => d.Id);
+
+            foreach (var item in Orders)
+            {
+                var products = await _context.CartItems.Where(o => o.OrderId == item.Id).Include(j => j.Product).Include(j => j.Product.User).ToListAsync();
+                OrdersVM.Add(new OrderViewModel { Id = item.Id, Buyer = item.Buyer, Description = item.Description, FromDate = item.FromDate, Price = item.Price, CartItems = products, ToDate = item.ToDate });
+            }
+
+            return OrdersVM;
+        }
+
+        
+        [HttpPost("setasordered/{id}")]
+        public async Task<IActionResult> SetAsOrdered(int id, OrderViewModel order)
+        {
+            var ord = await _context.CartItems.Where(o => o.OrderId == order.Id).Where(w => w.Product.User.Id == id).ToListAsync();
+            foreach (var o in ord)
+            {
+                o.StatusCode = 2;
+                _context.Entry(o).State = EntityState.Modified;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

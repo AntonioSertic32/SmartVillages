@@ -20,7 +20,7 @@ namespace SmartVillages.Client.Pages.Marketplace
         [Inject] public IDialogService DialogService { get; set; }
         public User User { get; set; }
         public List<OrderViewModel> MyOrders { get; set; } = new List<OrderViewModel>();
-        public List<CartItem> ActiveOrders { get; set; } = new List<CartItem>();
+        public List<OrderViewModel> ActiveOrders { get; set; } = new List<OrderViewModel>();
         public List<OrderViewModel> EndedOrders { get; set; } = new List<OrderViewModel>();
         public bool IsFarmer { get; set; }
 
@@ -29,8 +29,11 @@ namespace SmartVillages.Client.Pages.Marketplace
             User = await LocalStorage.GetItemAsync<User>("user");
             IsFarmer = User.UserType.UserTypeId == 2 ? true : false;
             await GetMyOrders();
-            await GetActiveOrders();
-            await GetEndedOrders();
+            if (IsFarmer)
+            {
+                await GetActiveOrders();
+                await GetEndedOrders();
+            }
         }
 
         public async Task GetMyOrders()
@@ -43,14 +46,16 @@ namespace SmartVillages.Client.Pages.Marketplace
 
         public async Task GetActiveOrders()
         {
+            ActiveOrders.Clear();
             var response = await Http.GetAsync($"api/orders/getactiveorders/{User.Id}");
-            List<CartItem> returnValue = await response.Content.ReadFromJsonAsync<List<CartItem>>();
+            List<OrderViewModel> returnValue = await response.Content.ReadFromJsonAsync<List<OrderViewModel>>();
             ActiveOrders = returnValue;
             StateHasChanged();
         }
 
         public async Task GetEndedOrders()
         {
+            EndedOrders.Clear();
             var response = await Http.GetAsync($"api/orders/getendedorders/{User.Id}");
             List<OrderViewModel> returnValue = await response.Content.ReadFromJsonAsync<List<OrderViewModel>>();
             EndedOrders = returnValue;
@@ -66,5 +71,23 @@ namespace SmartVillages.Client.Pages.Marketplace
 
             DialogService.Show<OpenMyOrdersMoreDetailsDialog>("Order review", parameters, maxWidth);
         }
+
+        public async Task OpenActiveEndedDialog(OrderViewModel item)
+        {
+            var parameters = new DialogParameters();
+            parameters.Add("Order", item);
+            parameters.Add("User", User);
+
+            DialogOptions maxWidth = new DialogOptions() { MaxWidth = MaxWidth.Medium };
+
+            var dialog = DialogService.Show<OpenActiveEndedMoreDetailsDialog>("Order review", parameters, maxWidth);
+            var result = await dialog.Result;
+            if (!result.Cancelled)
+            {
+                await GetActiveOrders();
+                await GetEndedOrders();
+            }
+        }
+
     }
 }
