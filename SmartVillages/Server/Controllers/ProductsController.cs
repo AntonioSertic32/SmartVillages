@@ -116,5 +116,20 @@ namespace SmartVillages.Server.Controllers
                 return products;
             }
         }
+
+        
+        [HttpPut("putproductrate")]
+        public async Task<IActionResult> PutProductRate(Product product)
+        {
+            /*
+            var rate = await _context.ProductRate.SingleOrDefaultAsync(t => t.Id == product.ProductRate.Id);
+            product.ProductRate = rate;
+
+            _context.Entry(product).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+            */
+            return NoContent();
+        }
     }
 }

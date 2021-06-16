@@ -67,43 +67,55 @@
                 @for (var i = 0; i < Order.CartItems.Count(); i++)
                 {
                     var locale = i;
-                    <MudExpansionPanel @onclick="() => RateAndComment(Order.CartItems[locale].Id)">
-                        <TitleContent>
-                            <div class="row m-0">
-                                <div class="col-3">
-                                    <p>@Order.CartItems[locale].Product.Title</p>
-                                </div>
-                                <div class="col-3 text-center">
-                                    <p>@Order.CartItems[locale].Product.User.FirstName @Order.CartItems[locale].Product.User.LastName</p>
-                                </div>
-                                <div class="col-3 text-center">
-                                    <p>@Order.CartItems[locale].Quantity</p>
-                                </div>
-                                <div class="col-3 text-center">
-                                    <p>@Order.CartItems[locale].Price$</p>
-                                </div>
-                            </div>
-                        </TitleContent>
-
-                        <ChildContent>
-
-                            <div class="row m-0">
-                                <div class="col-3 d-flex align-items-center">
-                                    <div class="d-flex flex-column align-center">
-                                        <MudRating @bind-SelectedValue="selectedVal" Size="Size.Large" HoveredValueChanged="HandleHoveredValueChanged" />
-                                        <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">@LabelText</MudText>
+                    <div @onclick="() => Fill(Order.CartItems[locale].Product.Id)">
+                        <MudExpansionPanel>
+                            <TitleContent>
+                                <div class="row m-0">
+                                    <div class="col-3">
+                                        <p>@Order.CartItems[locale].Product.Title</p>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <p>@Order.CartItems[locale].Product.User.FirstName @Order.CartItems[locale].Product.User.LastName</p>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <p>@Order.CartItems[locale].Quantity</p>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <p>@Order.CartItems[locale].Price$</p>
                                     </div>
                                 </div>
-                                <div class="col-8">
-                                    <MudTextField T="string" Label="Comment" Variant="Variant.Outlined" @bind-Text="sampleText" Lines="3" />
-                                </div>
-                                <div class="col-1 d-flex align-items-center">
-                                    <MudIconButton Icon="@Icons.Material.Filled.Send" Disabled="@(selectedVal == 0 || sampleText == "")" Size="Size.Large" Color="Color.Success" OnClick="() => RateAndComment(Order.CartItems[locale].Id)"></MudIconButton>
-                                </div>
-                            </div>
+                            </TitleContent>
 
-                        </ChildContent>
-                    </MudExpansionPanel>
+                            <ChildContent>
+
+                                <div class="row m-0">
+                                    <div class="col-3 d-flex align-items-center">
+                                        <div class="d-flex flex-column align-center">
+                                            <MudRating @bind-SelectedValue="SelectedVal" Size="Size.Large" HoveredValueChanged="HandleHoveredValueChanged" />
+                                            <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">@LabelText</MudText>
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <MudTextField T="string" Label="Comment" Variant="Variant.Outlined" @bind-Text="Comment" Lines="3" />
+                                    </div>
+                                    @if (!isEdit)
+                                    {
+                                        <div class="col-1 d-flex align-items-center">
+                                            <MudIconButton Icon="@Icons.Material.Filled.Send" Disabled="@(SelectedVal == 0 || Comment == "")" Size="Size.Large" Color="Color.Success" OnClick="() => RateAndComment(Order.CartItems[locale].Product)"></MudIconButton>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-1">
+                                            <MudIconButton Icon="@Icons.Material.Filled.Send" Disabled="@(SelectedVal == 0 || Comment == "")" Size="Size.Medium" Color="Color.Success" OnClick="() => RateAndComment(Order.CartItems[locale].Product)"></MudIconButton>
+                                            <MudIconButton Icon="@Icons.Material.Filled.Delete" Disabled="false" Size="Size.Medium" Color="Color.Error" OnClick="DeleteRate"></MudIconButton>
+                                        </div>
+                                    }
+                                </div>
+
+                            </ChildContent>
+                        </MudExpansionPanel>
+                    </div>
                 }
             </MudExpansionPanels>
 
