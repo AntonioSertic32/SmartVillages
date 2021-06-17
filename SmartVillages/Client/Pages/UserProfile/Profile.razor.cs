@@ -27,6 +27,8 @@ namespace SmartVillages.Client.Pages.UserProfile
         public bool EditingProfileImage { get; set; }
         public string UserOldImage { get; set; }
         public bool Loaded { get; set; }
+        public UserProfileStat UserProfileStat { get; set; } = new UserProfileStat();
+        public bool IsFarmerSignIn { get; set; }
 
         protected override async Task OnParametersSetAsync()
         {
@@ -47,6 +49,9 @@ namespace SmartVillages.Client.Pages.UserProfile
                     Loaded = true;
                 }
             }
+            if(User.UserType.UserTypeId == 2)
+                IsFarmerSignIn = true;
+            await GetUserStat();
             StateHasChanged();
         }
 
@@ -105,6 +110,13 @@ namespace SmartVillages.Client.Pages.UserProfile
             Snackbar.Clear();
             Snackbar.Add("GOOD", Severity.Success);
             await LocalStorage.SetItemAsync("user", User);
+        }
+
+        public async Task GetUserStat()
+        {
+            var response = await Http.GetAsync($"api/users/getuserstat/{User.Id}");
+            UserProfileStat = await response.Content.ReadFromJsonAsync<UserProfileStat>();
+            StateHasChanged();
         }
     }
 }

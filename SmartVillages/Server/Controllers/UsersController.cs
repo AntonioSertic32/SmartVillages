@@ -256,5 +256,28 @@ namespace SmartVillages.Server.Controllers
             return _random.Next(min, max);
         }
 
+
+        [HttpGet("getuserstat/{id}")]
+        public async Task<ActionResult<UserProfileStat>> GetUserStat(int id)
+        {
+            var tempyear = _context.Users.Where(u => u.Id == id).Select(s => s.DateCreated).FirstOrDefault();
+            var year = tempyear.Year;
+
+            var temprates = _context.ProductRate.Where(u => u.Product.User.Id == id).Select(s => s.Rate).Sum();
+            float rates = 0;
+            if (temprates > 0)
+            {
+                var tmp = _context.ProductRate.Where(u => u.Product.User.Id == id).Count();
+                rates = (float)temprates / (float)tmp;
+            }
+
+            var orders = _context.CartItems.Where(u => u.Product.User.Id == id).Count();
+
+            var products = _context.Products.Where(u => u.User.Id == id).Count();
+
+            UserProfileStat userProfileStat = new UserProfileStat { Orders = orders, Products = products, Rate = rates, Year = year };
+
+            return userProfileStat;
+        }
     }
 }

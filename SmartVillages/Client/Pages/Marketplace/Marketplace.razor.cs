@@ -1,6 +1,8 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
+using Newtonsoft.Json;
 using SmartVillages.Client.Shared.Dialogs;
 using SmartVillages.Shared;
 using SmartVillages.Shared.MarketplaceModels;
@@ -25,23 +27,25 @@ namespace SmartVillages.Client.Pages
         public User User { get; set; } = new User();
         public bool OnlyForFarmer { get; set; }
         public List<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();
-        public List<Product> Products { get; set; } = new List<Product>();
-        public List<Product> LastProducts { get; set; } = new List<Product>(); 
-        public List<Product> MostSoldProducts { get; set; } = new List<Product>();
+        public List<ProductViewModel> Products { get; set; } = new List<ProductViewModel>();
+        public List<ProductViewModel> LastProducts { get; set; } = new List<ProductViewModel>(); 
+        public List<ProductViewModel> MostSoldProducts { get; set; } = new List<ProductViewModel>();
+        public List<ProductViewModel> SearchedProducts { get; set; } = new List<ProductViewModel>();
         public bool CanOpenDialog { get; set; }
         public Product OpenedProduct { get; set; }
         public List<CartItem> Cart { get; set; } = new List<CartItem>();
         public bool CartOpened { get; set; }
         public bool Loaded { get; set; } = false;
         public bool MyOrdersOpened { get; set; }
+        public bool IsSeachedEmpty { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             User = await LocalStorage.GetItemAsync<User>("user");
             OnlyForFarmer = User.UserType.UserTypeId == 2 ? true : false;
-            //await GetProducts();
-            await GetLastProducts();
-            await GetMostSoldProducts();
+            await GetProducts();
+            //await GetLastProducts();
+            //await GetMostSoldProducts();
             await GetCategories();
             var Container = await LocalStorage.GetItemAsync<List<CartItem>>("cart");
             if (Container != null)
@@ -70,6 +74,15 @@ namespace SmartVillages.Client.Pages
                     }
                 else if (fromwhere == "lastproducts")
                     foreach (var p in LastProducts)
+                    {
+                        if (p.Id == id)
+                        {
+                            OpenedProduct = p;
+                            break;
+                        }
+                    }
+                else if (fromwhere == "searchedproducts")
+                    foreach (var p in SearchedProducts)
                     {
                         if (p.Id == id)
                         {
@@ -112,11 +125,12 @@ namespace SmartVillages.Client.Pages
         public async Task GetProducts()
         {
             Products.Clear();
+            IsSeachedEmpty = false;
             StateHasChanged();
             var response = await Http.GetAsync($"api/products");
             if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
             {
-                Products = await response.Content.ReadFromJsonAsync<List<Product>>();
+                Products = await response.Content.ReadFromJsonAsync<List<ProductViewModel>>();
                 Loaded = true;
                 StateHasChanged();
             }
@@ -125,11 +139,12 @@ namespace SmartVillages.Client.Pages
         public async Task GetLastProducts()
         {
             LastProducts.Clear();
+            IsSeachedEmpty = false;
             StateHasChanged();
             var response = await Http.GetAsync($"api/products/getlast");
             if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
             {
-                LastProducts = await response.Content.ReadFromJsonAsync<List<Product>>();
+                LastProducts = await response.Content.ReadFromJsonAsync<List<ProductViewModel>>();
                 Loaded = true;
                 StateHasChanged();
             }
@@ -138,11 +153,12 @@ namespace SmartVillages.Client.Pages
         public async Task GetMostSoldProducts()
         {
             MostSoldProducts.Clear();
+            IsSeachedEmpty = false;
             StateHasChanged();
             var response = await Http.GetAsync($"api/products/getmostsold");
             if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
             {
-                MostSoldProducts = await response.Content.ReadFromJsonAsync<List<Product>>();
+                MostSoldProducts = await response.Content.ReadFromJsonAsync<List<ProductViewModel>>();
                 Loaded = true;
                 StateHasChanged();
             }
@@ -191,6 +207,8 @@ namespace SmartVillages.Client.Pages
                 parameters.Add("Product", Products.Where(c => c.Id == id).FirstOrDefault());
             else if (fromwhere == "lastproducts")
                 parameters.Add("Product", LastProducts.Where(c => c.Id == id).FirstOrDefault());
+            else if (fromwhere == "searchedproducts")
+                parameters.Add("Product", SearchedProducts.Where(c => c.Id == id).FirstOrDefault());
             else
                 parameters.Add("Product", MostSoldProducts.Where(c => c.Id == id).FirstOrDefault());
 
@@ -227,6 +245,75 @@ namespace SmartVillages.Client.Pages
             //await GetProducts();
             await GetLastProducts();
             await GetMostSoldProducts();
+        }
+
+        public async Task SearchProducts(KeyboardEventArgs e)
+        {
+            if (e.Code == "Enter" || e.Code == "NumpadEnter")
+            {
+                ClearLists();
+
+                if (string.IsNullOrEmpty(Search) || string.IsNullOrWhiteSpace(Search))
+                {
+                    Loaded = false;
+                    await GetLastProducts();
+                    await GetMostSoldProducts();
+                }
+                else
+                {
+                    var response = await Http.GetAsync($"api/products/getsearch/{Search}");
+                    if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
+                    {
+                        SearchedProducts = await response.Content.ReadFromJsonAsync<List<ProductViewModel>>();
+                        if (SearchedProducts.Count < 1)
+                            IsSeachedEmpty = true;
+                        else
+                            IsSeachedEmpty = false;
+                        Loaded = true;
+                        StateHasChanged();
+                    }
+                }
+            }
+        }
+
+        public async Task OpenFilterDialog()
+        {
+            var parameters = new DialogParameters();
+            parameters.Add("User", User);
+            parameters.Add("AllCategories", ProductCategories);
+            DialogOptions maxWidth = new DialogOptions() { MaxWidth = MaxWidth.Medium };
+
+            var dialog = DialogService.Show<OpenFilterMarketplaceDialog>("Filter products", parameters, maxWidth);
+            var result = await dialog.Result;
+            if (!result.Cancelled)
+            {
+                var filter = JsonConvert.DeserializeObject<FilterProducts>(result.Data.ToString());
+                Console.WriteLine(result.Data.ToString());
+                ClearLists();
+                await FilterProducts(filter);
+            }
+        }
+
+        public async Task FilterProducts(FilterProducts filter)
+        {
+
+            var response = await Http.PostAsJsonAsync($"api/products/getfilteredproducts", filter);
+            if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
+            {
+                SearchedProducts = await response.Content.ReadFromJsonAsync<List<ProductViewModel>>();
+                Loaded = true;
+                StateHasChanged();
+            }
+        }
+
+        public void ClearLists()
+        {
+            Loaded = false;
+            Products.Clear();
+            LastProducts.Clear();
+            MostSoldProducts.Clear();
+            SearchedProducts.Clear();
+            StateHasChanged();
         }
     }
 }

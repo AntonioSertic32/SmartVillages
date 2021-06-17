@@ -24,9 +24,37 @@ namespace SmartVillages.Server.Controllers
 
         // GET: api/Products
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
+        public async Task<ActionResult<List<ProductViewModel>>> GetProduct()
         {
-            return await _context.Products.Where(p => p.Deleted != true).Include(f => f.User).Include(f => f.User.UserImage).Include(f => f.User.Place).Include(f => f.ProductCategory).Include(i => i.ProductImage).ToListAsync();
+            List<ProductViewModel> finaleproducts = new List<ProductViewModel>();
+            var allproducts = _context.Products.Where(p => p.Deleted != true).Include(f => f.User).Include(f => f.User.UserImage).Include(f => f.User.Place).Include(f => f.ProductCategory).Include(i => i.ProductImage).ToList();
+
+            foreach (var item in allproducts)
+            {
+                var rates = _context.ProductRate.Where(o => o.Product.Id == item.Id).Include(i => i.User).Include(i => i.User.UserImage).ToList();
+                float globalRate = 0;
+                if (rates.Count > 0)
+                {
+                    if (rates.Count > 1)
+                    {
+                        int count = 0;
+                        foreach (var r in rates)
+                            count += r.Rate;
+                        globalRate = (float)count / (float)rates.Count();
+                    }
+                    else
+                    {
+                        globalRate = rates[0].Rate;
+                    }
+                }
+                else
+                {
+                    globalRate = 0;
+                }
+                finaleproducts.Add(new ProductViewModel { Id = item.Id, Deleted = item.Deleted, Description = item.Description, Eco = item.Eco, Price = item.Price, ProductCategory = item.ProductCategory, ProductImage = item.ProductImage, ProductRate = globalRate, Quantity = item.Quantity, Title = item.Title, User = item.User });
+            }
+
+            return finaleproducts;
         }
 
         // GET: api/Products/5
@@ -104,10 +132,35 @@ namespace SmartVillages.Server.Controllers
 
 
         [HttpGet("getlast")]
-        public ActionResult<List<Product>> GetLast()
+        public ActionResult<List<ProductViewModel>> GetLast()
         {
-            List<Product> products = new List<Product>();
-            products = _context.Products.Where(p => p.Deleted != true).OrderByDescending(t => t.Id).Include(f => f.User).Include(f => f.User.UserImage).Include(f => f.User.Place).Include(f => f.ProductCategory).Include(i => i.ProductImage).Take(4).ToList();
+            List<ProductViewModel> products = new List<ProductViewModel>();
+            var temp = _context.Products.Where(p => p.Deleted != true).OrderByDescending(t => t.Id).Include(f => f.User).Include(f => f.User.UserImage).Include(f => f.User.Place).Include(f => f.ProductCategory).Include(i => i.ProductImage).Take(4).ToList();
+            foreach (var t in temp)
+            {
+                var rates = _context.ProductRate.Where(o => o.Product.Id == t.Id).Include(i => i.User).Include(i => i.User.UserImage).ToList();
+                float globalRate = 0;
+                if (rates.Count > 0)
+                {
+                    if (rates.Count > 1)
+                    {
+                        int count = 0;
+                        foreach (var r in rates)
+                            count += r.Rate;
+                        globalRate = (float)count / (float)rates.Count();
+                    }
+                    else
+                    {
+                        globalRate = rates[0].Rate;
+                    }
+                }
+                else
+                {
+                    globalRate = 0;
+                }
+                products.Add(new ProductViewModel { Id = t.Id, Deleted = t.Deleted, Description = t.Description, Eco = t.Eco, Price = t.Price, ProductCategory = t.ProductCategory, ProductImage = t.ProductImage, ProductRate = globalRate, Quantity = t.Quantity, Title = t.Title, User = t.User });
+            }
+
             if (products == null)
             {
                 return NotFound();
@@ -119,21 +172,41 @@ namespace SmartVillages.Server.Controllers
         }
 
         [HttpGet("getmostsold")]
-        public ActionResult<List<Product>> GetMostSold()
+        public ActionResult<List<ProductViewModel>> GetMostSold()
         {
-            List<Product> products = new List<Product>();
+            List<ProductViewModel> products = new List<ProductViewModel>();
             var allproducts = _context.Products.ToList();
             var allcartitems = _context.CartItems.Where(p => p.Product.Deleted != true).Include(f => f.Product.User).Include(f => f.Product.User.UserImage).Include(f => f.Product.User.Place).Include(f => f.Product.ProductCategory).Include(i => i.Product.ProductImage).ToList();
             //var distincted = allcartitems.DistinctBy(b => b.Product.Id).ToList();
-            foreach(var item in allproducts)
+            foreach (var item in allproducts)
             {
                 var thatitem = allcartitems.Where(p => p.Product.Id == item.Id).FirstOrDefault();
-                if(thatitem != null)
+                if (thatitem != null)
                 {
                     var sumthatitem = _context.CartItems.Where(p => p.Product.Id == item.Id).Count();
                     if (products.Count < 4)
                     {
-                        products.Add(item);
+                        var rates = _context.ProductRate.Where(o => o.Product.Id == item.Id).Include(i => i.User).Include(i => i.User.UserImage).ToList();
+                        float globalRate = 0;
+                        if (rates.Count > 0)
+                        {
+                            if (rates.Count > 1)
+                            {
+                                int count = 0;
+                                foreach (var r in rates)
+                                    count += r.Rate;
+                                globalRate = (float)count / (float)rates.Count();
+                            }
+                            else
+                            {
+                                globalRate = rates[0].Rate;
+                            }
+                        }
+                        else
+                        {
+                            globalRate = 0;
+                        }
+                        products.Add(new ProductViewModel { Id = item.Id, Deleted = item.Deleted, Description = item.Description, Eco = item.Eco, Price = item.Price, ProductCategory = item.ProductCategory, ProductImage = item.ProductImage, ProductRate = globalRate, Quantity = item.Quantity, Title = item.Title, User = item.User });
                     }
                     else
                     {
@@ -143,7 +216,28 @@ namespace SmartVillages.Server.Controllers
                             if (temp < sumthatitem)
                             {
                                 products.Remove(pro);
-                                products.Add(item);
+
+                                var rates = _context.ProductRate.Where(o => o.Product.Id == item.Id).Include(i => i.User).Include(i => i.User.UserImage).ToList();
+                                float globalRate = 0;
+                                if (rates.Count > 0)
+                                {
+                                    if (rates.Count > 1)
+                                    {
+                                        int count = 0;
+                                        foreach (var r in rates)
+                                            count += r.Rate;
+                                        globalRate = (float)count / (float)rates.Count();
+                                    }
+                                    else
+                                    {
+                                        globalRate = rates[0].Rate;
+                                    }
+                                }
+                                else
+                                {
+                                    globalRate = 0;
+                                }
+                                products.Add(new ProductViewModel { Id = item.Id, Deleted = item.Deleted, Description = item.Description, Eco = item.Eco, Price = item.Price, ProductCategory = item.ProductCategory, ProductImage = item.ProductImage, ProductRate = globalRate, Quantity = item.Quantity, Title = item.Title, User = item.User });
                             }
                         }
                     }
@@ -151,6 +245,120 @@ namespace SmartVillages.Server.Controllers
             }
 
             return products;
+        }
+
+        [HttpGet("getsearch/{search}")]
+        public ActionResult<List<ProductViewModel>> GetSearch(string search)
+        {
+            List<ProductViewModel> searchedproducts = new List<ProductViewModel>();
+            var allproducts = _context.Products.Where(p => p.Title.Contains(search)).Where(p => p.Deleted != true).Include(f => f.User).Include(f => f.User.UserImage).Include(f => f.User.Place).Include(f => f.ProductCategory).Include(i => i.ProductImage).ToList();
+            foreach (var item in allproducts)
+            {
+                var rates = _context.ProductRate.Where(o => o.Product.Id == item.Id).Include(i => i.User).Include(i => i.User.UserImage).ToList();
+                float globalRate = 0;
+                if (rates.Count > 0)
+                {
+                    if (rates.Count > 1)
+                    {
+                        int count = 0;
+                        foreach (var r in rates)
+                            count += r.Rate;
+                        globalRate = (float)count / (float)rates.Count();
+                    }
+                    else
+                    {
+                        globalRate = rates[0].Rate;
+                    }
+                }
+                else
+                {
+                    globalRate = 0;
+                }
+                searchedproducts.Add(new ProductViewModel { Id = item.Id, Deleted = item.Deleted, Description = item.Description, Eco = item.Eco, Price = item.Price, ProductCategory = item.ProductCategory, ProductImage = item.ProductImage, ProductRate = globalRate, Quantity = item.Quantity, Title = item.Title, User = item.User });
+            }
+
+            return searchedproducts;
+        }
+
+        [HttpPost("getfilteredproducts")]
+        public ActionResult<List<ProductViewModel>> PostProduct(FilterProducts filter)
+        {
+            List<ProductViewModel> filteredproductvms = new List<ProductViewModel>();
+            List<Product> filteredproducts = new List<Product>();
+
+            if (!string.IsNullOrEmpty(filter.Title) || !string.IsNullOrWhiteSpace(filter.Title))
+            {
+                filteredproducts = _context.Products.Where(p => p.Eco == filter.Eco).Where(p => p.Price >= filter.PriceMin).Where(p => p.Title.Contains(filter.Title)).Where(p => p.Deleted != true).Include(f => f.User).Include(f => f.User.UserImage).Include(f => f.User.Place).Include(f => f.ProductCategory).Include(i => i.ProductImage).ToList();
+                if (filter.PriceMax != 0)
+                {
+                    filteredproducts = filteredproducts.Where(p => p.Price <= filter.PriceMax).ToList();
+                }
+            }
+            else
+            {
+                filteredproducts = _context.Products.Where(p => p.Eco == filter.Eco).Where(p => p.Price >= filter.PriceMin).Where(p => p.Deleted != true).Include(f => f.User).Include(f => f.User.UserImage).Include(f => f.User.Place).Include(f => f.ProductCategory).Include(i => i.ProductImage).ToList();
+                if (filter.PriceMax != 0)
+                {
+                    filteredproducts = filteredproducts.Where(p => p.Price <= filter.PriceMax).ToList();
+                }
+            }
+
+            if(!string.IsNullOrEmpty(filter.ProductCategory.Name) && !string.IsNullOrEmpty(filter.ProductCategory.SubCategoryOne) && !string.IsNullOrEmpty(filter.ProductCategory.SubCategoryTwo) && !string.IsNullOrEmpty(filter.ProductCategory.Species))
+            {
+                filteredproducts = GetFilteredProductCategories(filteredproducts, filter);
+            }
+
+            // prebacit product u product view model
+            foreach (var item in filteredproducts)
+            {
+                var rates = _context.ProductRate.Where(o => o.Product.Id == item.Id).Include(i => i.User).Include(i => i.User.UserImage).ToList();
+                float globalRate = 0;
+                if (rates.Count > 0)
+                {
+                    if (rates.Count > 1)
+                    {
+                        int count = 0;
+                        foreach (var r in rates)
+                            count += r.Rate;
+                        globalRate = (float)count / (float)rates.Count();
+                    }
+                    else
+                    {
+                        globalRate = rates[0].Rate;
+                    }
+                }
+                else
+                {
+                    globalRate = 0;
+                }
+                filteredproductvms.Add(new ProductViewModel { Id = item.Id, Deleted = item.Deleted, Description = item.Description, Eco = item.Eco, Price = item.Price, ProductCategory = item.ProductCategory, ProductImage = item.ProductImage, ProductRate = globalRate, Quantity = item.Quantity, Title = item.Title, User = item.User });
+            }
+
+            return filteredproductvms;
+        }
+
+        protected List<Product> GetFilteredProductCategories(List<Product> products, FilterProducts filter)
+        {
+            List<Product> newfilteredlist = new List<Product>();
+
+            newfilteredlist = products.Where(p => p.ProductCategory.Name == filter.ProductCategory.Name).ToList();
+
+            if (filter.ProductCategory.SubCategoryOne != null)
+            {
+                newfilteredlist = newfilteredlist.Where(p => p.ProductCategory.SubCategoryOne == filter.ProductCategory.SubCategoryOne).ToList();
+
+                if (filter.ProductCategory.SubCategoryTwo != null)
+                {
+                    newfilteredlist = newfilteredlist.Where(p => p.ProductCategory.SubCategoryTwo == filter.ProductCategory.SubCategoryTwo).ToList();
+
+                    if (filter.ProductCategory.Species != null)
+                    {
+                        newfilteredlist = newfilteredlist.Where(p => p.ProductCategory.Species == filter.ProductCategory.Species).ToList();
+                    }
+                }
+            }
+
+            return newfilteredlist;
         }
     }
 }

@@ -8,6 +8,6 @@ namespace SmartVillages.Shared.MarketplaceModels
 {
     public class ProductViewModel : Product
     {
-        public List<ProductRate> ProductRates { get; set; }
+        public float ProductRate { get; set; }
     }
 }
