@@ -98,12 +98,27 @@ namespace SmartVillages.Server.Controllers
 
 
         [HttpGet("getratesbyuserandorder/{userid}/{productid}")]
-        public async Task<ActionResult<ProductRate>> GetRatesByUserAndOrder(int userid, int productid)
+        public ActionResult<ProductRate> GetRatesByUserAndOrder(int userid, int productid)
         {
             ProductRate productRate = new ProductRate();
             productRate = _context.ProductRate.Where(p => p.Product.Id == productid).Where(u => u.User.Id == userid).FirstOrDefault();
 
             return productRate;
+        }
+
+        [HttpGet("getlastrates/{productid}")]
+        public ActionResult<List<ProductRate>> GetLastRates(int productid)
+        {
+            List<ProductRate> rates = new List<ProductRate>();
+            rates = _context.ProductRate.Where(p => p.Product.Id == productid).Include(i => i.Product).Include(i => i.User).Include(i => i.User.UserImage).Take(3).ToList(); ;
+            if (rates == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return rates;
+            }
         }
     }
 }

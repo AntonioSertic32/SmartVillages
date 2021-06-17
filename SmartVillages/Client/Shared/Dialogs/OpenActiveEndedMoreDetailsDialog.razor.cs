@@ -28,7 +28,7 @@ namespace SmartVillages.Client.Shared.Dialogs
         public bool isEdit { get; set; }
         public int RateID { get; set; }
 
-        protected override async Task OnInitializedAsync()
+        protected override Task OnInitializedAsync()
         {
             Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
             Snackbar.Configuration.SnackbarVariant = Variant.Filled;
@@ -45,6 +45,7 @@ namespace SmartVillages.Client.Shared.Dialogs
                     Ordered = true;
                 }
             }
+            return base.OnInitializedAsync();
         }
 
         public void Cancel() => MudDialog.Cancel();

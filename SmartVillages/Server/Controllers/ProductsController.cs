@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MoreLinq;
 using SmartVillages.Server.Data;
 using SmartVillages.Shared.MarketplaceModels;
 
@@ -25,7 +26,7 @@ namespace SmartVillages.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products.Where(p => p.Deleted != true).Include(f => f.User).Include(f => f.User.UserImage).Include(f => f.User.Place).Include(f => f.ProductCategory).Include(i => i.ProductImage).ToListAsync();
         }
 
         // GET: api/Products/5
@@ -102,11 +103,11 @@ namespace SmartVillages.Server.Controllers
         }
 
 
-        [HttpGet("getlastten")]
-        public async Task<ActionResult<List<Product>>> GeTLastTen()
+        [HttpGet("getlast")]
+        public ActionResult<List<Product>> GetLast()
         {
             List<Product> products = new List<Product>();
-            products = _context.Products.Where(p => p.Deleted != true).OrderByDescending(t => t.Id).Include(f => f.User).Include(f => f.User.UserImage).Include(f => f.User.Place).Include(f => f.ProductCategory).Include(i => i.ProductImage).Take(10).ToList();
+            products = _context.Products.Where(p => p.Deleted != true).OrderByDescending(t => t.Id).Include(f => f.User).Include(f => f.User.UserImage).Include(f => f.User.Place).Include(f => f.ProductCategory).Include(i => i.ProductImage).Take(4).ToList();
             if (products == null)
             {
                 return NotFound();
@@ -117,19 +118,39 @@ namespace SmartVillages.Server.Controllers
             }
         }
 
-        
-        [HttpPut("putproductrate")]
-        public async Task<IActionResult> PutProductRate(Product product)
+        [HttpGet("getmostsold")]
+        public ActionResult<List<Product>> GetMostSold()
         {
-            /*
-            var rate = await _context.ProductRate.SingleOrDefaultAsync(t => t.Id == product.ProductRate.Id);
-            product.ProductRate = rate;
+            List<Product> products = new List<Product>();
+            var allproducts = _context.Products.ToList();
+            var allcartitems = _context.CartItems.Where(p => p.Product.Deleted != true).Include(f => f.Product.User).Include(f => f.Product.User.UserImage).Include(f => f.Product.User.Place).Include(f => f.Product.ProductCategory).Include(i => i.Product.ProductImage).ToList();
+            //var distincted = allcartitems.DistinctBy(b => b.Product.Id).ToList();
+            foreach(var item in allproducts)
+            {
+                var thatitem = allcartitems.Where(p => p.Product.Id == item.Id).FirstOrDefault();
+                if(thatitem != null)
+                {
+                    var sumthatitem = _context.CartItems.Where(p => p.Product.Id == item.Id).Count();
+                    if (products.Count < 4)
+                    {
+                        products.Add(item);
+                    }
+                    else
+                    {
+                        foreach (var pro in products.ToList())
+                        {
+                            var temp = _context.CartItems.Where(p => p.Product.Id == pro.Id).Count();
+                            if (temp < sumthatitem)
+                            {
+                                products.Remove(pro);
+                                products.Add(item);
+                            }
+                        }
+                    }
+                }
+            }
 
-            _context.Entry(product).State = EntityState.Modified;
-
-            await _context.SaveChangesAsync();
-            */
-            return NoContent();
+            return products;
         }
     }
 }

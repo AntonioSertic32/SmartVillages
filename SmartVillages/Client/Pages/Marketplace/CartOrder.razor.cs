@@ -26,7 +26,9 @@ namespace SmartVillages.Client.Pages.Marketplace
         public int Count { get; set; } = 0;
         public List<CartItem> Cart { get; set; } = new List<CartItem>();
         public User User { get; set; }
-        public DateTime? date { get; set; } = DateTime.Today.AddDays(1);
+        public DateTime? date { get; set; } = DateTime.Today.AddDays(2);
+        public DateTime? mindate { get; set; } = DateTime.Today.AddDays(2);
+        public DateTime? maxdate { get; set; } = DateTime.Today.AddDays(30);
         public Order Order { get; set; } = new Order();
 
         protected override async Task OnInitializedAsync()

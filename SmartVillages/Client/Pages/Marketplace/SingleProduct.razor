@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <div class="col p-4 mt-5">
+    <div class="col p-4 pb-0">
         <div class="row">
             <h1 class="col-8">@Product.Title</h1>
             <div class="col-4" style="max-height: 40px;">
@@ -61,15 +61,50 @@
             </div>
             <div class="d-flex align-items-center">
                 <p style="font-size: 24px;" class="m-0">Price: </p>
-                <p class="m-0" style="font-weight: 500;font-size: 28px;">$@Product.Price</p>
-                <p class="text-muted m-0">/Kg</p>
+                <p class="m-0" style="font-weight: 500;font-size: 28px;">@Product.Price$</p>
             </div>
             <div class="d-flex align-items-center mt-3 mb-5">
-                <MudRating ReadOnly="true" SelectedValue="4" Size="Size.Large" /><MudText Class="ml-2" Typo="Typo.h5">4,2</MudText>
+                <MudRating ReadOnly="true" SelectedValue="(int)Math.Round(GlobalRate, 0)" Size="Size.Large" /><MudText Class="ml-2" Typo="Typo.h5">@GlobalRate</MudText>
             </div>
         </div>
         <hr />
         <p style="font-size: 18px;">@Product.Description</p>
         <hr />
+        @if (Product.Eco)
+        {
+            <div class="d-flex">
+                <MudIconButton Class="mr-2 mb-2" Icon="fas fa-leaf" Size="Size.Small" Color="Color.Success"></MudIconButton>
+                <p class="m-0" style="font-size: 18px;">Eco</p>
+            </div>
+            <hr />
+        }
+        <MudText Align="Align.Center" Typo="Typo.h5">Reviews</MudText>
+        @if (Rates.Count > 0)
+        {
+            foreach (var rate in Rates)
+            {
+                <div class="px-2 my-2" style="border: 1px solid lightgrey; border-radius: 8px;">
+                    <div class="d-flex p-1">
+                        <div class="image p-1">
+                            <MudAvatar Image="@(rate.User.UserImage != null ? rate.User.UserImage.Image : "/img/default.png")" Size="Size.Large" Class="ma-2" />
+                        </div>
+                        <div class="px-3" style="display: flex; flex-direction: column; justify-content: center;">
+                            <h4 class="author_name m-0">@rate.User.FirstName @rate.User.LastName</h4>
+                            <div class="d-flex">
+                                <MudRating ReadOnly="true" SelectedValue="@rate.Rate" Size="Size.Medium" /><MudText Class="ml-2" Typo="Typo.body1">@rate.Rate,0</MudText>
+                            </div>
+                        </div>
+                        <div class="ml-auto mr-3 mt-3" style="display: flex; flex-direction: column;">
+                            <MudText Typo="Typo.body1">@rate.Date.ToString("dd/MM/yyyy")</MudText>
+                        </div>
+                    </div>
+                    <MudText Class="ml-5 mb-2" Typo="Typo.body1">@rate.Comment</MudText>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No reviews...</p>
+        }
     </div>
 </div>

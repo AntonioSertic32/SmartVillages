@@ -30,6 +30,8 @@ namespace SmartVillages.Client.Pages
         public string LinkToProfile { get; set; }
         public string LinkToMessages { get; set; }
         public List<CartItem> Cart { get; set; } = new List<CartItem>();
+        public List<ProductRate> Rates { get; set; } = new List<ProductRate>();
+        public float GlobalRate { get; set; }
 
         protected override async Task OnParametersSetAsync()
         {
@@ -41,6 +43,8 @@ namespace SmartVillages.Client.Pages
             }
             LinkToProfile = "/profile/" + Product.User.Id;
             LinkToMessages = "/messages/" + Product.User.Id;
+
+            await GetRates();
         }
 
         public async Task Edit()
@@ -52,16 +56,7 @@ namespace SmartVillages.Client.Pages
             DialogOptions maxWidth = new DialogOptions() { MaxWidth = MaxWidth.Medium };
 
             var dialog = DialogService.Show<EditProductDialog>("Edit product", parameters, maxWidth);
-            var result = await dialog.Result;
-            if (!result.Cancelled)
-            {
-                Console.WriteLine("nije cancel");
-                // update ui
-            }
-            else
-            {
-                Console.WriteLine("je cancel");
-            }
+            await dialog.Result;
         }
 
         public async Task Delete()
@@ -100,6 +95,36 @@ namespace SmartVillages.Client.Pages
             {
                 Cart = await LocalStorage.GetItemAsync<List<CartItem>>("cart");
                 await ChartCallback.InvokeAsync();
+            }
+        }
+
+        public async Task GetRates()
+        {
+            var response = await Http.GetAsync($"api/productrates/getlastrates/{Product.Id}");
+
+            string content = await response.Content.ReadAsStringAsync();
+            if (content != "")
+            {
+                Rates = await response.Content.ReadFromJsonAsync<List<ProductRate>>();
+                if(Rates.Count > 0)
+                {
+                    if(Rates.Count > 1)
+                    {
+                        int count = 0;
+                        foreach (var r in Rates)
+                            count += r.Rate;
+                        GlobalRate = (float)count / (float)Rates.Count();
+                    }
+                    else
+                    {
+                        GlobalRate = Rates[0].Rate;
+                    }
+                }
+                else
+                {
+                    GlobalRate = 0;
+                }
+                StateHasChanged();
             }
         }
     }

@@ -56,7 +56,7 @@
                 <MudText Style="margin-left: 20px;" Typo="Typo.body1">@User.Address</MudText>
 
                 <div style="margin-bottom: 2.5rem; margin-top: 2.5rem;">
-                    <MudDatePicker Label="Order date" @bind-Date="date" DisableToolbar="true" />
+                    <MudDatePicker Label="Order date" MinDate="mindate" MaxDate="maxdate" @bind-Date="date" DisableToolbar="true" />
                 </div>
 
                 <MudTextField T="string" @bind-Value="Order.Description" Label="Description" Variant="Variant.Outlined" Lines="8" />

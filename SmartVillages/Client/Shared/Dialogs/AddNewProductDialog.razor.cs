@@ -125,11 +125,12 @@ namespace SmartVillages.Client.Shared.Dialogs
         {
             var entries = e.GetMultipleFiles();
             //validations
+            /*
             Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
             Snackbar.Add($"Files with {entries.FirstOrDefault().Size} bytes size are not allowed", Severity.Error);
             Snackbar.Add($"Files starting with letter {entries.FirstOrDefault().Name.Substring(0, 1)} are not recommended", Severity.Warning);
             Snackbar.Add($"This file has the extension {entries.FirstOrDefault().Name.Split(".").Last()}", Severity.Info);
-
+            */
             //get the file
             var file = e.File;
             //read that file in a byte array

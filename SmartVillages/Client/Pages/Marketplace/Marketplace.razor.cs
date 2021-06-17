@@ -26,6 +26,8 @@ namespace SmartVillages.Client.Pages
         public bool OnlyForFarmer { get; set; }
         public List<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();
         public List<Product> Products { get; set; } = new List<Product>();
+        public List<Product> LastProducts { get; set; } = new List<Product>(); 
+        public List<Product> MostSoldProducts { get; set; } = new List<Product>();
         public bool CanOpenDialog { get; set; }
         public Product OpenedProduct { get; set; }
         public List<CartItem> Cart { get; set; } = new List<CartItem>();
@@ -37,7 +39,9 @@ namespace SmartVillages.Client.Pages
         {
             User = await LocalStorage.GetItemAsync<User>("user");
             OnlyForFarmer = User.UserType.UserTypeId == 2 ? true : false;
-            await GetProducts();
+            //await GetProducts();
+            await GetLastProducts();
+            await GetMostSoldProducts();
             await GetCategories();
             var Container = await LocalStorage.GetItemAsync<List<CartItem>>("cart");
             if (Container != null)
@@ -48,21 +52,41 @@ namespace SmartVillages.Client.Pages
             StateHasChanged();
         }
 
-        public void OpenItem(int id, bool isOpenCart = false)
+        public void OpenItem(int id, bool isOpenCart = false, string fromwhere = "products")
         {
             CloseItem();
             if (isOpenCart)
                 CartOpened = true;
             else
             {
-                foreach (var p in Products)
-                {
-                    if (p.Id == id)
+                if (fromwhere == "products")
+                    foreach (var p in Products)
                     {
-                        OpenedProduct = p;
-                        break;
+                        if (p.Id == id)
+                        {
+                            OpenedProduct = p;
+                            break;
+                        }
                     }
-                }
+                else if (fromwhere == "lastproducts")
+                    foreach (var p in LastProducts)
+                    {
+                        if (p.Id == id)
+                        {
+                            OpenedProduct = p;
+                            break;
+                        }
+                    }
+                else
+                    foreach (var p in MostSoldProducts)
+                    {
+                        if (p.Id == id)
+                        {
+                            OpenedProduct = p;
+                            break;
+                        }
+                    }
+
                 SingleProductOpened = true;
             }
             StateHasChanged();
@@ -88,10 +112,37 @@ namespace SmartVillages.Client.Pages
         public async Task GetProducts()
         {
             Products.Clear();
-            var response = await Http.GetAsync($"api/products/getlastten/");
+            StateHasChanged();
+            var response = await Http.GetAsync($"api/products");
             if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
             {
                 Products = await response.Content.ReadFromJsonAsync<List<Product>>();
+                Loaded = true;
+                StateHasChanged();
+            }
+        }
+
+        public async Task GetLastProducts()
+        {
+            LastProducts.Clear();
+            StateHasChanged();
+            var response = await Http.GetAsync($"api/products/getlast");
+            if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
+            {
+                LastProducts = await response.Content.ReadFromJsonAsync<List<Product>>();
+                Loaded = true;
+                StateHasChanged();
+            }
+        }
+
+        public async Task GetMostSoldProducts()
+        {
+            MostSoldProducts.Clear();
+            StateHasChanged();
+            var response = await Http.GetAsync($"api/products/getmostsold");
+            if (response.StatusCode != System.Net.HttpStatusCode.NotFound)
+            {
+                MostSoldProducts = await response.Content.ReadFromJsonAsync<List<Product>>();
                 Loaded = true;
                 StateHasChanged();
             }
@@ -111,7 +162,10 @@ namespace SmartVillages.Client.Pages
                 var result = await dialog.Result;
                 if (!result.Cancelled)
                 {
-                    await GetProducts();
+                    Loaded = false;
+                    //await GetProducts();
+                    await GetLastProducts();
+                    await GetMostSoldProducts();
                 }
             }
         }
@@ -129,11 +183,16 @@ namespace SmartVillages.Client.Pages
             await LocalStorage.SetItemAsync("cart", Cart);
         }
 
-        public async void OpenAddToChartDialog(int id)
+        public async void OpenAddToChartDialog(int id, string fromwhere = "products")
         {
             var parameters = new DialogParameters();
             parameters.Add("CartList", Cart);
-            parameters.Add("Product", Products.Where(c => c.Id == id).FirstOrDefault());
+            if (fromwhere == "products")
+                parameters.Add("Product", Products.Where(c => c.Id == id).FirstOrDefault());
+            else if (fromwhere == "lastproducts")
+                parameters.Add("Product", LastProducts.Where(c => c.Id == id).FirstOrDefault());
+            else
+                parameters.Add("Product", MostSoldProducts.Where(c => c.Id == id).FirstOrDefault());
 
             var dialog = DialogService.Show<AddToCartDialog>("Add to cart", parameters);
             var result = await dialog.Result;
@@ -149,7 +208,9 @@ namespace SmartVillages.Client.Pages
             CartOpened = false;
             Cart.Clear();
             Loaded = false;
-            await GetProducts();
+            //await GetProducts();
+            await GetLastProducts();
+            await GetMostSoldProducts();
         }
 
         public void OpenCloseMyOrders()
@@ -163,7 +224,9 @@ namespace SmartVillages.Client.Pages
         {
             CloseItem();
             Loaded = false;
-            await GetProducts();
+            //await GetProducts();
+            await GetLastProducts();
+            await GetMostSoldProducts();
         }
     }
 }
