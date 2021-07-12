@@ -27,6 +27,7 @@ namespace SmartVillages.Server.Data
         public DbSet<UserImage> UserImages { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
         public DbSet<Place> Places { get; set; }
+        public DbSet<UserConnection> UserConnections { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,6 +35,8 @@ namespace SmartVillages.Server.Data
                 .HasIndex(p => new { p.Email, p.OIB })
                 .IsUnique(true);
         }
+
+        public DbSet<SmartVillages.Shared.UserModels.UserConnection> UserConnection { get; set; }
 
     }
 }

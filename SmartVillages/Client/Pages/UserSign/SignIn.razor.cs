@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using Blazored.LocalStorage;
 using SmartVillages.Shared.UserModels;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace SmartVillages.Client.Pages.UserSign
 {
@@ -25,6 +26,9 @@ namespace SmartVillages.Client.Pages.UserSign
         [Inject] ILocalStorageService LocalStorage { get; set; }
 
         public UserSignIn UserModel { get; set; } = new UserSignIn();
+        public HubConnection Connection { get; private set; }
+        public User User { get; set; } = new User();
+        public UserConnection UserConnection { get; set; } = new UserConnection();
 
         /* neka animacija dok se logira */
         public bool Loading { get; set; }
@@ -87,8 +91,10 @@ namespace SmartVillages.Client.Pages.UserSign
                 else
                 {
                     User returnValue = await response.Content.ReadFromJsonAsync<User>();
+                    User = returnValue;
                     await LocalStorage.SetItemAsync("user", returnValue);
                     Snackbar.Add("Success!", Severity.Success);
+                    await ConnectToServer();
                     Navigation.NavigateTo("/index");
                 }
             }
@@ -97,8 +103,31 @@ namespace SmartVillages.Client.Pages.UserSign
                 Snackbar.Add(ex.Message, Severity.Error);
                 throw;
             }
-
         }
 
+        public async Task ConnectToServer()
+        {
+            var connectionHubUrl = "";
+            connectionHubUrl = $"{Http.BaseAddress}connectionhub";
+
+            Connection = new HubConnectionBuilder()
+                .WithUrl(connectionHubUrl)
+                .Build();
+
+            await Connection.StartAsync();
+
+            Connection.Closed += async (s) =>
+            {
+                Console.WriteLine("Connection closed");
+            };
+
+            //Connection.On("logout", async () => await Logout());
+            UserConnection userConnection = new UserConnection { Id = 0, ConnectionId = Connection.ConnectionId, IsActive = true, UserId = User.Id.ToString() };
+            var response = await Http.PostAsJsonAsync($"api/userconnections/postuserconnection", userConnection);
+
+            UserConnection = await response.Content.ReadFromJsonAsync<UserConnection>();
+
+            //await _hubContext.Clients.Client(userConnectionId).SendAsync("logout");
+        }
     }
 }

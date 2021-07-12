@@ -32,10 +32,10 @@ namespace SmartVillages.Client.Shared
             }
         }
 
-        public void Logout()
+        public async Task Logout()
         {
-            LocalStorage.RemoveItemAsync("user");
-            LocalStorage.RemoveItemAsync("cart");
+            await LocalStorage.RemoveItemAsync("user");
+            await LocalStorage.RemoveItemAsync("cart");
             NavigationManager.NavigateTo("/");
         }
 
