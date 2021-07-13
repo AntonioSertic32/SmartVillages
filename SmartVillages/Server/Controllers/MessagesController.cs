@@ -146,6 +146,10 @@ namespace SmartVillages.Server.Controllers
 
             foreach (var singleUser in AllUsers)
             {
+                // dohvatit da li je aktivan..
+                var activeOrNot = _context.UserConnections.Where(c => c.UserId == singleUser.Id.ToString() && c.IsActive == false).OrderBy(o => o.Id).LastOrDefault();
+                bool isActive = activeOrNot != null ? true : false;
+
                 var lastMessage = _context.Messages.Where(u => (u.PersonOne == User && u.PersonTwo == singleUser) || (u.PersonOne == singleUser && u.PersonTwo == User)).OrderBy(o => o.Id).Last();
                 var numOfUnread = _context.Messages.Where(u => (u.PersonOne == singleUser && u.PersonTwo == User) && u.Seen == false).Count();
                 bool isLastSeen = false;
@@ -164,7 +168,8 @@ namespace SmartVillages.Server.Controllers
                     MessageContent = lastMessage.MessageContent,
                     LastIsSeen = isLastSeen,
                     UnreadMessages = numOfUnread,
-                    Date = lastMessage.Date
+                    Date = lastMessage.Date,
+                    IsUserActive = isActive
                 });
             }
             List<LastMessage> LastMessagesOrdered = LastMessages.OrderBy(o => o.Date, OrderByDirection.Descending).ToList();

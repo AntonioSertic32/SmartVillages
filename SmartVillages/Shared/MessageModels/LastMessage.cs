@@ -15,5 +15,6 @@ namespace SmartVillages.Shared.MessageModels
         public bool LastIsSeen { get; set; }
         public int UnreadMessages { get; set; }
         public DateTime Date { get; set; }
+        public bool IsUserActive { get; set; }
     }
 }

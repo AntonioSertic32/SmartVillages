@@ -43,7 +43,9 @@
                     {
                         <div class="messages_chat_box d-flex @(message.LastIsSeen ? "seen" : "notseen")" @onclick="() => OpenMessage(message)">
                             <div class="image p-1">
-                                <MudAvatar Image="@(message.User.UserImage != null ? message.User.UserImage.Image : "/img/default.png")" Size="Size.Large" Class="ma-2" />
+                                <MudBadge Color="@(message.IsUserActive ? Color.Success : Color.Error)" Bordered="true" Bottom="true" Overlap="true">
+                                    <MudAvatar Image="@(message.User.UserImage != null ? message.User.UserImage.Image : "/img/default.png")" Size="Size.Large" Class="ma-2" />
+                                </MudBadge>
                             </div>
                             <div class="message px-3">
                                 <h4 class="author_name m-0">@message.User.FirstName @message.User.LastName</h4>

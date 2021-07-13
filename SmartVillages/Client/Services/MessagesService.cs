@@ -73,5 +73,6 @@ namespace SmartVillages.Client.Services
         // Dohvatiti aktivne korisnike i dati im zeleni kruzic u chatu
         // Na odjavi staviti IsActive u false
         // Kad se posalje poruka poslati i obavijest pozivom one navedene gore i azurirat chat, za sto je portrebno prvo dohvatiti korisnikov connectionid preko userid-a
+        // I prilikom svake prijave da se kreira novi zapis.. ako je korisnik vec ostao ulogiran jel 
     }
 }
