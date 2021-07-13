@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using MoreLinq;
 using SmartVillages.Server.Data;
@@ -18,10 +19,12 @@ namespace SmartVillages.Server.Controllers
     public class MessagesController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly IHubContext<ConnectionHub> _hubContext;
 
-        public MessagesController(DataContext context)
+        public MessagesController(DataContext context, IHubContext<ConnectionHub> connectionHub)
         {
             _context = context;
+            _hubContext = connectionHub;
         }
 
         // GET: api/Messages
@@ -183,6 +186,13 @@ namespace SmartVillages.Server.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpPost("SendMessageToUser")]
+        public async Task<IActionResult> SendMessageToUser([FromBody] string userConnectionId)
+        {
+            await _hubContext.Clients.Client(userConnectionId).SendAsync("new_message");
+            return Ok("message sent successfully");
         }
     }
 }

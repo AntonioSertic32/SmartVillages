@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MudBlazor.Services;
+using SmartVillages.Client.Services;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -24,6 +25,8 @@ namespace SmartVillages.Client
             builder.Services.AddMudServices();
 
             builder.Services.AddBlazoredLocalStorage();
+
+            builder.Services.AddScoped<MessagesService>();
 
             await builder.Build().RunAsync();
         }
