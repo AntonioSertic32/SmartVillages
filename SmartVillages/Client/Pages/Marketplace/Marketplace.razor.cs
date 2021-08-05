@@ -35,6 +35,7 @@ namespace SmartVillages.Client.Pages
         public Product OpenedProduct { get; set; }
         public List<CartItem> Cart { get; set; } = new List<CartItem>();
         public bool CartOpened { get; set; }
+
         public bool Loaded { get; set; } = false;
         public bool MyOrdersOpened { get; set; }
         public bool IsSeachedEmpty { get; set; }
@@ -43,9 +44,9 @@ namespace SmartVillages.Client.Pages
         {
             User = await LocalStorage.GetItemAsync<User>("user");
             OnlyForFarmer = User.UserType.UserTypeId == 2 ? true : false;
-            await GetProducts();
-            //await GetLastProducts();
-            //await GetMostSoldProducts();
+            //await GetProducts();
+            await GetLastProducts();
+            await GetMostSoldProducts();
             await GetCategories();
             var Container = await LocalStorage.GetItemAsync<List<CartItem>>("cart");
             if (Container != null)

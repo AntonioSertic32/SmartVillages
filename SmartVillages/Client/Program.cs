@@ -26,7 +26,9 @@ namespace SmartVillages.Client
 
             builder.Services.AddBlazoredLocalStorage();
 
-            builder.Services.AddScoped<MessagesService>();
+            builder.Services.AddScoped<MessagesService>(); 
+
+            builder.Services.AddSingleton<MessagesUpdateService>();
 
             await builder.Build().RunAsync();
         }

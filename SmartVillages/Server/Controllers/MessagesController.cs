@@ -89,6 +89,8 @@ namespace SmartVillages.Server.Controllers
             _context.Messages.Add(message);
             await _context.SaveChangesAsync();
 
+            SendMessageToUser(persontwo);
+
             return CreatedAtAction("GetMessage", new { id = message.Id }, message);
         }
 
@@ -147,7 +149,7 @@ namespace SmartVillages.Server.Controllers
             foreach (var singleUser in AllUsers)
             {
                 // dohvatit da li je aktivan..
-                var activeOrNot = _context.UserConnections.Where(c => c.UserId == singleUser.Id.ToString() && c.IsActive == false).OrderBy(o => o.Id).LastOrDefault();
+                var activeOrNot = _context.UserConnections.Where(c => c.UserId == singleUser.Id.ToString() && c.IsActive == true).OrderBy(o => o.Id).LastOrDefault();
                 bool isActive = activeOrNot != null ? true : false;
 
                 var lastMessage = _context.Messages.Where(u => (u.PersonOne == User && u.PersonTwo == singleUser) || (u.PersonOne == singleUser && u.PersonTwo == User)).OrderBy(o => o.Id).Last();
@@ -193,10 +195,10 @@ namespace SmartVillages.Server.Controllers
             return Ok();
         }
 
-        [HttpPost("SendMessageToUser")]
-        public async Task<IActionResult> SendMessageToUser([FromBody] string userConnectionId)
+        protected async Task<IActionResult> SendMessageToUser(int userId)
         {
-            await _hubContext.Clients.Client(userConnectionId).SendAsync("new_message");
+            var connectionId = _context.UserConnections.Where(u => u.UserId == userId.ToString() && u.IsActive == true).Select(s => s.ConnectionId).FirstOrDefault();
+            await _hubContext.Clients.Client(connectionId).SendAsync("new_message");
             return Ok("message sent successfully");
         }
     }

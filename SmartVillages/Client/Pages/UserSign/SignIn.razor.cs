@@ -22,6 +22,7 @@ namespace SmartVillages.Client.Pages.UserSign
         [Parameter] public EventCallback OpenSignUp { get; set; }
 
         [Inject] public ISnackbar Snackbar { get; set; }
+        [Inject] public MessagesUpdateService MessagesUpdateService { get; set; }
         [Inject] public HttpClient Http { get; set; }
         [Inject] public NavigationManager Navigation { get; set; }
         [Inject] ILocalStorageService LocalStorage { get; set; }
@@ -95,7 +96,7 @@ namespace SmartVillages.Client.Pages.UserSign
                     User = returnValue;
                     await LocalStorage.SetItemAsync("user", returnValue);
                     Snackbar.Add("Success!", Severity.Success);
-                    await MessagesService.ConnectToServer(User, Snackbar);
+                    await MessagesService.ConnectToServer(User, MessagesUpdateService, Snackbar);
                     Navigation.NavigateTo("/index");
                 }
             }

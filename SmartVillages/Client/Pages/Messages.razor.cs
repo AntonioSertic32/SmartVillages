@@ -11,6 +11,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using SmartVillages.Shared.UserModels;
 using SmartVillages.Shared.MessageModels;
+using SmartVillages.Client.Services;
 
 namespace SmartVillages.Client.Pages
 {
@@ -21,6 +22,7 @@ namespace SmartVillages.Client.Pages
         [Inject] public HttpClient Http { get; set; }
         [Inject] IJSRuntime JsRuntime { get; set; }
         [Inject] public ISnackbar Snackbar { get; set; }
+        [Inject] public MessagesUpdateService MessagesUpdateService { get; set; }
 
         public string TextValue { get; set; }
         public string MessageToSend { get; set; }
@@ -38,9 +40,20 @@ namespace SmartVillages.Client.Pages
         protected override async Task OnInitializedAsync()
         {
             User = await LocalStorage.GetItemAsync<User>("user");
+
+            InitializeComponent();
+
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
+            Snackbar.Configuration.SnackbarVariant = Variant.Filled;
+
+            MessagesUpdateService.Notify += OnNotify;
+        }
+
+        public async Task InitializeComponent()
+        {
             /* DOHVACANJE SVIH PORUKA ZA LIJEVU STRANU KOMPONENTE */
             await GetAllMessages();
-
+            
             foreach (var me in AllMessagesList)
             {
                 // pogledat jel ima sa userom pod ovim id-om
@@ -52,14 +65,24 @@ namespace SmartVillages.Client.Pages
                     break;
                 }
             }
-            if(!Found && Id != "0")
+            if (!Found && Id != "0")
             {
                 // ispisati informacije (otvaranje nove poruke)
                 await OpenNewMessage();
             }
+        }
 
-            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
-            Snackbar.Configuration.SnackbarVariant = Variant.Filled;
+        public async Task OnNotify()
+        {
+            Snackbar.Clear();
+            Snackbar.Add("New Message!", Severity.Info);
+            await InitializeComponent();
+
+            if (OpenedUser.UserType != null)
+            {
+                await GetDirectMessages();
+                await SetAsSeen(AllMessagesList[AllMessagesList.Count()-1]);
+            }
         }
 
         public async Task GetAllMessages()
